@@ -1,0 +1,11 @@
+#labels Featured,Phase-Implementation
+= Hawkscope Changelog =
+
+==Changes in version 0.1.1 (2008-09-25)==
+  * Improved load time
+  * Fixed memory leak: 
+    http://code.google.com/p/hawkscope/issues/detail?id=1
+  * File system changes are now detected: 
+    http://code.google.com/p/hawkscope/issues/detail?id=4
+  * Added exception when system tray is not supported
+  
