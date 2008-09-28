@@ -1,7 +1,7 @@
 #labels Phase-Deploy,Featured
 = Running the jar =
 
-If you have JRE installed correctly, double click hawkscope.jar to run it.
+If you have your [http://java.sun.com/javase/downloads/index.jsp Java Runtime Environment] installed correctly, double click hawkscope.jar to run it.
 
 Otherwise you can run it from command line:
 {{{
