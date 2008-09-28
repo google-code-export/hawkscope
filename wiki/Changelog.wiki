@@ -6,7 +6,7 @@
   * Various performance and memory consumption optimizations
   * Long menus now are split into parts:
     http://code.google.com/p/hawkscope/issues/detail?id=3
-  * Items that are neither files nor folders (i.e. unix devices in /dev/*) now have a separate icon and are properly displayed  
+  * Items that are neither files nor folders (i.e. unix devices in /dev/) now have a separate icon and are properly displayed  
   * Added "About" menu item  
 
 ==Changes in version 0.1.1 (2008-09-25)==
