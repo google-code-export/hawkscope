@@ -7,3 +7,14 @@ Otherwise you can run it from command line:
 {{{
 java -jar hawkscope.jar
 }}} 
+
+= Running Hawkscope on Startup =
+== Windows ==
+Drag hawkscope-X.X.X.jar into Start Menu and drop it in your Programs -> Startup folder
+
+== Linux (Gnome) ==
+Go to System -> Preferences -> Sessions
+Add new item with command:
+{{{
+/path/to/java/bin/java -jar /path/to/hawkscope-X.X.X.jar
+}}}
