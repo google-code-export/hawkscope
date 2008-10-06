@@ -23,7 +23,7 @@ Add new item with command:
 
 Hawkscope writes it's own configuration file in user home: .hawkscope.properties
 
-You can manually configure several things there:
+You can edit this file with plain text editor to manually configure several options:
 || Property || Title || Description || 
 || quick.access.list || Quick Access List || Adds custom entries to quick access list. Entries separated with ";". It can either be a full path, a java property, like ${user.home} (default) or environmental variable like ${$JAVA_HOME}.||
 ||display.hidden||Display hidden files|| 1 if hidden files should be displayed, 0 if not (default)||
