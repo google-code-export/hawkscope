@@ -28,5 +28,12 @@ You can manually configure several things there:
 || quick.access.list || Quick Access List || Adds custom entries to quick access list. Entries separated with ";". It can either be a full path, a java property, like ${user.home} (default) or environmental variable like ${$JAVA_HOME}.||
 ||display.hidden||Display hidden files|| 1 if hidden files should be displayed, 0 if not (default)||
 ||display.floppy||Display Floppy drives||1 if floppy drives should be displayed, 0 if not (default)||
+
+Example .hawkscope.properties
+{{{
+display.hidden = 0
+display.floppy = 0
+quick.access.list = ${user.home};${user.home}/Development;/mnt/myserv;${$JAVA_HOME}
+}}}
    
     
