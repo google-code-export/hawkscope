@@ -18,6 +18,7 @@
   * Added ignore to Floppy drive by default: 
     http://code.google.com/p/hawkscope/issues/detail?id=2
   * Improved error dialogs
+  * Nice partition names where possible
     
 ==Changes in version 0.1.2 (2008-09-28)==
   * Added icons for "Hide" and "Exit" actions
