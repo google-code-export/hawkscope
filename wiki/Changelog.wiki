@@ -5,10 +5,9 @@
   * Added quick access list to main menu, configurable via .hawkscope.properties. "user.home" folder read from system properties is added by default
     http://code.google.com/p/hawkscope/issues/detail?id=11
   * Improved About dialog: 
-    - Added "Environment" field to About dialog
-    - Added icon to About dialog
-    - Added "Copy to Clipboard" button to About dialog for copying environmental 
-      report
+    # Added "Environment" field to About dialog
+    # Added icon to About dialog
+    # Added "Copy to Clipboard" button to About dialog for copying environmental report
     http://code.google.com/p/hawkscope/issues/detail?id=12
   * Fixed configuration file writing
   * Changed "unknown" icon
