@@ -1,6 +1,17 @@
 #labels Featured,Phase-Implementation
 = Hawkscope Changelog =
 
+==Changes in version 0.3.0 (2009-01-23)==
+  * SWT GUI Implementation
+    http://code.google.com/p/hawkscope/issues/detail?id=18
+  * Fixed some file opening problems
+    http://code.google.com/p/hawkscope/issues/detail?id=10
+  * Solved tray icon ugliness
+    http://code.google.com/p/hawkscope/issues/detail?id=7
+  * Improved menu usability 
+    http://code.google.com/p/hawkscope/issues/detail?id=8
+  * Hawkscope menu is now always on top
+
 ==Changes in version 0.2.0 (2008-10-06)==
   * Added quick access list to main menu, configurable via .hawkscope.properties. "user.home" folder read from system properties is added by default
     http://code.google.com/p/hawkscope/issues/detail?id=11
