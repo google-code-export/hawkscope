@@ -14,7 +14,7 @@ Drag hawkscope-X.X.X-win-XX.jar or .exe into Start Menu and drop it in your Prog
 
 == Linux (Gnome) ==
 One way to do it:
-{{{{
+{{{
 sudo mkdir /opt/hawkscope
 sudo cp hawkscope-X.X.X-linux-gtk-XX.jar /opt/hawkscope/
 sudo chmod a+rx /opt/hawkscope/hawkscope-X.X.X-linux-gtk-XX.jar
