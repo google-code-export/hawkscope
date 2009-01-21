@@ -34,6 +34,7 @@ Example .hawkscope.properties
 {{{
 display.hidden = 0
 display.floppy = 0
+gui.implementation = SWT
 quick.access.list = ${user.home};${user.home}/Development;/mnt/myserv;${$JAVA_HOME}
 }}}
    
