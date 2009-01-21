@@ -14,6 +14,10 @@ msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library
 
 === Where's the Windows 64-bit version? ===
 32-bit version should run fine, so I did not install 64-bit Windows just to make a build. If you can provide a 64-bit Windows build, please do.
+
+=== How did you make Windows .exe from a JAR file? ===
+With [http://jsmooth.sourceforge.net/ JSmooth]
+
 -----
 = Linux =
 
