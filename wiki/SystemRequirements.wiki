@@ -2,3 +2,5 @@
 = Hawkscope System Requirements =
 
 [http://java.sun.com/javase/downloads/index.jsp Java 6] Runtime Environment (JRE 6 Update 10 RC or greater recommended)
+
+Ubuntu users may look here: [https://help.ubuntu.com/community/Java]
