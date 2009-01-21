@@ -1,12 +1,26 @@
 #labels Featured,Phase-Support
+= General =
+
+=== What is Hawkscope? ===
+It's an application that resides in your system tray and allows you to browse your hard drive and open anything within seconds.
+
+=== Is it free? ===
+Absolutely, it's free and open source. 
+
+= Windows =
+
 === I'm getting a "missing msvcr71.dll" warning when running the Windows executable ===
 msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library is not distributed along with Hawkscope windows executable, as most Windows users have it. One way to remove this warning is to You can [http://www.dll-files.com/dllindex/dll-files.shtml?msvcr71 download msvcr71.dll] and drop it to your C:\Windows\System32 folder.
+
+=== Where's the Windows 64-bit version? ===
+32-bit version should run fine, so I did not install 64-bit Windows just to make a build. If you can provide a 64-bit Windows build, please do.
+
+= Linux =
 
 === I've made Hawkscope autostart in my Gnome sessions preference, but it says system tray is not supported ===
 Have you read the UsingHawkscope page carefully? Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
 
+= Mac OS X =
+
 === Where's the Mac OS X version? ===
 Since 0.3.0 Hawkscope has SWT implementation, so it should run on Mac OS X, however, as Hawkscope is built with Java 6, and Apple has released Java 6 only for 64-bit Leopard, meanwhile I have a 32-bit Macbook, I can't test anything, neither produce a build. If you own a 64-bit mac with Java 6, you can contribute a build, it would be thankful.
-
-=== Where's the Windows 64-bit version? ===
-32-bit version should run fine, so I did not install 64-bit Windows just to make a build. If you can provide a 64-bit Windows build, please do.
