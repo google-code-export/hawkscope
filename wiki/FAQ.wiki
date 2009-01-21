@@ -3,4 +3,4 @@
 msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library is not distributed along with Hawkscope windows executable, as most Windows users have it. One way to remove this warning is to You can [http://www.dll-files.com/dllindex/dll-files.shtml?msvcr71 download msvcr71.dll] and drop it to your C:\Windows\System32 folder.
 
 === I've made Hawkscope autostart in my Gnome sessions preference, but it says system tray is not supported ===
-Have you read the UsingHawkscope page? Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
+Have you read the UsingHawkscope page carefully? Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
