@@ -6,7 +6,7 @@ It's an application that resides in your system tray and allows you to browse yo
 
 === Is it free? ===
 Absolutely, it's free and open source. 
-
+-----
 = Windows =
 
 === I'm getting a "missing msvcr71.dll" warning when running the Windows executable ===
@@ -14,12 +14,12 @@ msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library
 
 === Where's the Windows 64-bit version? ===
 32-bit version should run fine, so I did not install 64-bit Windows just to make a build. If you can provide a 64-bit Windows build, please do.
-
+-----
 = Linux =
 
 === I've made Hawkscope autostart in my Gnome sessions preference, but it says system tray is not supported ===
 Have you read the UsingHawkscope page carefully? Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
-
+-----
 = Mac OS X =
 
 === Where's the Mac OS X version? ===
