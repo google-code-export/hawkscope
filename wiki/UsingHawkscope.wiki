@@ -9,6 +9,7 @@ java -jar hawkscope.jar
 }}} 
 
 = Running Hawkscope on Startup =
+
 == Windows ==
 Drag hawkscope-X.X.X-win-XX.jar or .exe into Start Menu and drop it in your Programs -> Startup folder.
 
@@ -27,7 +28,6 @@ java -jar /opt/hawkscope/hawkscope.jar -delay 15000
 }}}
 Ubuntu users may look here: [https://help.ubuntu.com/community/AddingProgramToSessionStartup]
 Startup delay is required due to Java Bug [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179 #6438179]
-
 
 
 = Configuration =
