@@ -13,12 +13,22 @@ java -jar hawkscope.jar
 Drag hawkscope-X.X.X-win-XX.jar or .exe into Start Menu and drop it in your Programs -> Startup folder.
 
 == Linux (Gnome) ==
-Go to System -> Preferences -> Sessions
-Add new item with command:
-{{{
-/path/to/java/bin/java -jar /path/to/hawkscope-X.X.X-linux-gtk-XX.jar -delay 15000
+One way to do it:
+{{{{
+sudo mkdir /opt/hawkscope
+sudo cp hawkscope-X.X.X-linux-gtk-XX.jar /opt/hawkscope/
+sudo chmod a+rx /opt/hawkscope/hawkscope-X.X.X-linux-gtk-XX.jar
+sudo ln -s /opt/hawkscope/hawkscope-X.X.X-linux-gtk-XX.jar /opt/hawkscope/hawkscope.jar
 }}}
-Startup delay is required due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179]
+Go to System -> Preferences -> Sessions
+Add new autostart item with command:
+{{{
+java -jar /opt/hawkscope/hawkscope.jar -delay 15000
+}}}
+Ubuntu users may look here: [https://help.ubuntu.com/community/AddingProgramToSessionStartup]
+Startup delay is required due to Java Bug [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179 #6438179]
+
+
 
 = Configuration =
 
