@@ -34,9 +34,9 @@ Startup delay is required due to Java Bug [http://bugs.sun.com/bugdatabase/view_
 
 Hawkscope writes it's own configuration file `.hawkscope.properties` in user home folder.
 
-In Windows XP user home is C:\Documents and Settings\username\.
-In Windows Vista user home is C:\Users\username\
-In Linux it's /home/username
+In Windows XP user home is `C:\Documents and Settings\username\`.\
+In Windows Vista user home is `C:\Users\username\`.\
+In Linux it's `/home/username`.\
 
 You can edit this file with plain text editor to manually configure several options:
 || Property || Title || Description || 
