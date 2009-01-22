@@ -12,6 +12,9 @@ Absolutely, it's free and open source.
  * Check out the source code
  * Make patches or contributions and post them to the [http://code.google.com/p/hawkscope/issues/list Issue Tracker] or send by email to tomas.varaneckas@gmail.com.
 
+=== Will the upgrade from version X to Y break my old settings in .hawkscope.properties? ===
+No, it will not. New properties are merged.
+
 -----
 = Windows =
 
