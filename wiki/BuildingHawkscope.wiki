@@ -1,5 +1,6 @@
 #labels Phase-Implementation,Featured
 = Building Hawkscope =
+If you're into bleeding edge things, building Hawkscope from source is for you! Why wait for releases when you can get all the new features before everyone else - just build the latest version and enjoy. :)
 
 === Prequisites ===
 To build Hawkscope executable jar, you need:
