@@ -13,6 +13,7 @@ To build Hawkscope executable jar, you need:
   * Get a working SVN client (i.e. [http://tortoisesvn.tigris.org TortoiseSVN] on Windows or simply sudo apt-get install subversion on Linux)
   * Checkout the source from http://hawkscope.googlecode.com/svn/trunk
   * Go to checked out folder with command line terminal (cmd.exe on Windows or any shell in Linux)
+  * Go to lib/ folder and execute your line from install.txt. You can execute all of them if in doubt.
   * Run `mvn clean package`
   * The build result will be in target/ folder. Look for hawkscope-...-jar-with-dependencies.jar
   * That's it. You can run it by double clicking or with java -jar hawkscope-....jar 
