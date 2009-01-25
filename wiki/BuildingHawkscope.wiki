@@ -7,7 +7,7 @@ To build Hawkscope executable jar, you need:
   * Maven 2.0.6+
   * SVN client (to get the source)
 
-=== Quick build ===
+=== Quick build steps for all the lazy ones ===
   * Download JDK, install, set JAVA_HOME environmental variable
   * Download Maven, extract somewhere, add maven/bin to your PATH
   * Get a working SVN client (i.e. [http://tortoisesvn.tigris.org TortoiseSVN] on Windows or simply sudo apt-get install subversion on Linux)
