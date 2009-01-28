@@ -15,6 +15,9 @@ Absolutely, it's free and open source.
 === Will the upgrade from version X to Y break my old settings in .hawkscope.properties? ===
 No, it will not. New properties are merged.
 
+=== What are the Network Proxy settings for? ===
+It's for checking for updates while being behind a corporate secure proxy.
+
 -----
 = Windows =
 
