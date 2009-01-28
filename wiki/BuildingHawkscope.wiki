@@ -53,7 +53,7 @@ Run `ant dist-win`. Installer will reside in dist/output/hawkscope-(version)-ins
 Run `ant dist-mac` and check the dist/output folder for goodies.
 
 === Creating Debian Package ===
-Run `ant dist-mac` and look at dist/output
+Run `ant dist-deb` and look at dist/output
 
 = Running Hawkscope =
 
