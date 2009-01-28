@@ -55,4 +55,4 @@ Mount them first, then add in regular way (/mnt/share/name)
 = Mac OS X =
 
 === Where's the Mac OS X version? ===
-Since 0.3.0 Hawkscope has SWT GUI implementation, so it should run on Mac OS X, however, as Hawkscope is built with Java 6, and Apple has released Java 6 only for 64-bit Leopard, meanwhile I have a 32-bit Macbook, I can't test anything, neither produce a build. If you own a 64-bit mac with Java 6, you can contribute a build, it would be thankful.
+In the Downloads!
