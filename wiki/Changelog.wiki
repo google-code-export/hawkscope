@@ -1,6 +1,32 @@
 #labels Featured,Phase-Implementation
 = Hawkscope Changelog =
 
+==Changes in version 0.4.0 (2009-01-29)==
+  * Made Hawkscope Java 5 compatible, now it runs on Mac OS X 10.4+
+    http://code.google.com/p/hawkscope/issues/detail?id=9
+  * HTTP proxy authentication for update checks
+    http://code.google.com/p/hawkscope/issues/detail?id=26
+  * Better handling of resources and smaller memory consumption
+    http://code.google.com/p/hawkscope/issues/detail?id=28
+  * Added possibility to use operating system icons if they are available
+    http://code.google.com/p/hawkscope/issues/detail?id=24 
+  * Swing GUI implementation is now discontinued and removed
+    http://code.google.com/p/hawkscope/issues/detail?id=22
+  * Added possibility to override configuration parameters with args line
+    http://code.google.com/p/hawkscope/issues/detail?id=23
+  * Added possibility to blacklist folders and drives
+    http://code.google.com/p/hawkscope/issues/detail?id=16 
+  * Settings Window
+    http://code.google.com/p/hawkscope/issues/detail?id=6 
+  * Automatic check for updates
+    http://code.google.com/p/hawkscope/issues/detail?id=14
+  * Added menu reload delay to improve performance
+    http://code.google.com/p/hawkscope/issues/detail?id=21
+  * SWT About window is now a singleton
+    http://code.google.com/p/hawkscope/issues/detail?id=20
+  * Created a workaround for SWT tray menu popup. It's not on top of tray now.
+    http://code.google.com/p/hawkscope/issues/detail?id=19
+
 ==Changes in version 0.3.0 (2009-01-23)==
   * Added -delay (miliseconds) parameter to avoid Java Bug #6438179 that kills Hawkscope auto-startup on Linux
   * SWT GUI Implementation
