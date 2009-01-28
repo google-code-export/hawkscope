@@ -1,6 +1,8 @@
 #labels Phase-Deploy,Featured
 = Running the jar =
 
+You have to [BuildingHawkscope build] it first.
+
 If you have your [http://java.sun.com/javase/downloads/index.jsp Java Runtime Environment] installed correctly, double click hawkscope.jar to run it.
 
 Otherwise you can run it from command line:
@@ -11,20 +13,13 @@ java -jar hawkscope.jar
 = Running Hawkscope on Startup =
 
 == Windows ==
-Drag hawkscope-X.X.X-win-XX.jar or .exe into Start Menu and drop it in your Programs -> Startup folder.
+Hawkscope is automatically added to your Start Menu -> Programs -> Startup folder.
 
 == Linux (Gnome) ==
-One way to do it:
-{{{
-sudo mkdir /opt/hawkscope
-sudo cp hawkscope-X.X.X-linux-gtk-XX.jar /opt/hawkscope/
-sudo chmod a+rx /opt/hawkscope/hawkscope-X.X.X-linux-gtk-XX.jar
-sudo ln -s /opt/hawkscope/hawkscope-X.X.X-linux-gtk-XX.jar /opt/hawkscope/hawkscope.jar
-}}}
 Go to System -> Preferences -> Sessions
 Add new autostart item with command:
 {{{
-java -jar /opt/hawkscope/hawkscope.jar -delay 15000
+hawkscope -delay 5000
 }}}
 Ubuntu users may look here: [https://help.ubuntu.com/community/AddingProgramToSessionStartup]
 Startup delay is required due to Java Bug [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179 #6438179]
@@ -40,18 +35,12 @@ Operating Systems have different user home folder:
   * Linux: `/home/username`
   * Mac: `/Users/username`
 
-You can edit this file with plain text editor to manually configure several options:
+You can edit this file with plain text editor to manually configure several options. As of 0.4.0 Hawkscope has a configuration window, you should only edit `.hawkscope.properties` to add Quick Acess path hacks:
 || Property || Title || Description || 
 || quick.access.list || Quick Access List || Adds custom entries to quick access list. Entries separated with ";". It can either be a full path, a java property, like ${user.home} (default) or environmental variable like ${$JAVA_HOME}.||
-||display.hidden||Display hidden files|| 1 if hidden files should be displayed, 0 if not (default)||
-||display.floppy||Display Floppy drives||1 if floppy drives should be displayed, 0 if not (default)||
-||gui.implementation||GUI Implementation||Sets GUI implementation. Choices are "SWT" (recommended and default) and "Swing".||
 
-Example .hawkscope.properties
+Example .hawkscope.properties path hack:
 {{{
-display.hidden = 0
-display.floppy = 0
-gui.implementation = SWT
 quick.access.list = ${user.home};${user.home}/Development;/mnt/myserv;${$JAVA_HOME}
 }}}
    
