@@ -1,6 +1,6 @@
 #labels Featured,Phase-Deploy
 = Hawkscope System Requirements =
 
-[http://java.sun.com/javase/downloads/index.jsp Java 5] Runtime Environment (JRE 6 recommended)
+[http://java.sun.com/javase/downloads/index.jsp Java 5] Runtime Environment or greater. JRE 6 recommended.
 
 Ubuntu users may look here: [https://help.ubuntu.com/community/Java]
