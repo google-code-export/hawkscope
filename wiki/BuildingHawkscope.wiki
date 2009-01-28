@@ -3,10 +3,14 @@
 If you're into bleeding edge things, building Hawkscope from source is for you! Why wait for releases when you can get all the new features before everyone else - just build the latest version and enjoy. :)
 
 === Prequisites ===
-To build Hawkscope executable jar, you need:
+To build Hawkscope, you need:
+  Bare minimum:
   * JDK 6+
   * Maven 2.0.6+
   * SVN client (to get the source)
+  Optional:
+  * Ant 1.7+ (to build the installers)
+  * NSIS2 (to build Windows installer) 
 
 === Quick build steps for all the lazy ones ===
   * Download JDK, install, set `JAVA_HOME` environmental variable
@@ -19,7 +23,6 @@ To build Hawkscope executable jar, you need:
   * The build result will be in `target/` folder. Look for `hawkscope-...-jar-with-dependencies.jar`
   * That's it. You can run it by double clicking or with `java -jar hawkscope-....jar`
   * If you failed, don't worry. Read more about building below. It should help.
-
 
 === Adding SWT native library to local Maven repository ===
 Hawkscope uses Eclipse SWT native libraries for each os / arch. Library 
@@ -42,6 +45,15 @@ mvn clean package
 }}}
 The jar will be in target/ folder, named:
 hawkscope-(version)-(os)-(arch)-jar-with-dependencies.jar
+
+=== Creating Windows installer ===
+Run `ant dist-win`. Installer will reside in dist/output/hawkscope-(version)-installer.exe
+
+=== Creating Mac OS X app + packaging it in a Disk Image ===
+Run `ant dist-mac` and check the dist/output folder for goodies.
+
+=== Creating Debian and RPM packages ===
+Not yet... But on the way.
 
 = Running Hawkscope =
 
