@@ -52,8 +52,8 @@ Run `ant dist-win`. Installer will reside in dist/output/hawkscope-(version)-ins
 === Creating Mac OS X app + packaging it in a Disk Image ===
 Run `ant dist-mac` and check the dist/output folder for goodies.
 
-=== Creating Debian and RPM packages ===
-Not yet... But on the way.
+=== Creating Debian Package ===
+Run `ant dist-mac` and look at dist/output
 
 = Running Hawkscope =
 
