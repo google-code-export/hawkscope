@@ -52,8 +52,5 @@ rm ~/.hawkscope.properties
 -----
 = Mac OS X =
 
-=== How do I start Hawkscope on boot? ===
-Right click Hawkscope dock item and then select "Open at Login". Or go to System Preferences > Accounts > Login Items and add Hawkscope there manually.
-
 === Why can't I quit Hawkscope by closing Dock icon? It also stops OS X from logging off or shutting down. ===
 A [http://code.google.com/p/hawkscope/issues/detail?id=32 bug]. Please exit Hawkscope manually via Tray icon on top. If you happened to quit it via Dock or can't shutdown, just Force Quit it by holding alt while right clicking the dock icon.
