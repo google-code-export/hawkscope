@@ -13,7 +13,7 @@ java -jar hawkscope.jar
 = Running Hawkscope on Startup =
 
 == Windows ==
-Hawkscope is automatically added to your Start Menu -> Programs -> Startup folder.
+Hawkscope is automatically added to your Start Menu -> Programs -> Startup folder during setup. If you don't want it to run on Windows startup, remove the shortcut.
 
 == Linux (Gnome) ==
 Go to System -> Preferences -> Sessions
@@ -23,6 +23,9 @@ hawkscope -delay 5000
 }}}
 Ubuntu users may look here: [https://help.ubuntu.com/community/AddingProgramToSessionStartup]
 Startup delay is required due to Java Bug [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179 #6438179]
+
+== Mac OS X ==
+Right click Hawkscope dock item and then select "Open at Login". Or go to System Preferences > Accounts > Login Items and add Hawkscope there manually.
 
 
 = Configuration =
