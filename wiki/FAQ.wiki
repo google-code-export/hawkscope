@@ -51,8 +51,20 @@ Please read the UsingHawkscope carefully. Due to Java Bug: [http://bugs.sun.com/
 === How to add network shares to quick access list? ===
 Mount them first, then add in regular way (/mnt/share/name)
 
+=== Hawkscope sucks, how to remove it? ===
+{{{
+dpkg -r hawkscope
+#to remove configuration
+rm ~/.hawkscope.properties
+}}}
 -----
 = Mac OS X =
 
 === Where's the Mac OS X version? ===
 In the Downloads!
+
+=== How do I start Hawkscope on boot? ===
+Right click Hawkscope dock item and then select "Open at Login". Or go to System Preferences > Accounts > Login Items and add Hawkscope there manually.
+
+=== Why can't I quit Hawkscope by closing Dock icon? It also stops OS X from logging off or shutting down. ===
+A bug. Please exit Hawkscope manually via Tray icon on top. If you happened to quit it via Dock or can't shutdown, just Force Quit it by holding alt while right clicking the dock icon.
