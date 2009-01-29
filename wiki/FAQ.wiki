@@ -31,12 +31,12 @@ msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library
 With [http://jsmooth.sourceforge.net/ JSmooth] and [http://nsis.sourceforge.net NSIS].
 
 === How to add network shares to quick access list? ===
-First map the network share to Windows drive (right click My Computer -> Map Network Drive), i.e.: S:. The drive will be automatically displayed in Hawkscope main menu. You can add the drive's sub-folders to quick.access.list in the regular way (i.e.: S:/sub/folder)
+Since Hawkscope 0.4.0 you can do it via Settings -> Quick Access by adding a mounted share like a regular folder. Or you can map the network share to Windows drive (right click My Computer -> Map Network Drive), i.e.: S:. The drive will be automatically displayed in Hawkscope main menu.
 
 -----
 = Linux =
 
-=== I've made Hawkscope autostart in my Gnome sessions preference, but it says system tray is not supported ===
+=== I've made Hawkscope autostart in my Gnome sessions preference, but it does not show up ===
 Please read the UsingHawkscope carefully. Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
 
 === How to add network shares to quick access list? ===
@@ -48,11 +48,9 @@ sudo dpkg -r hawkscope
 #to remove configuration
 rm ~/.hawkscope.properties
 }}}
+
 -----
 = Mac OS X =
-
-=== Where's the Mac OS X version? ===
-In the Downloads!
 
 === How do I start Hawkscope on boot? ===
 Right click Hawkscope dock item and then select "Open at Login". Or go to System Preferences > Accounts > Login Items and add Hawkscope there manually.
