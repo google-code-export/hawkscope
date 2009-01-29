@@ -30,15 +30,6 @@ msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library
 === How did you make Windows .exe from a JAR file? And the Installer? ===
 With [http://jsmooth.sourceforge.net/ JSmooth] and [http://nsis.sourceforge.net NSIS].
 
-=== How to add folders like "C:\Program Files" to quick access list? ===
-Example .hawkscope.properties:
-{{{
-display.floppy = 0
-gui.implementation = SWT
-quick.access.list = ${user.home};C:/Program\ Files
-display.hidden = 0
-}}}
-
 === How to add network shares to quick access list? ===
 First map the network share to Windows drive (right click My Computer -> Map Network Drive), i.e.: S:. The drive will be automatically displayed in Hawkscope main menu. You can add the drive's sub-folders to quick.access.list in the regular way (i.e.: S:/sub/folder)
 
