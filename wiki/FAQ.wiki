@@ -36,6 +36,9 @@ Since Hawkscope 0.4.0 you can do it via Settings -> Quick Access by adding a mou
 -----
 = Linux =
 
+=== Installation errors due to some dependency issues ===
+Try enabling third party repositories. More [Installing here]
+
 === I've made Hawkscope autostart in my Gnome sessions preference, but it does not show up ===
 Please read the UsingHawkscope carefully. Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
 
