@@ -53,7 +53,7 @@ Mount them first, then add in regular way (/mnt/share/name)
 
 === Hawkscope sucks, how to remove it? ===
 {{{
-dpkg -r hawkscope
+sudo dpkg -r hawkscope
 #to remove configuration
 rm ~/.hawkscope.properties
 }}}
