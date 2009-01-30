@@ -62,4 +62,4 @@ rm ~/.hawkscope.properties
 = Mac OS X =
 
 === Why can't I quit Hawkscope by closing Dock icon? It also stops OS X from logging off or shutting down. ===
-A [http://code.google.com/p/hawkscope/issues/detail?id=32 bug]. Please exit Hawkscope manually via Tray icon on top. If you happened to quit it via Dock or can't shutdown and the tray icon is gone, just Force Quit it by holding alt while dock icon menu is open. This seems to be related to Apple Java Bug: [http://developer.apple.com/releasenotes/Java/JavaLeopardRN/ResolvedIssues/chapter_3_section_19.html #4997714]
+A [http://code.google.com/p/hawkscope/issues/detail?id=32 bug] (already fixed in svn trunk). Please exit Hawkscope manually via Tray icon on top. If you happened to quit it via Dock or can't shutdown and the tray icon is gone, just Force Quit it by holding alt while dock icon menu is open. This seems to be related to Apple Java Bug: [http://developer.apple.com/releasenotes/Java/JavaLeopardRN/ResolvedIssues/chapter_3_section_19.html #4997714]
