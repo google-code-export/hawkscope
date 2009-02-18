@@ -6,6 +6,9 @@
 ||Open With||1.0||A built-in plugin that allows you to define custom applications to open chosen file types, folders and unknown files.||
 
 ==External Plugins==
-Currently there are no external Hawkscope Plugins available for download. Please check back later!
+||Plugin Name||Version||Description||Download||Source||
+||Hello World||1.0||Example Hawkscope plugin. Opens http://hawkscope.googlecode.com in a browser.||[http://hawkscope.googlecode.com/svn/trunk/contrib/helloworld-plugin/helloworld-plugin.jar helloworld-plugin.jar]||http://hawkscope.googlecode.com/svn/trunk/contrib/helloworld-plugin/helloworld-plugin.zip helloworld-plugin.zip||
+
+Please check back later for more useful plugins!
 
 If you are interested in writing a Plugin, check the [PluginDeveloperGuide Plugin Developer Guide].
