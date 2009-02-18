@@ -2,3 +2,5 @@
 #labels Phase-Support
 
 Currently there are no Hawkscope Plugins available. Please check back later!
+
+If you are interested in writing a Plugin, check the [PluginDeveloperGuide|Plugin Developer Guide]
