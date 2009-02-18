@@ -1,11 +1,11 @@
 #summary Hawkscope Plugins
 #labels Phase-Support
 
-Currently there are no Hawkscope Plugins available for download. Please check back later!
-
-If you are interested in writing a Plugin, check the [PluginDeveloperGuide Plugin Developer Guide].
-
-Built-in Plugins:
-
+==Built-in Plugins==
 ||Plugin Name||Version||Description||
 ||Open With||1.0||A built-in plugin that allows you to define custom applications to open chosen file types, folders and unknown files.||
+
+==External Plugins==
+Currently there are no external Hawkscope Plugins available for download. Please check back later!
+
+If you are interested in writing a Plugin, check the [PluginDeveloperGuide Plugin Developer Guide].
