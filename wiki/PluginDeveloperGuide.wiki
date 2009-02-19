@@ -1,4 +1,9 @@
 #summary Hawkscope Plugin Developer Guide
 #labels Phase-Implementation
 
-Coming Soon!
+So, you want to write a Hawkscope Plugin? You are in a right place then.
+
+== Anatomy of a Plugin ==
+Hawkscope Plugin is a Java JAR file, which contains:
+  * plugin.loader - a plain-text file with fully qualified class name of main plugin class.
+  * Java Class that implements [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/Plugin.java com.varaneckas.hawkscope.plugin.Plugin] interface.
