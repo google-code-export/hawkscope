@@ -22,6 +22,21 @@
 
 *Use operating system icons* - if enabled, Hawkscope will attempt to use the underlying Operating System icons when displaying files. This works quite well in Windows and Mac. Folder and Mac application icon support is coming soon.
 
+=== Quick Access ===
+[http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VN2ZA_XI/AAAAAAAABUw/OowIcVTFYG0/hs3.png]
+
+=== Blacklist ===
+[http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOHyfr1I/AAAAAAAABU4/3XIK-3dOBU4/hs4.png]
+
+=== Network ===
+[http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOIGfCWI/AAAAAAAABVA/AQ-HFUxicGw/hs5.png]
+
+=== Plugins ===
+[http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOBT_GLI/AAAAAAAABVI/0QLPPyE6a6w/hs6.png]
+
+=== Open With ===
+[http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0VOAlMbfI/AAAAAAAABVQ/5ALlkfsm3rA/hs7.png]
+
 
 
 
