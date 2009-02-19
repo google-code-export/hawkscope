@@ -2,11 +2,11 @@
 #labels Phase-Implementation
 
 So, you want to write a Hawkscope Plugin? You are in a right place then.
-== Required Knowledge ==
+= Required Knowledge =
   * Core Java 5+
   * [http://www.eclipse.org/swt Eclipse SWT]
 
-== Anatomy of a Plugin ==
+= Anatomy of a Plugin =
 Hawkscope Plugin is a Java JAR file, which contains:
   * plugin.loader - a plain-text file with fully qualified class name of main plugin class.
   * Java Class that implements [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/Plugin.java com.varaneckas.hawkscope.plugin.Plugin] interface. For convenience, it is recommended to extend [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/PluginAdapter.java PluginAdapter], which allows you to implement only the functionality you will need.
@@ -15,7 +15,7 @@ Hawkscope Plugin is a Java JAR file, which contains:
 
 Hawkscope plugins should be compiled with Java 1.5 compatibility.
 
-== The Bare Minimum ==
+= The Bare Minimum =
 [http://lh3.ggpht.com/_nP8Aa6cTHpo/SZ0rYiF7FAI/AAAAAAAABVY/M5iotSSwKb8/hs8.png]
 
 `plugin.loader`
@@ -45,7 +45,7 @@ class MinimumPlugin extends PluginAdapter {
 }
 }}}
 
-== Extension Points ===
+= Extension Points =
 
 There are several extension points that plugins can hook into.
 
@@ -77,11 +77,11 @@ Can intercept File clicks and take various actions.
 
 Can add tabs to Settings Window's Tab folder.
 
-== Example Plugin ==
+= Example Plugin =
 
 You can browse [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/openwith/ Open With built-in plugin source] for a sophisticated plugin example. 
 
-== Where to start? ==
+= Where to start? =
   # [http://code.google.com/p/hawkscope/source/checkout Checkout] or [http://code.google.com/p/hawkscope/downloads/list Download] Hawkscope source, analyze it. Read [BuildingHawkscope]. 
   # If you are using [http://www.eclipse.org Eclipse], create an Eclipse project for Hawkscope source. Otherwise build a hawkscope.jar - you will need it for building your plugin.
   # Create a Java project in your IDE. If it's Eclipse, reference the Hawkscope project to your plugin's new project. Otherwise add hawkscope.jar to a list of referenced libraries.
