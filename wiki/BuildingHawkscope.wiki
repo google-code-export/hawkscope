@@ -5,7 +5,7 @@ If you're into bleeding edge things, building Hawkscope from source is for you! 
 === Prequisites ===
 To build Hawkscope, you need:
   Bare minimum:
-  * JDK 6+
+  * JDK 5+
   * Maven 2.0.6+
   * SVN client (to get the source)
   Optional:
