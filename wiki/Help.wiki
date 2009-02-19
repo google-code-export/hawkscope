@@ -4,13 +4,21 @@
 =Hawkscope Menu Sections=
 
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0Rbx5N1CI/AAAAAAAABUg/dUNVZflUrAM/hs1.png]
+
 *Quick Access List* - a configurable list of folders that you can access quickly.
+
 *File System Roots* - a place where your drives and partitions are listed.
+
 *Hawkscope Main Menu* - static menu items.
+
 *Hide* - hides the Hawkscope menu.
+
 *About* - displays the About dialog.
+
 *Settings* - allows you to configure Hawkscope.
+
 *Help* - shows help window with this content.
+
 *Exit* - quits Hawkscope.
 
 = Hawkscope Settings =
