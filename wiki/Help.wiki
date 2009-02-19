@@ -1,5 +1,5 @@
 #summary Hawkscope Help
-#labels Phase-QA,Phase-Support
+#labels Phase-QA,Phase-Support,Featured
 
 =Hawkscope Menu Sections=
 
