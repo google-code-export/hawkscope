@@ -73,3 +73,7 @@ Can intercept File clicks and take various actions.
 === Settings Tabs ===
 
 Can add tabs to Settings Window's Tab folder.
+
+== Example Plugin ==
+
+You can browse [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/openwith/ Open With built-in plugin source] for a sophisticated plugin example. 
