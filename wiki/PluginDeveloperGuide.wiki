@@ -11,6 +11,7 @@ Hawkscope Plugin is a Java JAR file, which contains:
   * Any other Java classes or resources. (optional)
 
 == The Bare Minimum ==
+[http://lh3.ggpht.com/_nP8Aa6cTHpo/SZ0rYiF7FAI/AAAAAAAABVY/M5iotSSwKb8/hs8.png]
 
 `plugin.loader`
 {{{
