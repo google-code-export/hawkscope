@@ -1,13 +1,6 @@
 #summary Hawkscope Help
 #labels Phase-QA,Phase-Support
 
-== Resources ==
-
-  * [FAQ Frequently Asked Questions]
-  * [SystemRequirements System Requirements]
-  * [UsingHawkscope Using Hawkscope]
-  * [Plugins Hawkscope Plugins]
-
 == Hawkscope Menu Sections ==
 
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0Rbx5N1CI/AAAAAAAABUg/dUNVZflUrAM/hs1.png]
@@ -89,7 +82,9 @@
 
 *-* - removes selected preferred application(s). 
 
+== Additional Resources ==
 
-
-
-More help is on the way.
+  * [FAQ Frequently Asked Questions]
+  * [SystemRequirements System Requirements]
+  * [UsingHawkscope Using Hawkscope]
+  * [Plugins Hawkscope Plugins]
