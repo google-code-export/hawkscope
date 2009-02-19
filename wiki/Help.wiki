@@ -6,7 +6,7 @@
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0Rbx5N1CI/AAAAAAAABUg/dUNVZflUrAM/hs1.png]
 
 = Hawkscope Settings =
-=== General ===
+== General ==
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/SZ0Snc0ldTI/AAAAAAAABUo/SSZbawuGnQ0/hs2.png]
 
 *Check for updates* - if enabled, Hawkscope will check for updates on startup and will add "Update Available" item in Hawkscope Menu if update is available. If you are behind a proxy, make sure HTTP Proxy is configured in Network Settings Tab.
@@ -15,7 +15,7 @@
 
 *Use operating system icons* - if enabled, Hawkscope will attempt to use the underlying Operating System icons when displaying files. This works quite well in Windows and Mac. Folder and Mac application icon support is coming soon.
 
-=== Quick Access ===
+== Quick Access ==
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VN2ZA_XI/AAAAAAAABUw/OowIcVTFYG0/hs3.png]
 
 *Quick Access Locations* - it's an ordered list of locations that will appear in Hawkcope's Quick Access List.
@@ -28,7 +28,7 @@
 
 *Dn* - moves selected Quick Access item down.
 
-=== Blacklist ===
+== Blacklist ==
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOHyfr1I/AAAAAAAABU4/3XIK-3dOBU4/hs4.png]
 
 *Display hidden files* - if enabled, Hawkscope will display hidden files in it's menu.
@@ -41,7 +41,7 @@
 
 *-* - Removes selected locations from Blacklist.
 
-=== Network ===
+== Network ==
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOIGfCWI/AAAAAAAABVA/AQ-HFUxicGw/hs5.png]
 
 *Use HTTP Proxy* - if enabled, Hawkscope will try to use the defined HTTP Proxy.
@@ -56,7 +56,7 @@
 
 *Password* - your HTTP Proxy authentication password.
 
-=== Plugins ===
+== Plugins ==
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOBT_GLI/AAAAAAAABVI/0QLPPyE6a6w/hs6.png]
 
 *Plugin Location* - a directory where Hawkscope will look for plugins.
@@ -69,7 +69,7 @@
 
 *Get Plugins* - opens [Plugins Hawkscope Plugins] page in your browser.
 
-=== Open With ===
+== Open With ==
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0VOAlMbfI/AAAAAAAABVQ/5ALlkfsm3rA/hs7.png]
 
 *For directories* - a command or application that will handle opening of directories. Double-click the input to choose.
