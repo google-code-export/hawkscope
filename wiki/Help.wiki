@@ -1,3 +1,7 @@
 #summary Hawkscope Help
+#labels Phase-QA,Phase-Support
 
-Coming soon!
+== Resources ==
+
+  * [FAQ Frequently Asked Questions]
+  * [SystemRequirements System Requirements]
