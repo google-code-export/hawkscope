@@ -88,4 +88,4 @@
   * [SystemRequirements System Requirements]
   * [UsingHawkscope Using Hawkscope]
   * [Plugins Hawkscope Plugins]
-  * [http://code.google.com/p/hawkscope/issue/create Submit a Bug/Feature Request]
+  * [http://code.google.com/p/hawkscope/issues/entry Submit a Bug/Feature Request]
