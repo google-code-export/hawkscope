@@ -1,4 +1,6 @@
+#summary Installing Hawkscope
 #labels Phase-Support
+
 = Windows =
 I Agree -> Next -> Done ..
 
