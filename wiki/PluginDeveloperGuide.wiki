@@ -48,14 +48,28 @@ There are several extension points that plugins can hook into.
 
 === Before Quick Access List ===
 
+Can add menu items on the very top of main Hawkscope menu.
+
 === Before About Menu Item ===
+
+Can add menu items between Hide and About.
 
 === Quick Access List Item creation ===
 
+Can enhance Quick Access List items while they are rendered.
+
 === Folder Menu creation ===
+
+Can enhance Folder Menu items when they are rendered.
 
 === File Menu Item creation ===
 
+Can enhance File items when they are rendered.
+
 === File Menu Item click interception ===
 
+Can intercept File clicks and take various actions.
+
 === Settings Tabs ===
+
+Can add tabs to Settings Window's Tab folder.
