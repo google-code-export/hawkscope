@@ -1,4 +1,7 @@
 #labels Phase-Deploy,Featured
+= About this section =
+If you are looking for a simple Help, go [Help here]. This section is more of a "Hacking Hawkscope".
+
 = Running the jar =
 
 You have to [BuildingHawkscope build] it first.
