@@ -2,6 +2,9 @@
 #labels Phase-Implementation
 
 So, you want to write a Hawkscope Plugin? You are in a right place then.
+== Required Knowledge ==
+  * Core Java 5+
+  * [http://www.eclipse.org/swt Eclipse SWT]
 
 == Anatomy of a Plugin ==
 Hawkscope Plugin is a Java JAR file, which contains:
