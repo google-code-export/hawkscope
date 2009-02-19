@@ -25,17 +25,14 @@ import com.varaneckas.hawkscope.plugin.PluginAdapter;
 
 class MinimumPlugin extends PluginAdapter {
     
-    @Override
     public String getDescription() {
         return "Bare Minimum Plugin";
     }
 
-    @Override
     public String getName() {
         return "Bare Minimum";
     }
 
-    @Override
     public String getVersion() {
         return "1.0";
     }
