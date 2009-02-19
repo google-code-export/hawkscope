@@ -1,11 +1,11 @@
 #summary Hawkscope Help
 #labels Phase-QA,Phase-Support
 
-== Hawkscope Menu Sections ==
+=Hawkscope Menu Sections=
 
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0Rbx5N1CI/AAAAAAAABUg/dUNVZflUrAM/hs1.png]
 
-== Hawkscope Settings ==
+= Hawkscope Settings =
 === General ===
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/SZ0Snc0ldTI/AAAAAAAABUo/SSZbawuGnQ0/hs2.png]
 
@@ -82,7 +82,7 @@
 
 *-* - removes selected preferred application(s). 
 
-== Additional Resources ==
+= Additional Resources =
 
   * [FAQ Frequently Asked Questions]
   * [SystemRequirements System Requirements]
