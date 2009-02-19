@@ -7,3 +7,37 @@ So, you want to write a Hawkscope Plugin? You are in a right place then.
 Hawkscope Plugin is a Java JAR file, which contains:
   * plugin.loader - a plain-text file with fully qualified class name of main plugin class.
   * Java Class that implements [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/Plugin.java com.varaneckas.hawkscope.plugin.Plugin] interface.
+  * Image resources in "images" folder. (optional)
+  * Any other Java classes or resources. (optional)
+
+== The Bare Minimum ==
+
+`plugin.loader`
+{{{
+bare.MinimumPlugin
+}}}
+
+`bare/MinimumPlugin.java`
+{{{
+package bare;
+
+import com.varaneckas.hawkscope.plugin.PluginAdapter;
+
+class MinimumPlugin extends PluginAdapter {
+    
+    @Override
+    public String getDescription() {
+        return "Bare Minimum Plugin";
+    }
+
+    @Override
+    public String getName() {
+        return "Bare Minimum";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0";
+    }
+}
+}}}
