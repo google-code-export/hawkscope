@@ -10,6 +10,8 @@ Hawkscope Plugin is a Java JAR file, which contains:
   * Image resources in "images" folder. (optional)
   * Any other Java classes or resources. (optional)
 
+Hawkscope plugins should be compiled with Java 1.5 compatibility.
+
 == The Bare Minimum ==
 [http://lh3.ggpht.com/_nP8Aa6cTHpo/SZ0rYiF7FAI/AAAAAAAABVY/M5iotSSwKb8/hs8.png]
 
