@@ -25,17 +25,69 @@
 === Quick Access ===
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VN2ZA_XI/AAAAAAAABUw/OowIcVTFYG0/hs3.png]
 
+*Quick Access Locations* - it's an ordered list of locations that will appear in Hawkcope's Quick Access List.
+
+*+* - adds a new Quick Access item.
+
+*-* - removes selected Quick Access item(s).
+
+*Up* - moves selected Quick Access item up.
+
+*Dn* - moves selected Quick Access item down.
+
 === Blacklist ===
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOHyfr1I/AAAAAAAABU4/3XIK-3dOBU4/hs4.png]
+
+*Display hidden files* - if enabled, Hawkscope will display hidden files in it's menu.
+
+*Display floppy drives* - if enabled, Hawkscope will list floppy drives in File System Roots. This is not recommended as floppy drives will make noises when scanned.
+
+*Blacklisted Locations* - a list of locations that will not appear anywhere in Hawkscope menu. You may add private or inaccessible system folders there, to make your menu lighter and more discrete.
+
+*+* - Adds a location to Blacklist.
+
+*-* - Removes selected locations from Blacklist.
 
 === Network ===
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOIGfCWI/AAAAAAAABVA/AQ-HFUxicGw/hs5.png]
 
+*Use HTTP Proxy* - if enabled, Hawkscope will try to use the defined HTTP Proxy.
+
+*HTTP Proxy Host* - IP address or domain name of your HTTP Proxy.
+
+*HTTP Proxy Port* - port number of your HTTP Proxy.
+
+*Enable Authentication* - if your HTTP Proxy requires authentication, you can enable it here for Hawkscope.
+
+*Username* - your HTTP Proxy authentication user name.
+
+*Password* - your HTTP Proxy authentication password.
+
 === Plugins ===
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VOBT_GLI/AAAAAAAABVI/0QLPPyE6a6w/hs6.png]
 
+*Plugin Location* - a directory where Hawkscope will look for plugins.
+
+*Open* - opens (creates if necessary) the Plugin Location directory.
+
+*Available Plugins* - a list of available plugins with their information.
+
+*Reload Plugins* - scans the Plugin Location for new plugins and reinitializes all plugins with last known settings.
+
+*Get Plugins* - opens [Plugins Hawkscope Plugins] page in your browser.
+
 === Open With ===
 [http://lh6.ggpht.com/_nP8Aa6cTHpo/SZ0VOAlMbfI/AAAAAAAABVQ/5ALlkfsm3rA/hs7.png]
+
+*For directories* - a command or application that will handle opening of directories. Double-click the input to choose.
+
+*Unknown files* - a command or application that will handle opening of unknown files (i.e. - ones without extension). Double-click the input to choose.
+
+*Preferred Applications* - a list of file extensions and commands (or applications) that will override the default programs.
+
+*+* - adds new preferred application.
+
+*-* - removes selected preferred application(s). 
 
 
 
