@@ -41,3 +41,21 @@ class MinimumPlugin extends PluginAdapter {
     }
 }
 }}}
+
+== Extension Points ===
+
+There are several extension points that plugins can hook into.
+
+=== Before Quick Access List ===
+
+=== Before About Menu Item ===
+
+=== Quick Access List Item creation ===
+
+=== Folder Menu creation ===
+
+=== File Menu Item creation ===
+
+=== File Menu Item click interception ===
+
+=== Settings Tabs ===
