@@ -6,3 +6,6 @@
   * [FAQ Frequently Asked Questions]
   * [SystemRequirements System Requirements]
   * [UsingHawkscope Using Hawkscope]
+  * [Plugins Hawkscope Plugins]
+
+More help is on the way.
