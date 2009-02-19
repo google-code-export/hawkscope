@@ -79,13 +79,13 @@ Can add tabs to Settings Window's Tab folder.
 You can browse [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/openwith/ Open With built-in plugin source] for a sophisticated plugin example. 
 
 == Where to start? ==
-1. [http://code.google.com/p/hawkscope/source/checkout Checkout] or [http://code.google.com/p/hawkscope/downloads/list Download] Hawkscope source, analyze it. Read [BuildingHawkscope]. 
-2. If you are using [http://www.eclipse.org Eclipse], create an Eclipse project for Hawkscope source. Otherwise build a hawkscope.jar - you will need it for building your plugin.
-3. Create a Java project in your IDE. If it's Eclipse, reference the Hawkscope project to your plugin's new project. Otherwise add hawkscope.jar to a list of referenced libraries.
-4. Create a class that extends [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/PluginAdapter.java PluginAdapter].
-5. Create a plain-text file named `plugin.loader` and put your plugins fully qualified class name there.
-6. Code your plugin.
-7. Build the JAR. (Compile the classes with Java 1.5 compatibility!)
-8. Try it.
+# [http://code.google.com/p/hawkscope/source/checkout Checkout] or [http://code.google.com/p/hawkscope/downloads/list Download] Hawkscope source, analyze it. Read [BuildingHawkscope]. 
+# If you are using [http://www.eclipse.org Eclipse], create an Eclipse project for Hawkscope source. Otherwise build a hawkscope.jar - you will need it for building your plugin.
+# Create a Java project in your IDE. If it's Eclipse, reference the Hawkscope project to your plugin's new project. Otherwise add hawkscope.jar to a list of referenced libraries.
+# Create a class that extends [http://hawkscope.googlecode.com/svn/trunk/src/main/java/com/varaneckas/hawkscope/plugin/PluginAdapter.java PluginAdapter].
+# Create a plain-text file named `plugin.loader` and put your plugins fully qualified class name there.
+# Code your plugin.
+# Build the JAR. (Compile the classes with Java 1.5 compatibility!)
+# Try it.
 
 More documentation is coming soon.
