@@ -1,5 +1,5 @@
 #summary Hawkscope Plugins
-#labels Phase-Support
+#labels Phase-Support,Featured
 
 =Built-in Plugins=
 ||Plugin Name||Version||Description||
