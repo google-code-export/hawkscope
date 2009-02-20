@@ -45,6 +45,11 @@ public class GooglescopePlugin extends PluginAdapter {
     private static GooglescopePlugin instance;
     
     /**
+     * Search icon
+     */
+    private final Image icon;
+    
+    /**
      * Singleton Instance getter
      * 
      * @return
@@ -61,6 +66,8 @@ public class GooglescopePlugin extends PluginAdapter {
      */
 	private GooglescopePlugin() {
 		canHookBeforeQuickAccessList = true;
+		icon = new Image(Display.getDefault(), getClass()
+                .getClassLoader().getResourceAsStream("icons/search24.png"));
 	}
 	
 	/**
@@ -69,8 +76,7 @@ public class GooglescopePlugin extends PluginAdapter {
 	public void beforeQuickAccess(final MainMenu mainMenu) {
 		final ExecutableMenuItem google = new ExecutableMenuItem();
 		google.setText("Google Search");
-		google.setIcon(new Image(Display.getDefault(), getClass()
-		        .getClassLoader().getResourceAsStream("icons/search24.png")));
+		google.setIcon(icon);
 		google.setCommand(new Command() {
 			public void execute() {
 				InputDialog.open("Google for:", 512, 
@@ -81,7 +87,8 @@ public class GooglescopePlugin extends PluginAdapter {
 							} catch (UnsupportedEncodingException e) {
 								e.printStackTrace();
 							}
-							Program.launch("http://www.google.com/search?q=" + q);
+							Program.launch("http://www.google.com/search?q=" 
+							        + q);
 						}
 				});
 			}
