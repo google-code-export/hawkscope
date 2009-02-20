@@ -20,7 +20,9 @@ package com.varaneckas.hawkscope.plugins.googlescope;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.command.Command;
 import com.varaneckas.hawkscope.gui.InputDialog;
@@ -36,31 +38,56 @@ import com.varaneckas.hawkscope.util.Updater;
  * @version $Id$
  */
 public class GooglescopePlugin extends PluginAdapter {
+    
+    /**
+     * Singleton Instance
+     */
+    private static GooglescopePlugin instance;
+    
+    /**
+     * Singleton Instance getter
+     * 
+     * @return
+     */
+    public static GooglescopePlugin getInstance() {
+        if (instance == null) {
+            instance = new GooglescopePlugin();
+        }
+        return instance;
+    }
 
-	public GooglescopePlugin() {
+    /**
+     * This plugin hooks before quick access list
+     */
+	private GooglescopePlugin() {
 		canHookBeforeQuickAccessList = true;
 	}
 	
-	@Override
+	/**
+	 * Adds Google Search item
+	 */
 	public void beforeQuickAccess(final MainMenu mainMenu) {
-		ExecutableMenuItem google = new ExecutableMenuItem();
+		final ExecutableMenuItem google = new ExecutableMenuItem();
 		google.setText("Google Search");
+		google.setIcon(new Image(Display.getDefault(), getClass()
+		        .getClassLoader().getResourceAsStream("icons/search24.png")));
 		google.setCommand(new Command() {
 			public void execute() {
 				InputDialog.open("Google for:", 512, 
-						null, new Updater() {
-							public void setValue(String q) {
-								try {
-									q = URLEncoder.encode(q, "UTF-8");
-								} catch (UnsupportedEncodingException e) {
-									e.printStackTrace();
-								}
-								Program.launch("http://www.google.com/search?q=" + q);
+					null, new Updater() {
+						public void setValue(String q) {
+							try {
+								q = URLEncoder.encode(q, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
 							}
-					});
+							Program.launch("http://www.google.com/search?q=" + q);
+						}
+				});
 			}
 		});
 		mainMenu.addMenuItem(google);
+		mainMenu.addSeparator();
 	}
 	
 	public String getDescription() {
