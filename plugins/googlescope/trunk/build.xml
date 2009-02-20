@@ -1,0 +1,19 @@
+<project name="googlescope" basedir=".">
+  <!-- $Id$ -->
+  <property file="build.properties"/>
+  <target name="clean">
+  	<delete dir="target/classes" failonerror="false"/>
+  </target>
+  <target name="compile" depends="clean">
+  	<mkdir dir="target/classes"/>
+  	<javac classpath="${hawkscope.jar}" 
+  		srcdir="src/" destdir="target/classes" source="1.5" target="1.5"/>
+  	<copy todir="target/classes">
+  	   <fileset dir="etc/"/>
+  	</copy>
+  </target>
+  <target name="dist" depends="compile">
+     <jar destfile="dist/googlescope-${googlescope.version}.jar" 
+     	basedir="target/classes"/>
+  </target>
+</project>

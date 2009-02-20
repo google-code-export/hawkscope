@@ -85,7 +85,7 @@ public class GooglescopePlugin extends PluginAdapter {
 							try {
 								q = URLEncoder.encode(q, "UTF-8");
 							} catch (UnsupportedEncodingException e) {
-								e.printStackTrace();
+								log.warn("UTF-8 is unsupported", e);
 							}
 							Program.launch("http://www.google.com/search?q=" 
 							        + q);
