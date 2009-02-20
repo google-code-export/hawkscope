@@ -91,7 +91,7 @@ public class GooglescopePlugin extends PluginAdapter {
 	}
 	
 	public String getDescription() {
-		return "Allows running Google queries right from Hawkscope menu";
+		return "Allows running Google queries right from Hawkscope menu.";
 	}
 
 	public String getName() {
