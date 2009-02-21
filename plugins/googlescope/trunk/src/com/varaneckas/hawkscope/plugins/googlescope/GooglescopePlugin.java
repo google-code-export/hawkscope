@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.command.Command;
 import com.varaneckas.hawkscope.gui.InputDialog;
@@ -80,7 +81,7 @@ public class GooglescopePlugin extends PluginAdapter {
 		google.setCommand(new Command() {
 			public void execute() {
 				InputDialog.open("Google for:", 512, 
-					null, new Updater() {
+					new Shell(), new Updater() {
 						public void setValue(String q) {
 							try {
 								q = URLEncoder.encode(q, "UTF-8");
