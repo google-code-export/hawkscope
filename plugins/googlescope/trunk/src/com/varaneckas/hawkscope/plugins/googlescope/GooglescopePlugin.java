@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.command.Command;
-import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
