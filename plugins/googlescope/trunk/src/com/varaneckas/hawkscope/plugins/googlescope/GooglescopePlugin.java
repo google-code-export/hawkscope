@@ -106,7 +106,7 @@ public class GooglescopePlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.2";
+		return "1.3";
 	}
 
 }
