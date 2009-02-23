@@ -24,7 +24,7 @@ import com.varaneckas.hawkscope.util.Updater;
  */
 public class InputDialog {
 
-	   /**
+	/**
      * Opens the dialog 
      * 
      * @param prompt Prompt text
@@ -77,5 +77,6 @@ public class InputDialog {
         dialog.open();
         dialog.forceFocus();
         dialog.forceActive();
+        text.forceFocus();
     }
 }
