@@ -47,7 +47,7 @@ sudo update-java-alternatives -s java-6-sun
 }}}
 
 === I've made Hawkscope autostart in my Gnome sessions preference, but it does not show up ===
-Please read the UsingHawkscope carefully. Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
+Please read the UsingHawkscope carefully. Due to Java Bug: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179 #6438179] you have to add -delay 15000 (starts application 15 seconds later, so system tray loads first).
 
 === How to add network shares to quick access list? ===
 Mount them first, then add in regular way (/mnt/share/name)
