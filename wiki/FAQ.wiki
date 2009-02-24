@@ -11,6 +11,7 @@ Absolutely, it's free and open source.
  * Post issues in [http://code.google.com/p/hawkscope/issues/list Issue Tracker] to request features or bug fixes
  * Check out the source code
  * Make patches or contributions and post them to the [http://code.google.com/p/hawkscope/issues/list Issue Tracker] or send by email to tomas.varaneckas@gmail.com.
+ * Contribute [Plugins]
 
 === Will the upgrade from version X to Y break my old settings in .hawkscope.properties? ===
 No, it will not. New properties are merged.
