@@ -17,7 +17,7 @@ Absolutely, it's free and open source.
 No, it will not. New properties are merged.
 
 === What are the Network Proxy settings for? ===
-It's for checking for updates while being behind a corporate secure proxy.
+It's for checking for updates and for accessing the online help while being behind a proxy.
 
 -----
 = Windows =
