@@ -47,8 +47,7 @@
   * Fixed configuration file writing
   * Changed "unknown" icon
   * Removed lots of unneeded dependencies to get a much lighter executable
-  * Switched to maven assembly plugin version 2.1 due to file duplication bug:
-    http://jira.codehaus.org/browse/MASSEMBLY-355
+  * Switched to maven assembly plugin version 2.1 due to file duplication bug: [http://jira.codehaus.org/browse/MASSEMBLY-355 MASSEMBLY-355]
   * Fixed path resolving problems in Windows
   * Added ignore to Floppy drive by default: Issue #2
   * Improved error dialogs
