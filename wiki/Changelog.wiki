@@ -1,103 +1,69 @@
 #labels Featured,Phase-Implementation
 = Hawkscope Changelog =
 ==Changes in version 0.5.1 (2009-02-24)==
-  * Linux GIJ 4.3 support: 
-     ~~[http://code.google.com/p/hawkscope/issues/detail?id=54 54]~~ 
-     ~~[http://code.google.com/p/hawkscope/issues/detail?id=55 55]~~ 
-     ~~[http://code.google.com/p/hawkscope/issues/detail?id=56 56]~~
+  * Linux GIJ 4.3 support: Issue #54 Issue #55 Issue #56
 
 ==Changes in version 0.5.0 (2009-02-20)==
-  * Plugin System
-    http://code.google.com/p/hawkscope/issues/detail?id=27
-  * Open With plugin
-    http://code.google.com/p/hawkscope/issues/detail?id=42  
-  * A temporary workaround for Mac menubar icon blues
-    http://code.google.com/p/hawkscope/issues/detail?id=33
-  * Friendlier GUI windows
-    http://code.google.com/p/hawkscope/issues/detail?id=44   
-  * Interactive error report
-    http://code.google.com/p/hawkscope/issues/detail?id=46 
-  * Help Window
-    http://code.google.com/p/hawkscope/issues/detail?id=43
+  * Plugin System: Issue #27
+  * Open With plugin: Issue #42
+  * A temporary workaround for Mac menubar icon blues: Issue #33
+  * Friendlier GUI windows: Issue #44
+  * Interactive error report: Issue #46
+  * Help Window: Issue #43
 
 ==Changes in version 0.4.1 (2009-02-06)==
-  * Separate versions for each operating system
-    http://code.google.com/p/hawkscope/issues/detail?id=37
-  * Mac application contents are no longer shown
-    http://code.google.com/p/hawkscope/issues/detail?id=38
-  * Fixed Mac OS X Dock Quit problem
-    http://code.google.com/p/hawkscope/issues/detail?id=32
+  * Separate versions for each operating system: Issue #37
+  * Mac application contents are no longer shown: Issue #38
+  * Fixed Mac OS X Dock Quit problem: Issue #32
 
 ==Changes in version 0.4.0 (2009-01-29)==
-  * Made Hawkscope Java 5 compatible, now it runs on Mac OS X 10.4+
-    http://code.google.com/p/hawkscope/issues/detail?id=9
-  * HTTP proxy authentication for update checks
-    http://code.google.com/p/hawkscope/issues/detail?id=26
-  * Better handling of resources and smaller memory consumption
-    http://code.google.com/p/hawkscope/issues/detail?id=28
-  * Added possibility to use operating system icons if they are available
-    http://code.google.com/p/hawkscope/issues/detail?id=24 
-  * Swing GUI implementation is now discontinued and removed
-    http://code.google.com/p/hawkscope/issues/detail?id=22
-  * Added possibility to override configuration parameters with args line
-    http://code.google.com/p/hawkscope/issues/detail?id=23
-  * Added possibility to blacklist folders and drives
-    http://code.google.com/p/hawkscope/issues/detail?id=16 
-  * Settings Window
-    http://code.google.com/p/hawkscope/issues/detail?id=6 
-  * Automatic check for updates
-    http://code.google.com/p/hawkscope/issues/detail?id=14
-  * Added menu reload delay to improve performance
-    http://code.google.com/p/hawkscope/issues/detail?id=21
-  * SWT About window is now a singleton
-    http://code.google.com/p/hawkscope/issues/detail?id=20
-  * Created a workaround for SWT tray menu popup. It's not on top of tray now.
-    http://code.google.com/p/hawkscope/issues/detail?id=19
+  * Made Hawkscope Java 5 compatible, now it runs on Mac OS X 10.4+: Issue #9
+  * HTTP proxy authentication for update checks: Issue #26
+  * Better handling of resources and smaller memory consumption: Issue #28
+  * Added possibility to use operating system icons if they are available: Issue #24
+  * Swing GUI implementation is now discontinued and removed: Issue #22
+  * Added possibility to override configuration parameters with args line: Issue #23
+  * Added possibility to blacklist folders and drives: Issue #16
+  * Settings Window: Issue #6
+  * Automatic check for updates: Issue #14
+  * Added menu reload delay to improve performance: Issue #21
+  * SWT About window is now a singleton: Issue #20
+  * Created a workaround for SWT tray menu popup. It's not on top of tray now: Issue #19
 
 ==Changes in version 0.3.0 (2009-01-23)==
   * Added -delay (miliseconds) parameter to avoid Java Bug #6438179 that kills Hawkscope auto-startup on Linux
-  * SWT GUI Implementation
-    http://code.google.com/p/hawkscope/issues/detail?id=18
-  * Fixed some file opening problems
-    http://code.google.com/p/hawkscope/issues/detail?id=10
-  * Solved tray icon ugliness
-    http://code.google.com/p/hawkscope/issues/detail?id=7
-  * Improved menu usability 
-    http://code.google.com/p/hawkscope/issues/detail?id=8
+  * SWT GUI Implementation: Issue #18
+  * Fixed some file opening problems: Issue #10
+  * Solved tray icon ugliness: Issue #7
+  * Improved menu usability: Issue #8
   * Hawkscope menu is now always on top
 
 ==Changes in version 0.2.0 (2008-10-06)==
-  * Added quick access list to main menu, configurable via .hawkscope.properties. "user.home" folder read from system properties is added by default
-    http://code.google.com/p/hawkscope/issues/detail?id=11
-  * Improved About dialog: 
+  * Added quick access list to main menu, configurable via .hawkscope.properties. "user.home" folder read from system properties is added by default: Issue #11
+  * Improved About dialog: : Issue #12
     # Added "Environment" field to About dialog
     # Added icon to About dialog
     # Added "Copy to Clipboard" button to About dialog for copying environmental report
-    http://code.google.com/p/hawkscope/issues/detail?id=12
   * Fixed configuration file writing
   * Changed "unknown" icon
   * Removed lots of unneeded dependencies to get a much lighter executable
   * Switched to maven assembly plugin version 2.1 due to file duplication bug:
     http://jira.codehaus.org/browse/MASSEMBLY-355
   * Fixed path resolving problems in Windows
-  * Added ignore to Floppy drive by default: 
-    http://code.google.com/p/hawkscope/issues/detail?id=2
+  * Added ignore to Floppy drive by default: Issue #2
   * Improved error dialogs
   * Nice partition names where possible
     
 ==Changes in version 0.1.2 (2008-09-28)==
   * Added icons for "Hide" and "Exit" actions
   * Various performance and memory consumption optimizations
-  * Long menus now are split into parts:
-    http://code.google.com/p/hawkscope/issues/detail?id=3
+  * Long menus now are split into parts: Issue #3
   * Items that are neither files nor folders (i.e. unix devices in /dev/) now have a separate icon and are properly displayed  
   * Added "About" menu item  
 
 ==Changes in version 0.1.1 (2008-09-25)==
   * Improved load time
-  * Fixed memory leak: 
-    http://code.google.com/p/hawkscope/issues/detail?id=1
-  * File system changes are now detected: 
-    http://code.google.com/p/hawkscope/issues/detail?id=4
+  * Fixed memory leak: Issue #1
+  * File system changes are now detected: Issue #4
   * Added exception when system tray is not supported
   
