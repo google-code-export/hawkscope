@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2008-2009 Tomas Varaneckas
+ * http://www.varaneckas.com
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.varaneckas.hawkscope.plugins.twitter;
 
 import java.util.List;
@@ -10,7 +27,6 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 
 import twitter4j.Status;
@@ -25,201 +41,230 @@ import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
+import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.Updater;
 
 public class TwitterPlugin extends PluginAdapter {
 
-    private TwitterSettingsTabItem settings;
+	private TwitterSettingsTabItem settings;
 
-    private final Image icon;
+	protected static final String PROP_TWITTER_USER = "plugins.twitter.user";
 
-    protected static final String PROP_TWITTER_USER = "plugins.twitter.user";
+	protected static final String PROP_TWITTER_PASS = "plugins.twitter.pass";
+	
+	protected static final String PROP_TWITTER_SHOW_MY = "plugins.twitter.show.my";
 
-    protected static final String PROP_TWITTER_PASS = "plugins.twitter.pass";
+	protected static final String PROP_TWITTER_SHOW_RE = "plugins.twitter.show.replies";
 
-    private Twitter twitter;
+	protected static final String PROP_TWITTER_SHOW_FRIENDS = "plugins.twitter.show.friends";
+	
+	protected static final String PROP_TWITTER_CACHE = "plugins.twitter.cache.lifetime";
+	
+	private Twitter twitter;
 
-    private static TwitterPlugin instance;
+	private String twitterError = null;
 
-    public static TwitterPlugin getInstance() {
-        if (instance == null) {
-            instance = new TwitterPlugin();
-        }
-        return instance;
-    }
+	private TwitterMenuItem twitterMenu;
 
-    private String user;
+	private static TwitterPlugin instance;
 
-    private String pass;
+	public static TwitterPlugin getInstance() {
+		if (instance == null) {
+			instance = new TwitterPlugin();
+		}
+		return instance;
+	}
 
-    private TwitterPlugin() {
-        canHookBeforeQuickAccessList = true;
-        icon = new Image(Display.getDefault(), getClass().getClassLoader()
-                .getResourceAsStream("icons/twitter24.png"));
-        refresh();
-    }
+	private String user;
 
-    public void refresh() {
-        Configuration cfg = ConfigurationFactory.getConfigurationFactory()
-                .getConfiguration();
-        user = cfg.getProperties().get(PROP_TWITTER_USER);
-        pass = cfg.getProperties().get(PROP_TWITTER_PASS);
-        twitter = new Twitter(user, pass);
-        twitter.setSource("Hawkscope");
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    log.info("Twitter ok: " + twitter.test());
-                } catch (TwitterException e) {
-                    log.warn("Twitter error", e);
-                }
-            }
-        }).start();
-    }
+	private String pass;
 
-    @Override
-    public void enhanceSettings(TabFolder folder,
-            List<AbstractSettingsTabItem> tabItems) {
-        settings = new TwitterSettingsTabItem(folder);
-        tabItems.add(settings);
-    }
+	private TwitterPlugin() {
+		canHookBeforeQuickAccessList = true;
+		refresh();
+	}
 
-    @Override
-    public void beforeQuickAccess(MainMenu mainMenu) {
-        final ExecutableMenuItem item = MenuFactory.newExecutableMenuItem();
-        item.setText("Tweet!");
-        item.setIcon(icon);
-        item.setCommand(new Command() {
-            public void execute() {
-                InputDialog.open("Tweet:", 140, new Shell(), new Updater() {
-                    public void setValue(String value) {
-                        try {
-                            twitter.update(value);
-                        } catch (TwitterException e) {
-                            throw new RuntimeException("Failed tweeting :(", e);
-                        }
-                    }
-                });
-            }
-        });
-        mainMenu.addMenuItem(new com.varaneckas.hawkscope.menu.MenuItem() {
-            public void createMenuItem(Menu parent) {
-                MenuItem m = new MenuItem(parent, SWT.CASCADE);
-                m.setText("Twitter");
-                m.setImage(icon);
-                Menu menu = new Menu(parent);
-                m.setMenu(menu);
-                item.createMenuItem(menu);
-                try {
-                    MenuItem replies = new MenuItem(menu, SWT.CASCADE);
-                    replies.setImage(icon);
-                    replies.setText("Replies");
-                    Menu repMenu = new Menu(parent);
-                    replies.setMenu(repMenu);
-                    listReplies(repMenu);
-                    listFollowing(parent, menu);
-                    listFollowers(parent, menu);
-                } catch (final Exception e) {
+	protected Image getTwitterIcon() {
+		return IconFactory.getInstance().getPluginIcon("twitter24.png",
+				getClass().getClassLoader());
+	}
 
-                }
-            }
+	public void refresh() {
+		Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+				.getConfiguration();
+		user = cfg.getProperties().get(PROP_TWITTER_USER);
+		pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
+		twitter = new Twitter(user, pass);
+		twitter.setSource("Hawkscope");
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					if (!twitter.test()) {
+						twitterError = "Please check settings.";
+					} else {
+						log.info("Twitter ok: " + twitter.test());
+					}
+				} catch (TwitterException e) {
+					log.warn("Twitter error", e);
+				}
+			}
+		});
+	}
 
-            private void listFollowing(Menu parent, Menu menu)
-                    throws TwitterException {
-                MenuItem following = new MenuItem(menu, SWT.CASCADE);
-                following.setImage(icon);
-                following.setText("Following");
-                Menu folMenu = new Menu(parent);
-                following.setMenu(folMenu);
-                for (final User followee : twitter.getFriends()) {
-                    MenuItem mi = new MenuItem(folMenu, SWT.PUSH);
-                    mi.setText(followee.getName());
-                    mi.setImage(icon);
-                    mi.addSelectionListener(new SelectionListener() {
-                        public void widgetDefaultSelected(
-                                SelectionEvent selectionevent) {
-                            widgetSelected(selectionevent);
-                        }
+	@Override
+	public void enhanceSettings(TabFolder folder,
+			List<AbstractSettingsTabItem> tabItems) {
+		settings = new TwitterSettingsTabItem(folder);
+		tabItems.add(settings);
+	}
 
-                        public void widgetSelected(
-                                SelectionEvent selectionevent) {
-                            Program.launch(twitter.getBaseURL()
-                                    + followee.getId());
-                        }
-                    });
-                }
-            }
-            
-            private void listFollowers(Menu parent, Menu menu)
-            throws TwitterException {
-        MenuItem following = new MenuItem(menu, SWT.CASCADE);
-        following.setImage(icon);
-        following.setText("Followers");
-        Menu folMenu = new Menu(parent);
-        following.setMenu(folMenu);
-        for (final User followee : twitter.getFollowers()) {
-            MenuItem mi = new MenuItem(folMenu, SWT.PUSH);
-            mi.setText(followee.getName());
-            mi.setImage(icon);
-            mi.addSelectionListener(new SelectionListener() {
-                public void widgetDefaultSelected(
-                        SelectionEvent selectionevent) {
-                    widgetSelected(selectionevent);
-                }
+	@Override
+	public void beforeQuickAccess(MainMenu mainMenu) {
 
-                public void widgetSelected(
-                        SelectionEvent selectionevent) {
-                    Program.launch(twitter.getBaseURL()
-                            + followee.getId());
-                }
-            });
-        }
-    }            
+		twitterMenu = new TwitterMenuItem();
+		twitterMenu.setText("Twitter");
+		twitterMenu.setIcon(getTwitterIcon());
+		mainMenu.addMenuItem(twitterMenu);
 
-            private void listReplies(Menu repMenu) throws TwitterException {
-                for (final Status reply : twitter.getReplies()) {
-                    MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
-                    mi.setText(reply.getUser().getName() + ": "
-                            + reply.getText().replaceAll("\\n", ""));
-                    mi.setImage(icon);
-                    mi.addSelectionListener(new SelectionListener() {
-                        public void widgetDefaultSelected(
-                                SelectionEvent selectionevent) {
-                            widgetSelected(selectionevent);
-                        }
+		if (twitterError != null) {
+			twitterMenu.setText("Twitter :( " + twitterError);
+			return;
+		}
+		createTweetItem();
 
-                        public void widgetSelected(
-                                SelectionEvent selectionevent) {
-                            Program.launch(twitter.getBaseURL()
-                                    + +reply.getUser().getId());
-                        }
-                    });
-                }
-            }
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					loadData();
+				} catch (final TwitterException e) {
+					twitterError = e.getMessage();
+					log.warn("Twitter error", e);
+				}
+			}
+		});
+	}
 
-            public void setEnabled(boolean enabled) {
-            }
+	private void loadData() throws TwitterException {
+		// My Tweets
+		MenuItem timeline = new MenuItem(
+				twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
+		timeline.setImage(getTwitterIcon());
+		timeline.setText("My Tweets");
+		Menu timeMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
+		timeline.setMenu(timeMenu);
+		listMessages(timeMenu, twitter.getUserTimeline(twitter.getUserId(), 10));
 
-            public void setIcon(Image icon) {
-            }
+		// Replies
+		MenuItem replies = new MenuItem(twitterMenu.getSwtMenuItem().getMenu(),
+				SWT.CASCADE);
+		replies.setImage(getTwitterIcon());
+		replies.setText("Replies");
+		Menu repMenu = new Menu(replies);
+		replies.setMenu(repMenu);
+		listMessages(repMenu, twitter.getRepliesByPage(1));
 
-            public void setText(String text) {
-            }
-        });
+		// Friends Tweets
+		MenuItem friendTw = new MenuItem(
+				twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
+		friendTw.setImage(getTwitterIcon());
+		friendTw.setText("Friend Tweets");
+		Menu frtwMenu = new Menu(friendTw);
+		friendTw.setMenu(frtwMenu);
+		listMessages(frtwMenu, twitter.getFriendsTimelineByPage(1));
+	}
 
-        mainMenu.addSeparator();
-    }
+	private void addUserList(String name, List<User> users) {
+		MenuItem following = new MenuItem(twitterMenu.getSwtMenuItem()
+				.getMenu(), SWT.CASCADE);
+		following.setImage(getTwitterIcon());
+		following.setText(name);
+		Menu folMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
+		following.setMenu(folMenu);
+		listUsers(folMenu, users);
 
-    public String getDescription() {
-        return "Lets you tweet in Hawkscope";
-    }
+	}
 
-    public String getName() {
-        return "Twitter";
-    }
+	private void createTweetItem() {
+		ExecutableMenuItem tweet = MenuFactory.newExecutableMenuItem();
+		tweet.setText("Tweet!");
+		tweet.setIcon(IconFactory.getInstance().getPluginIcon("twitter24.png",
+				getClass().getClassLoader()));
+		tweet.setCommand(new Command() {
+			public void execute() {
+				new TwitterDialog(new Updater() {
+					public void setValue(String value) {
+						try {
+							twitter.update(value);
+						} catch (TwitterException e) {
+							throw new RuntimeException("Failed tweeting :(", e);
+						}
+					}
+				});
+			}
+		});
+		tweet.createMenuItem(twitterMenu.getSwtMenuItem().getMenu());
+	}
 
-    public String getVersion() {
-        return "1.0";
-    }
+	private void listMessages(Menu repMenu, List<Status> messages) {
+		try {
+			for (final Status reply : messages) {
+				String msg = reply.getUser().getName() + ": "
+				+ reply.getText().replaceAll("\\n", "");
+				MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
+				mi.setText(msg);
+				mi.setImage(getTwitterIcon());
+				mi.addSelectionListener(new SelectionListener() {
+					public void widgetDefaultSelected(
+							SelectionEvent selectionevent) {
+						widgetSelected(selectionevent);
+					}
+					public void widgetSelected(SelectionEvent selectionevent) {
+						Program.launch(twitter.getBaseURL()
+								+ reply.getUser().getName());
+					}
+				});
+			}
+		} catch (final Exception e) {
+			log.warn("Failed listing replies", e);
+		}
+	}
+
+	private void listUsers(Menu folMenu, List<User> users) {
+		for (final User followee : users) {
+			try {
+				MenuItem mi = new MenuItem(folMenu, SWT.CASCADE);
+				mi.setText(followee.getName());
+				mi.setImage(getTwitterIcon());
+				Menu msgsMenu = new Menu(mi);
+				mi.setMenu(msgsMenu);
+				listMessages(msgsMenu, twitter.getUserTimeline(followee.getName(), 10));
+				mi.addSelectionListener(new SelectionListener() {
+					public void widgetDefaultSelected(
+							SelectionEvent selectionevent) {
+						widgetSelected(selectionevent);
+					}
+
+					public void widgetSelected(SelectionEvent selectionevent) {
+						Program.launch(twitter.getBaseURL()
+								+ followee.getName());
+					}
+				});
+			} catch (final Exception e) {
+				log.warn("Failed listing user", e);
+			}
+		}
+	}
+
+	public String getDescription() {
+		return "Lets you tweet in Hawkscope";
+	}
+
+	public String getName() {
+		return "Twitter";
+	}
+
+	public String getVersion() {
+		return "1.0";
+	}
 
 }

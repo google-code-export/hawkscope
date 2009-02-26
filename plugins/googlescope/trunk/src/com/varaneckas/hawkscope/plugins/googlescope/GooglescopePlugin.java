@@ -20,15 +20,15 @@ package com.varaneckas.hawkscope.plugins.googlescope;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.command.Command;
+import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
+import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.Updater;
 
 /**
@@ -43,11 +43,6 @@ public class GooglescopePlugin extends PluginAdapter {
      * Singleton Instance
      */
     private static GooglescopePlugin instance;
-    
-    /**
-     * Search icon
-     */
-    private final Image icon;
     
     /**
      * Singleton Instance getter
@@ -66,8 +61,6 @@ public class GooglescopePlugin extends PluginAdapter {
      */
 	private GooglescopePlugin() {
 		canHookBeforeQuickAccessList = true;
-		icon = new Image(Display.getDefault(), getClass()
-                .getClassLoader().getResourceAsStream("icons/search24.png"));
 	}
 	
 	/**
@@ -76,10 +69,11 @@ public class GooglescopePlugin extends PluginAdapter {
 	public void beforeQuickAccess(final MainMenu mainMenu) {
 		final ExecutableMenuItem google = new ExecutableMenuItem();
 		google.setText("Google Search");
-		google.setIcon(icon);
+		google.setIcon(IconFactory.getInstance().getPluginIcon("search24.png", 
+				getClass().getClassLoader()));
 		google.setCommand(new Command() {
 			public void execute() {
-				InputDialog.open("Google for:", 512, 
+				new InputDialog().open("Google for:", 512, 
 					new Shell(), new Updater() {
 						public void setValue(String q) {
 							try {
@@ -106,7 +100,7 @@ public class GooglescopePlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.3";
+		return "1.4";
 	}
 
 }
