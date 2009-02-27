@@ -24,7 +24,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
@@ -61,11 +60,15 @@ public class TwitterPlugin extends PluginAdapter {
 	
 	protected static final String PROP_TWITTER_CACHE = "plugins.twitter.cache.lifetime";
 	
+	private static final int PAGE_SIZE = 20;
+	
 	private Twitter twitter;
 
 	private String twitterError = null;
 
 	private TwitterMenuItem twitterMenu;
+	
+	private long lastUpdate = System.currentTimeMillis();
 
 	private static TwitterPlugin instance;
 
@@ -80,6 +83,20 @@ public class TwitterPlugin extends PluginAdapter {
 
 	private String pass;
 
+	private long cache;
+	
+	private boolean showMy;
+	
+	private boolean showReplies;
+	
+	private boolean showFriends;
+	
+	private Menu menuMy;
+	
+	private Menu menuReplies;
+	
+	private Menu menuFriends;
+	
 	private TwitterPlugin() {
 		canHookBeforeQuickAccessList = true;
 		refresh();
@@ -100,9 +117,19 @@ public class TwitterPlugin extends PluginAdapter {
 	public void refresh() {
 		Configuration cfg = ConfigurationFactory.getConfigurationFactory()
 				.getConfiguration();
-		user = cfg.getProperties().get(PROP_TWITTER_USER);
-		pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
-		createTwitter(cfg);
+		try {
+			twitterError = null;
+			user = cfg.getProperties().get(PROP_TWITTER_USER);
+			pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
+			cache = Long.valueOf(cfg.getProperties().get(PROP_TWITTER_CACHE));
+			showMy = cfg.getProperties().get(PROP_TWITTER_SHOW_MY).equals("1");
+			showReplies = cfg.getProperties().get(PROP_TWITTER_SHOW_RE).equals("1");		
+			showFriends = cfg.getProperties().get(PROP_TWITTER_SHOW_FRIENDS).equals("1");
+			createTwitter(cfg);
+	 	} catch (final Exception e) {
+	 		twitterError = "No configuration, please visit Settings -> Twitter";
+	 		log.warn("Twitter is not configured");
+	 	}
 	}
 
 	private boolean createTwitter(Configuration cfg) {
@@ -148,7 +175,7 @@ public class TwitterPlugin extends PluginAdapter {
 		}
 		createTweetItem();
 
-		Display.getDefault().asyncExec(new Runnable() {
+		new Thread(new Runnable() {
 			public void run() {
 				try {
 					loadData();
@@ -157,48 +184,97 @@ public class TwitterPlugin extends PluginAdapter {
 					log.warn("Twitter error: " + getTwitterError(), e);
 				}
 			}
-		});
+		}).start();
 		mainMenu.addSeparator();
 	}
 
 	private void loadData() throws TwitterException {
-		// My Tweets
-		MenuItem timeline = new MenuItem(
-				twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
-		timeline.setImage(getTwitterIcon());
-		timeline.setText("My Tweets");
-		Menu timeMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
-		timeline.setMenu(timeMenu);
-		listMessages(timeMenu, twitter.getUserTimeline(twitter.getUserId(), 10));
-
-		// Replies
-		MenuItem replies = new MenuItem(twitterMenu.getSwtMenuItem().getMenu(),
-				SWT.CASCADE);
-		replies.setImage(getTwitterIcon());
-		replies.setText("Replies");
-		Menu repMenu = new Menu(replies);
-		replies.setMenu(repMenu);
-		listMessages(repMenu, twitter.getRepliesByPage(1));
-
-		// Friends Tweets
-		MenuItem friendTw = new MenuItem(
-				twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
-		friendTw.setImage(getTwitterIcon());
-		friendTw.setText("Friend Tweets");
-		Menu frtwMenu = new Menu(friendTw);
-		friendTw.setMenu(frtwMenu);
-		listMessages(frtwMenu, twitter.getFriendsTimelineByPage(1));
+		createMyTweets();
+		createReplies();
+		createFriendsTweets();
 	}
 
-	private void addUserList(String name, List<User> users) {
-		MenuItem following = new MenuItem(twitterMenu.getSwtMenuItem()
-				.getMenu(), SWT.CASCADE);
-		following.setImage(getTwitterIcon());
-		following.setText(name);
-		Menu folMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
-		following.setMenu(folMenu);
-		listUsers(folMenu, users);
+	private void createFriendsTweets() throws TwitterException {
+		// Friends Tweets
+		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MenuItem friendTw = new MenuItem(
+						twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
+				friendTw.setImage(getTwitterIcon());
+				friendTw.setText("Friend Tweets");
+				menuFriends = new Menu(friendTw);
+				friendTw.setMenu(menuFriends);
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							listMessages(menuFriends, twitter.getFriendsTimelineByPage(1));
+						} catch (final TwitterException e) {
+							twitterError = e.getMessage();
+						}
+					}
+				}).start();
+			}
+		});
+	}
 
+	private void createReplies() throws TwitterException {
+		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				// Replies
+				MenuItem replies = new MenuItem(twitterMenu.getSwtMenuItem().getMenu(),
+						SWT.CASCADE);
+				replies.setImage(getTwitterIcon());
+				replies.setText("Replies");
+				menuReplies = new Menu(replies);
+				replies.setMenu(menuReplies);
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							listMessages(menuReplies, twitter.getRepliesByPage(1));
+						} catch (final TwitterException e) {
+							twitterError = e.getMessage();
+						}
+					}
+				}).start();
+			}
+		});
+	}
+
+	private void createMyTweets() throws TwitterException {
+		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				// My Tweets
+				MenuItem timeline = new MenuItem(
+						twitterMenu.getSwtMenuItem().getMenu(), SWT.CASCADE);
+				timeline.setImage(getTwitterIcon());
+				timeline.setText("My Tweets");
+				menuMy = new Menu(twitterMenu.getSwtMenuItem().getMenu());
+				timeline.setMenu(menuMy);
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							listMessages(menuMy, twitter.getUserTimeline(twitter.getUserId(), PAGE_SIZE));
+						} catch (final TwitterException e) {
+							twitterError = e.getMessage();
+						}
+					}
+				}).start();
+			}
+		});
+	}
+
+	private void addUserList(final String name, final List<User> users) {
+		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MenuItem following = new MenuItem(twitterMenu.getSwtMenuItem()
+						.getMenu(), SWT.CASCADE);
+				following.setImage(getTwitterIcon());
+				following.setText(name);
+				Menu folMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
+				following.setMenu(folMenu);
+				listUsers(folMenu, users);
+			}
+		});
 	}
 
 	private void createTweetItem() {
@@ -222,28 +298,32 @@ public class TwitterPlugin extends PluginAdapter {
 		tweet.createMenuItem(twitterMenu.getSwtMenuItem().getMenu());
 	}
 
-	private void listMessages(Menu repMenu, List<Status> messages) {
-		try {
-			for (final Status reply : messages) {
-				String msg = reply.getUser().getName() + ": "
-				+ reply.getText().replaceAll("\\n", "");
-				MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
-				mi.setText(msg);
-				mi.setImage(getTwitterIcon());
-				mi.addSelectionListener(new SelectionListener() {
-					public void widgetDefaultSelected(
-							SelectionEvent selectionevent) {
-						widgetSelected(selectionevent);
+	private void listMessages(final Menu repMenu, final List<Status> messages) {
+		twitterMenu.getSwtMenuItem().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					for (final Status reply : messages) {
+						String msg = reply.getUser().getName() + ": "
+						+ reply.getText().replaceAll("\\n", "");
+						MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
+						mi.setText(msg);
+						mi.setImage(getTwitterIcon());
+						mi.addSelectionListener(new SelectionListener() {
+							public void widgetDefaultSelected(
+									SelectionEvent selectionevent) {
+								widgetSelected(selectionevent);
+							}
+							public void widgetSelected(SelectionEvent selectionevent) {
+								Program.launch(twitter.getBaseURL()
+										+ reply.getUser().getName());
+							}
+						});
 					}
-					public void widgetSelected(SelectionEvent selectionevent) {
-						Program.launch(twitter.getBaseURL()
-								+ reply.getUser().getName());
-					}
-				});
+				} catch (final Exception e) {
+					log.warn("Failed listing replies", e);
+				}
 			}
-		} catch (final Exception e) {
-			log.warn("Failed listing replies", e);
-		}
+		});
 	}
 
 	private void listUsers(Menu folMenu, List<User> users) {
@@ -254,7 +334,8 @@ public class TwitterPlugin extends PluginAdapter {
 				mi.setImage(getTwitterIcon());
 				Menu msgsMenu = new Menu(mi);
 				mi.setMenu(msgsMenu);
-				listMessages(msgsMenu, twitter.getUserTimeline(followee.getName(), 10));
+				listMessages(msgsMenu, twitter.getUserTimeline(followee.getName(), 
+						PAGE_SIZE));
 				mi.addSelectionListener(new SelectionListener() {
 					public void widgetDefaultSelected(
 							SelectionEvent selectionevent) {
