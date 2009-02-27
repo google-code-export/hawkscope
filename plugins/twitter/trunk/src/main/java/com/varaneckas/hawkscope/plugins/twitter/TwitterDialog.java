@@ -40,10 +40,9 @@ public class TwitterDialog extends InputDialog {
 	}
 	
 	@Override
-	protected void createTextInput(int maxLength, int width) {
+	protected void createTextInput(final int maxLength, int width) {
 		text = new Text(dialog, SWT.BORDER | SWT.MULTI | SWT.WRAP);
 		FormData layout = SharedStyle.relativeTo(null, null, null, null);
-		text.setTextLimit(maxLength);
 		layout.width = 200;
 		layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
 		layout.height = 60;
@@ -53,12 +52,13 @@ public class TwitterDialog extends InputDialog {
 		labelLayout.left = null;
 		label.setLayoutData(labelLayout);
 		label.setFont(SharedStyle.FONT_BOLD);
-		label.setText("Characters left: " + text.getTextLimit());
+		text.setTextLimit(maxLength);
+		label.setText("Characters left: " + maxLength);
 		text.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent ev) {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
-						label.setText("Characters left: " + (text.getTextLimit() 
+						label.setText("Characters left: " + (maxLength 
 								- text.getText().length()));
 					}
 				});

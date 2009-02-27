@@ -18,6 +18,7 @@
 package com.varaneckas.hawkscope.plugins.twitter;
 
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
@@ -31,22 +32,53 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
     
     Text inputPass;
     
+    Label pass;
+    
+    Button checkDisplayFriendsTweets;
+    
     public TwitterSettingsTabItem(final TabFolder folder) {
         super(folder, "&Twitter");
         
         createLoginSection();
         
+        createDisplaySection();
+        
+        createUpdateFrequencySection();
+    }
+
+	private void createUpdateFrequencySection() {
+        Label cache = addSectionLabel("Update frequency");
+        cache.setLayoutData(ident(SharedStyle.relativeTo(checkDisplayFriendsTweets, null)));
+        
+        Text inputUpdateFreq = addText(cfg.getProperties()
+                .get(TwitterPlugin.PROP_TWITTER_CACHE), 5);
+        
         
     }
 
-	private void createLoginSection() {
+    private void createDisplaySection() {
+	    Label display = addSectionLabel("Display");
+	    display.setLayoutData(SharedStyle.relativeTo(pass, null));
+	    
+	    Button checkDisplayMyTweets = addCheckbox("Display my tweets");
+	    checkDisplayMyTweets.setLayoutData(ident(SharedStyle.relativeTo(display, null)));
+	    
+	    Button checkDisplayReplies = addCheckbox("Display replies");
+	    checkDisplayReplies.setLayoutData(ident(SharedStyle.relativeTo(checkDisplayMyTweets, null)));
+	    
+	    checkDisplayFriendsTweets = addCheckbox("Display friends tweets");
+	    checkDisplayFriendsTweets.setLayoutData(ident(SharedStyle.relativeTo(checkDisplayReplies, null)));
+	    
+    }
+
+    private void createLoginSection() {
 		Label twitterLogin = addSectionLabel("Twitter Login");
         twitterLogin.setLayoutData(SharedStyle.relativeTo(null, null));
         
         Label user = addLabel("Username:");
         user.setLayoutData(ident(SharedStyle.relativeTo(twitterLogin, null)));
         
-        Label pass = addLabel("Password:");
+        pass = addLabel("Password:");
         pass.setLayoutData(ident(SharedStyle.relativeTo(user, null)));
         
         inputUser = addText(cfg.getProperties()

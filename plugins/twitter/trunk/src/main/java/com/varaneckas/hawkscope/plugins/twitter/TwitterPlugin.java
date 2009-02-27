@@ -89,6 +89,13 @@ public class TwitterPlugin extends PluginAdapter {
 		return IconFactory.getInstance().getPluginIcon("twitter24.png",
 				getClass().getClassLoader());
 	}
+	
+	private String getTwitterError() {
+        if (twitterError.length() > 40) {
+            return twitterError.substring(0, 39);
+        }
+        return twitterError;
+	}
 
 	public void refresh() {
 		Configuration cfg = ConfigurationFactory.getConfigurationFactory()
@@ -96,22 +103,13 @@ public class TwitterPlugin extends PluginAdapter {
 		user = cfg.getProperties().get(PROP_TWITTER_USER);
 		pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
 		createTwitter(cfg);
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				try {
-					if (!twitter.test()) {
-						twitterError = "Please check settings.";
-					} else {
-						log.info("Twitter ok: " + twitter.test());
-					}
-				} catch (TwitterException e) {
-					log.warn("Twitter error", e);
-				}
-			}
-		});
 	}
 
-	private void createTwitter(Configuration cfg) {
+	private boolean createTwitter(Configuration cfg) {
+	    if (user == null || user.equals("")) {
+	        twitterError = "No User/Pass. Please configure.";
+	        return false;
+	    }
 		twitter = new Twitter(user, pass);
 		twitter.setSource("Hawkscope");
 		if (cfg.isHttpProxyInUse()) {
@@ -120,6 +118,12 @@ public class TwitterPlugin extends PluginAdapter {
 				twitter.setHttpProxyAuth(cfg.getHttpProxyAuthUsername(), 
 						cfg.getHttpProxyAuthPassword());
 			}
+		}
+		try {
+		    return twitter.test();
+		} catch (Exception e) {
+		    twitterError = e.getMessage();
+		    return false;
 		}
 	}
 
@@ -139,7 +143,7 @@ public class TwitterPlugin extends PluginAdapter {
 		mainMenu.addMenuItem(twitterMenu);
 
 		if (twitterError != null) {
-			twitterMenu.setText("Twitter :( " + twitterError);
+			twitterMenu.getSwtMenuItem().setText("Twitter :( " + getTwitterError());
 			return;
 		}
 		createTweetItem();
@@ -150,10 +154,11 @@ public class TwitterPlugin extends PluginAdapter {
 					loadData();
 				} catch (final TwitterException e) {
 					twitterError = e.getMessage();
-					log.warn("Twitter error", e);
+					log.warn("Twitter error: " + getTwitterError(), e);
 				}
 			}
 		});
+		mainMenu.addSeparator();
 	}
 
 	private void loadData() throws TwitterException {
