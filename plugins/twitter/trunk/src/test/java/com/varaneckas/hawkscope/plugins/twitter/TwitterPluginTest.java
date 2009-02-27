@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import twitter4j.Twitter;
 import twitter4j.User;
 
 import com.varaneckas.hawkscope.cfg.Configuration;

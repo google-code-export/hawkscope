@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 
 import twitter4j.Status;
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
 
@@ -94,8 +95,7 @@ public class TwitterPlugin extends PluginAdapter {
 				.getConfiguration();
 		user = cfg.getProperties().get(PROP_TWITTER_USER);
 		pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
-		twitter = new Twitter(user, pass);
-		twitter.setSource("Hawkscope");
+		createTwitter(cfg);
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				try {
@@ -109,6 +109,18 @@ public class TwitterPlugin extends PluginAdapter {
 				}
 			}
 		});
+	}
+
+	private void createTwitter(Configuration cfg) {
+		twitter = new Twitter(user, pass);
+		twitter.setSource("Hawkscope");
+		if (cfg.isHttpProxyInUse()) {
+			twitter.setHttpProxy(cfg.getHttpProxyHost(), cfg.getHttpProxyPort());
+			if (cfg.isHttpProxyAuthInUse()) {
+				twitter.setHttpProxyAuth(cfg.getHttpProxyAuthUsername(), 
+						cfg.getHttpProxyAuthPassword());
+			}
+		}
 	}
 
 	@Override

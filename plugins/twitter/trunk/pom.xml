@@ -44,13 +44,13 @@
     <dependency>
       <groupId>com.varaneckas</groupId>
       <artifactId>hawkscope</artifactId>
-      <version>0.5.1</version>
+      <version>0.5.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.homeip.yusuke</groupId>
       <artifactId>twitter4j</artifactId>
-      <version>1.1.4</version>
+      <version>1.1.5-patched</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
