@@ -17,12 +17,9 @@
  */
 package com.varaneckas.hawkscope.plugins.twitter;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
@@ -68,16 +65,6 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
     private Label display;
     
     /**
-     * Input for twitter data update frequency seconds
-     */
-    private Text inputUpdateFreq;
-    
-    /**
-     * "Update frequency" section label
-     */
-    private Label frequency;
-    
-    /**
      * Checkbox "Display friends tweets"
      */
     private Button checkDisplayFriendsTweets;
@@ -96,40 +83,6 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
         super(folder, "&Twitter");
         createLoginSection();
         createDisplaySection();
-        createUpdateFrequencySection();
-    }
-
-    /**
-     * Creates Update Frequency section
-     */
-	private void createUpdateFrequencySection() {
-        frequency = addSectionLabel("Update frequency");
-        frequency.setLayoutData(ident(SharedStyle.relativeTo(
-        		checkDisplayFriendsTweets, null)));
-        inputUpdateFreq = addText(cfg.getProperties()
-                .get(TwitterPlugin.PROP_TWITTER_CACHE), 5);
-        inputUpdateFreq.setLayoutData(ident(SharedStyle.relativeTo(frequency, 
-        		null)));
-        final String freq = cfg.getProperties()
-        		.get(TwitterPlugin.PROP_TWITTER_CACHE) == null ? 
-        				"60" : cfg.getProperties()
-                			.get(TwitterPlugin.PROP_TWITTER_CACHE) ;
-        inputUpdateFreq.setText(freq);
-        inputUpdateFreq.addListener(SWT.FocusOut, new Listener() {
-            public void handleEvent(final Event event) {
-                try {
-                    double d = Double.valueOf(inputUpdateFreq.getText());
-                    if (d <= 0) {
-                    	inputUpdateFreq.setText("0.1");
-                    }
-                    if (d > 9999) {
-                    	inputUpdateFreq.setText("9999");
-                    }
-                } catch (final Exception e) {
-                	inputUpdateFreq.setText(freq);
-                }
-            }
-        });
     }
 
 	/**
@@ -142,6 +95,7 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
 	    final String showMy = cfg.getProperties().get(
 	    		TwitterPlugin.PROP_TWITTER_SHOW_MY);
 	    checkDisplayMyTweets = addCheckbox("Display my tweets");
+	    checkDisplayMyTweets.setToolTipText("Displays your latest tweets");
 	    checkDisplayMyTweets.setLayoutData(ident(SharedStyle.relativeTo(
 	    		display, null)));
 	    checkDisplayMyTweets.setSelection(showMy == null ? 
@@ -150,6 +104,8 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
 	    final String showRe = cfg.getProperties().get(
 	    		TwitterPlugin.PROP_TWITTER_SHOW_RE);
 	    checkDisplayReplies = addCheckbox("Display replies");
+	    checkDisplayReplies
+	    		.setToolTipText("Displays latest replies to your tweets");
 	    checkDisplayReplies.setLayoutData(ident(SharedStyle.relativeTo(
 	    		checkDisplayMyTweets, null)));
 	    checkDisplayReplies.setSelection(showRe == null ? 
@@ -158,6 +114,8 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
 	    final String showF = cfg.getProperties().get(
 	    		TwitterPlugin.PROP_TWITTER_SHOW_FRIENDS);
 	    checkDisplayFriendsTweets = addCheckbox("Display friends tweets");
+	    checkDisplayFriendsTweets
+	    		.setToolTipText("Displays your friends latest tweets");
 	    checkDisplayFriendsTweets.setLayoutData(ident(SharedStyle.relativeTo(
 	    		checkDisplayReplies, null)));
 	    checkDisplayFriendsTweets.setSelection(showF == null ? 
@@ -201,8 +159,6 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
         		inputUser.getText());
         cfg.setPasswordProperty(TwitterPlugin.PROP_TWITTER_PASS, 
         		inputPass.getText());
-        cfg.getProperties().put(TwitterPlugin.PROP_TWITTER_CACHE, "" + 
-                Math.round(Double.valueOf(inputUpdateFreq.getText()) * 1000));
         cfg.getProperties().put(TwitterPlugin.PROP_TWITTER_SHOW_MY, 
         		checkDisplayMyTweets.getSelection() ? "1" : "0");
         cfg.getProperties().put(TwitterPlugin.PROP_TWITTER_SHOW_RE, 

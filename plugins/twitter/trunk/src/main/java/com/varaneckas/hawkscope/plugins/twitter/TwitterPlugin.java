@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.User;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
@@ -44,34 +43,79 @@ import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.Updater;
 
+/**
+ * Twitter plugin for Hawkscope
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class TwitterPlugin extends PluginAdapter {
 
+	/**
+	 * Twitter Settings tab item
+	 */
 	private TwitterSettingsTabItem settings;
 
+	/**
+	 * Twitter user property name
+	 */
 	protected static final String PROP_TWITTER_USER = "plugins.twitter.user";
 
+	/**
+	 * Twitter password property name
+	 */
 	protected static final String PROP_TWITTER_PASS = "plugins.twitter.pass";
 	
+	/**
+	 * Show my tweets property name
+	 */
 	protected static final String PROP_TWITTER_SHOW_MY = "plugins.twitter.show.my";
 
+	/**
+	 * Show replies property name 
+	 */
 	protected static final String PROP_TWITTER_SHOW_RE = "plugins.twitter.show.replies";
 
+	/**
+	 * Show friends tweets property name
+	 */
 	protected static final String PROP_TWITTER_SHOW_FRIENDS = "plugins.twitter.show.friends";
 	
+	/**
+	 * Twitter cache lifetime property name
+	 */
 	protected static final String PROP_TWITTER_CACHE = "plugins.twitter.cache.lifetime";
 	
+	/**
+	 * Page size for listing data
+	 */
 	private static final int PAGE_SIZE = 20;
 	
+	/**
+	 * Twitter4j object
+	 */
 	private Twitter twitter;
 
+	/**
+	 * Twitter error
+	 */
 	private String twitterError = null;
 
+	/**
+	 * Twitter hawkscope menu item
+	 */
 	private TwitterMenuItem twitterMenu;
 	
-	private long lastUpdate = System.currentTimeMillis();
-
+	/**
+	 * Singleton instance of this plugin
+	 */
 	private static TwitterPlugin instance;
 
+	/**
+	 * Singleton instance getter
+	 * 
+	 * @return
+	 */
 	public static TwitterPlugin getInstance() {
 		if (instance == null) {
 			instance = new TwitterPlugin();
@@ -79,34 +123,69 @@ public class TwitterPlugin extends PluginAdapter {
 		return instance;
 	}
 
+	/**
+	 * Twitter user
+	 */
 	private String user;
 
+	/**
+	 * Twitter password
+	 */
 	private String pass;
 
-	private long cache;
-	
+	/**
+	 * Should "My Tweets" item be shown?
+	 */
 	private boolean showMy;
 	
+	/**
+	 * Should "Replies" item be shown?
+	 */
 	private boolean showReplies;
 	
+	/**
+	 * Should "Friends Tweets" item be shown?
+	 */
 	private boolean showFriends;
 	
+	/**
+	 * My Tweets menu
+	 */
 	private Menu menuMy;
 	
+	/**
+	 * Replies menu
+	 */
 	private Menu menuReplies;
 	
+	/**
+	 * Friends Tweets menu
+	 */
 	private Menu menuFriends;
 	
+	/**
+	 * Private singleton constructor
+	 */
 	private TwitterPlugin() {
 		canHookBeforeQuickAccessList = true;
 		refresh();
 	}
 
+	/**
+	 * Gets twitter icon
+	 * 
+	 * @return
+	 */
 	protected Image getTwitterIcon() {
 		return IconFactory.getInstance().getPluginIcon("twitter24.png",
 				getClass().getClassLoader());
 	}
 	
+	/**
+	 * Gets a trimmed twitter error message for displaying in menu item
+	 * 
+	 * @return
+	 */
 	private String getTwitterError() {
         if (twitterError.length() > 40) {
             return twitterError.substring(0, 39);
@@ -114,6 +193,9 @@ public class TwitterPlugin extends PluginAdapter {
         return twitterError;
 	}
 
+	/**
+	 * Refreshes the plugin settings
+	 */
 	public void refresh() {
 		Configuration cfg = ConfigurationFactory.getConfigurationFactory()
 				.getConfiguration();
@@ -121,7 +203,6 @@ public class TwitterPlugin extends PluginAdapter {
 			twitterError = null;
 			user = cfg.getProperties().get(PROP_TWITTER_USER);
 			pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
-			cache = Long.valueOf(cfg.getProperties().get(PROP_TWITTER_CACHE));
 			showMy = cfg.getProperties().get(PROP_TWITTER_SHOW_MY).equals("1");
 			showReplies = cfg.getProperties().get(PROP_TWITTER_SHOW_RE).equals("1");		
 			showFriends = cfg.getProperties().get(PROP_TWITTER_SHOW_FRIENDS).equals("1");
@@ -132,7 +213,13 @@ public class TwitterPlugin extends PluginAdapter {
 	 	}
 	}
 
-	private boolean createTwitter(Configuration cfg) {
+	/**
+	 * Creates twitter4j object
+	 * 
+	 * @param cfg
+	 * @return
+	 */
+	private boolean createTwitter(final Configuration cfg) {
 	    if (user == null || user.equals("")) {
 	        twitterError = "No User/Pass. Please configure.";
 	        return false;
@@ -149,21 +236,20 @@ public class TwitterPlugin extends PluginAdapter {
 		try {
 		    return twitter.test();
 		} catch (Exception e) {
-		    twitterError = e.getMessage();
+		    twitterError = "Please check configuration.";
 		    return false;
 		}
 	}
 
 	@Override
-	public void enhanceSettings(TabFolder folder,
-			List<AbstractSettingsTabItem> tabItems) {
+	public void enhanceSettings(final TabFolder folder,
+			final List<AbstractSettingsTabItem> tabItems) {
 		settings = new TwitterSettingsTabItem(folder);
 		tabItems.add(settings);
 	}
 
 	@Override
-	public void beforeQuickAccess(MainMenu mainMenu) {
-
+	public void beforeQuickAccess(final MainMenu mainMenu) {
 		twitterMenu = new TwitterMenuItem();
 		twitterMenu.setText("Twitter");
 		twitterMenu.setIcon(getTwitterIcon());
@@ -189,9 +275,9 @@ public class TwitterPlugin extends PluginAdapter {
 	}
 
 	private void loadData() throws TwitterException {
-		createMyTweets();
-		createReplies();
-		createFriendsTweets();
+		if (showMy) createMyTweets();
+		if (showReplies) createReplies();
+		if (showFriends) createFriendsTweets();
 	}
 
 	private void createFriendsTweets() throws TwitterException {
@@ -263,6 +349,7 @@ public class TwitterPlugin extends PluginAdapter {
 		});
 	}
 
+	/*
 	private void addUserList(final String name, final List<User> users) {
 		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
 			public void run() {
@@ -275,7 +362,8 @@ public class TwitterPlugin extends PluginAdapter {
 				listUsers(folMenu, users);
 			}
 		});
-	}
+	} 
+	*/
 
 	private void createTweetItem() {
 		ExecutableMenuItem tweet = MenuFactory.newExecutableMenuItem();
@@ -306,6 +394,10 @@ public class TwitterPlugin extends PluginAdapter {
 						String msg = reply.getUser().getName() + ": "
 						+ reply.getText().replaceAll("\\n", "");
 						MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
+						if (msg.length() > 80) {
+							msg = msg.substring(0, 79) 
+								+ "...";
+						}
 						mi.setText(msg);
 						mi.setImage(getTwitterIcon());
 						mi.addSelectionListener(new SelectionListener() {
@@ -315,7 +407,9 @@ public class TwitterPlugin extends PluginAdapter {
 							}
 							public void widgetSelected(SelectionEvent selectionevent) {
 								Program.launch(twitter.getBaseURL()
-										+ reply.getUser().getName());
+										+ reply.getUser().getScreenName() 
+										+ "/status/" 
+										+ reply.getId());
 							}
 						});
 					}
@@ -326,6 +420,7 @@ public class TwitterPlugin extends PluginAdapter {
 		});
 	}
 
+	/*
 	private void listUsers(Menu folMenu, List<User> users) {
 		for (final User followee : users) {
 			try {
@@ -352,6 +447,7 @@ public class TwitterPlugin extends PluginAdapter {
 			}
 		}
 	}
+	*/
 
 	public String getDescription() {
 		return "Lets you tweet in Hawkscope";

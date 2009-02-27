@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.plugins.twitter;
 
-import org.eclipse.swt.widgets.Display;
 import org.junit.Test;
 
 import com.varaneckas.hawkscope.util.Updater;
@@ -14,6 +13,7 @@ public class TwitterDialogTest {
 				System.out.println(value);
 			}});
 		
+		/*
 		Display d = Display.getDefault();
 		while (d.readAndDispatch()) {
 			if (!d.isDisposed()) {
@@ -21,6 +21,7 @@ public class TwitterDialogTest {
 			}
 		}
 		d.dispose();
+		*/
 	}
 	
 }
