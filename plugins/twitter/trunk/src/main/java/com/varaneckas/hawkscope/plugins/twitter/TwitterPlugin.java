@@ -203,9 +203,12 @@ public class TwitterPlugin extends PluginAdapter {
 			twitterError = null;
 			user = cfg.getProperties().get(PROP_TWITTER_USER);
 			pass = cfg.getPasswordProperty(PROP_TWITTER_PASS);
-			showMy = cfg.getProperties().get(PROP_TWITTER_SHOW_MY).equals("1");
-			showReplies = cfg.getProperties().get(PROP_TWITTER_SHOW_RE).equals("1");		
-			showFriends = cfg.getProperties().get(PROP_TWITTER_SHOW_FRIENDS).equals("1");
+			showMy = cfg.getProperties().get(PROP_TWITTER_SHOW_MY)
+					.equals("1");
+			showReplies = cfg.getProperties().get(PROP_TWITTER_SHOW_RE)
+					.equals("1");		
+			showFriends = cfg.getProperties().get(PROP_TWITTER_SHOW_FRIENDS)
+					.equals("1");
 			createTwitter(cfg);
 	 	} catch (final Exception e) {
 	 		twitterError = "No configuration, please visit Settings -> Twitter";
@@ -256,7 +259,10 @@ public class TwitterPlugin extends PluginAdapter {
 		mainMenu.addMenuItem(twitterMenu);
 
 		if (twitterError != null) {
-			twitterMenu.getSwtMenuItem().setText("Twitter :( " + getTwitterError());
+			twitterMenu.getSwtMenuItem().setText("Twitter :( " 
+					+ getTwitterError());
+			twitterMenu.getSwtMenuItem().setEnabled(false);
+			twitterMenu.getSwtMenuItem().setMenu(null);
 			return;
 		}
 		createTweetItem();
@@ -274,12 +280,22 @@ public class TwitterPlugin extends PluginAdapter {
 		mainMenu.addSeparator();
 	}
 
+	/**
+	 * Loads the twitter menu data
+	 * 
+	 * @throws TwitterException
+	 */
 	private void loadData() throws TwitterException {
 		if (showMy) createMyTweets();
 		if (showReplies) createReplies();
 		if (showFriends) createFriendsTweets();
 	}
 
+	/**
+	 * Creates friends tweets menu item
+	 * 
+	 * @throws TwitterException
+	 */
 	private void createFriendsTweets() throws TwitterException {
 		// Friends Tweets
 		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
@@ -303,6 +319,11 @@ public class TwitterPlugin extends PluginAdapter {
 		});
 	}
 
+	/**
+	 * Creates replies menu item
+	 * 
+	 * @throws TwitterException
+	 */
 	private void createReplies() throws TwitterException {
 		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
 			public void run() {
@@ -326,6 +347,11 @@ public class TwitterPlugin extends PluginAdapter {
 		});
 	}
 
+	/**
+	 * Creates my tweets menu items
+	 * 
+	 * @throws TwitterException
+	 */
 	private void createMyTweets() throws TwitterException {
 		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
 			public void run() {
@@ -365,6 +391,9 @@ public class TwitterPlugin extends PluginAdapter {
 	} 
 	*/
 
+	/**
+	 * Creates tweet menu item
+	 */
 	private void createTweetItem() {
 		ExecutableMenuItem tweet = MenuFactory.newExecutableMenuItem();
 		tweet.setText("Tweet!");
@@ -386,6 +415,12 @@ public class TwitterPlugin extends PluginAdapter {
 		tweet.createMenuItem(twitterMenu.getSwtMenuItem().getMenu());
 	}
 
+	/**
+	 * Lists twitter messages in a menu
+	 * 
+	 * @param repMenu
+	 * @param messages
+	 */
 	private void listMessages(final Menu repMenu, final List<Status> messages) {
 		twitterMenu.getSwtMenuItem().getDisplay().asyncExec(new Runnable() {
 			public void run() {
@@ -450,7 +485,7 @@ public class TwitterPlugin extends PluginAdapter {
 	*/
 
 	public String getDescription() {
-		return "Lets you tweet in Hawkscope";
+		return "Lets you tweet in Hawkscope.";
 	}
 
 	public String getName() {
