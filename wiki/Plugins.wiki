@@ -7,9 +7,9 @@
 
 
 =Optional Plugins=
-||Plugin Name||Version||Description||Download||Source||
-||Googlescope||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/changelog.txt 1.4]||Allows running Google search queries right from Hawkscope menu.||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/dist/googlescope-1.4.jar googlescope-1.4.jar]||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/ Browse]||
-||Twitter||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/changelog.txt 1.0]||Lets you tweet in Hawkscope.||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/dist/twitter-1.0.jar twitter-1.0.jar]||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/ Browse]||
+||||Plugin Name||Version||Description||Download||Source||
+||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/etc/icons/search24.png]||Googlescope||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/changelog.txt 1.4]||Allows running Google search queries right from Hawkscope menu.||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/dist/googlescope-1.4.jar googlescope-1.4.jar]||[http://hawkscope.googlecode.com/svn/plugins/googlescope/trunk/ Browse]||
+||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/src/main/resources/icons/twitter24.png]||Twitter||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/changelog.txt 1.0]||Lets you tweet in Hawkscope.||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/dist/twitter-1.0.jar twitter-1.0.jar]||[http://hawkscope.googlecode.com/svn/plugins/twitter/trunk/ Browse]||
 
 *Before downloading optional plugins, please check you have the latest Hawkscope version! (0.5.2)*
 
