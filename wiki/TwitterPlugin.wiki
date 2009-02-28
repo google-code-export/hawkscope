@@ -35,11 +35,13 @@ Then, in Hawkscope Settings Plugins tab click Reload Plugins. You should see Twi
 
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/Sak5ZJBeQfI/AAAAAAAABdc/3MjxwSV7htc/Picture%2010.png]
 
-Close Hawkscope Settings window (click OK). Then if you open Hawkscope menu you will see a sad Twitter item. It's sad because there is no configuration. Go to Settings again.
+Close Hawkscope Settings window (click OK). Then if you open Hawkscope menu you will see a sad Twitter item. It's sad because there is no configuration. 
 
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/Sak5ZOoDkCI/AAAAAAAABdk/mt0wZ8yK-Yc/Picture%2011.png]
 
-Your settings now has a Twitter tab
+=Configuring=
+
+Go to Settings again. Your settings now has a Twitter tab
 
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/Sak5l-vTMrI/AAAAAAAABdw/-oOatGtDyqM/Picture%2012.png]
 
@@ -51,6 +53,8 @@ Your Twitter Hawkscope menu item is now enabled
 
 [http://lh3.ggpht.com/_nP8Aa6cTHpo/Sak5mW8s71I/AAAAAAAABeA/Nnt-zH5dXOk/Picture%2014.png]
 
+=Using=
+
 Click Tweet! to add a new Twitter status message
 
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/Sak5mbJdj-I/AAAAAAAABeI/3prTjZC8W_Q/Picture%2015.png]
@@ -60,5 +64,3 @@ And you can also see more tweets or visit them in browser by clicking
 [http://lh4.ggpht.com/_nP8Aa6cTHpo/Sak5mr4wtQI/AAAAAAAABeQ/tu-a7sMXkX8/s720/Picture%2016.png]
 
 Enjoy!
-
-
