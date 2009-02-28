@@ -31,6 +31,9 @@ import com.varaneckas.hawkscope.util.Updater;
 
 /**
  * Twitter input dialog 
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
  */
 public class TwitterDialog extends InputDialog {
 

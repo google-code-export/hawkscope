@@ -263,6 +263,7 @@ public class TwitterPlugin extends PluginAdapter {
 					+ getTwitterError());
 			twitterMenu.getSwtMenuItem().setEnabled(false);
 			twitterMenu.getSwtMenuItem().setMenu(null);
+			mainMenu.addSeparator();
 			return;
 		}
 		createTweetItem();
@@ -272,7 +273,7 @@ public class TwitterPlugin extends PluginAdapter {
 				try {
 					loadData();
 				} catch (final TwitterException e) {
-					twitterError = e.getMessage();
+					twitterError = "Please check configuration.";
 					log.warn("Twitter error: " + getTwitterError(), e);
 				}
 			}
@@ -311,7 +312,8 @@ public class TwitterPlugin extends PluginAdapter {
 						try {
 							listMessages(menuFriends, twitter.getFriendsTimelineByPage(1));
 						} catch (final TwitterException e) {
-							twitterError = e.getMessage();
+							twitterError = "Please check configuration.";
+							log.warn("Twitter error", e);
 						}
 					}
 				}).start();
@@ -339,7 +341,8 @@ public class TwitterPlugin extends PluginAdapter {
 						try {
 							listMessages(menuReplies, twitter.getRepliesByPage(1));
 						} catch (final TwitterException e) {
-							twitterError = e.getMessage();
+							twitterError = "Please check configuration.";
+							log.warn("Twitter error: ", e);
 						}
 					}
 				}).start();
@@ -367,7 +370,8 @@ public class TwitterPlugin extends PluginAdapter {
 						try {
 							listMessages(menuMy, twitter.getUserTimeline(twitter.getUserId(), PAGE_SIZE));
 						} catch (final TwitterException e) {
-							twitterError = e.getMessage();
+							twitterError = "Please check configuration.";
+							log.warn("Twitter error: ", e);
 						}
 					}
 				}).start();
