@@ -14,7 +14,7 @@
 *Before downloading optional plugins, please check you have the latest Hawkscope version! (0.5.2)*
 
 
-Please check back later for more useful plugins.
+Check back later for more useful plugins.
 
 =Create a Plugin!=
 If you are interested in writing a Plugin, check the [PluginDeveloperGuide Plugin Developer Guide].
