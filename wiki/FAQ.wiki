@@ -19,6 +19,9 @@ No, it will not. New properties are merged.
 === What are the Network Proxy settings for? ===
 It's for checking for updates and for accessing the online help while being behind a proxy.
 
+=== I like Hawkscope and I want to support the development ===
+You are welcome to [http://www.varaneckas.com/projects/opensource/hawkscope donate] a small amount of money.
+
 -----
 = Windows =
 
