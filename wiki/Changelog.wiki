@@ -1,5 +1,10 @@
 #labels Featured,Phase-Implementation
 = Hawkscope Changelog =
+==Changes in version 0.5.2 (2009-02-28)==
+  * Twitter plugin (available separately): Issue #59
+  * Improved plugin support: Issue #57
+  * Better password protection: Issue #58
+
 ==Changes in version 0.5.1 (2009-02-24)==
   * Linux GIJ 4.3 support: Issue #54 Issue #55 Issue #56
 
