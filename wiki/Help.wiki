@@ -104,5 +104,5 @@
   * [SystemRequirements System Requirements]
   * [UsingHawkscope Using Hawkscope]
   * [Plugins Hawkscope Plugins]
-  * [TwitterPlugin Twitter Plugin]
+  * [http://paranoid-engineering.blogspot.com/2009/02/hawkscope-twitter-plugin.html Twitter Plugin]
   * [http://code.google.com/p/hawkscope/issues/entry Submit a Bug/Feature Request]
