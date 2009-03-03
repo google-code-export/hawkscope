@@ -2,8 +2,8 @@
 #labels Phase-Support,Featured
 
 =Built-in Plugins=
-||Plugin Name||Version||Description||
-||Open With||1.0||A built-in plugin that allows you to define custom applications to open chosen file types, folders and unknown files.||
+|| ||Plugin Name||Version||Description||
+||[http://hawkscope.googlecode.com/svn/trunk/src/main/resources/icons/open24.png]||Open With||1.0||A built-in plugin that allows you to define custom applications to open chosen file types, folders and unknown files.||
 
 
 =Optional Plugins=
