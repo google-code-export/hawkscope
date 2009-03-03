@@ -68,8 +68,8 @@ public class ExecuteWindow extends AbstractWindow {
 
         createButtonClose();
 
-        final Text output = new Text(shell, SWT.BORDER | SWT.MULTI
-                | SWT.VERTICAL);
+        final Text output = new Text(shell, SWT.BORDER | SWT.MULTI 
+                | SWT.VERTICAL | SWT.HORIZONTAL);
         final FormData outputLayout = SharedStyle.relativeTo(labelOutput, null,
                 buttonClose, null);
         output.setEditable(false);
@@ -85,24 +85,25 @@ public class ExecuteWindow extends AbstractWindow {
                             || inputCommand.getText().length() < 1) {
                         return;
                     }
-                    Process p;
-                    try {
-                        output.setText("");
-                        inputCommand.setToolTipText("");
-                        String cmd = inputCommand.getText();
-                        inputCommand.setText("");
-                        p = Runtime.getRuntime().exec(cmd);
-                        InputStream in = p.getInputStream();
-                        int c;
-                        while ((c = in.read()) != -1) {
-                            output.setText(output.getText().concat(
-                                    "" + (char) c));
+                    shell.getDisplay().asyncExec(new Runnable() {
+                        public void run() {
+                            try {
+                                final String cmd = inputCommand.getText();
+                                inputCommand.setText("");
+                                inputCommand.setToolTipText("");
+                                output.setText("");
+                                final Process p = Runtime.getRuntime().exec(cmd);
+                                final InputStream in = p.getInputStream();
+                                int c;
+                                while ((c = in.read()) != -1) {
+                                    output.append("" + (char) c);
+                                }
+                                in.close();
+                            } catch (final Exception e) {
+                                output.setText(e.getMessage());
+                            }
                         }
-                        int exit = p.waitFor();
-                        output.setText(output.getText().concat("Exit: " + exit));
-                    } catch (Exception e) {
-                        output.append(e.getMessage());
-                    }
+                    });
                 }
             }
         });
