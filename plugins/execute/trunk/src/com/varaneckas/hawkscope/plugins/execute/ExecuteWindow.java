@@ -17,12 +17,11 @@
  */
 package com.varaneckas.hawkscope.plugins.execute;
 
-import java.io.InputStream;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -39,6 +38,31 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
  */
 public class ExecuteWindow extends AbstractWindow {
 
+    /**
+     * Label "Command"
+     */
+    private Label command;
+    
+    /**
+     * Command input line
+     */
+    private Text inputCommand;
+    
+    /**
+     * Checkbox "Run in a separate thread"
+     */
+    private Button async;
+    
+    /**
+     * Label "Output"
+     */
+    private Label labelOutput;
+    
+    /**
+     * Output text area
+     */
+    private Text output;
+    
     @Override
     public void open() {
         if (shell != null && !shell.isDisposed()) {
@@ -48,27 +72,52 @@ public class ExecuteWindow extends AbstractWindow {
             return;
         }
         createShell("Execute");
-
-        final Label command = new Label(shell, SWT.NONE);
-        command.setFont(SharedStyle.FONT_BOLD);
-        command.setText("Command");
-        command.setLayoutData(SharedStyle.relativeTo(null, null));
-
-        final Text inputCommand = new Text(shell, SWT.BORDER);
-        final FormData inputLayout = SharedStyle
-                .relativeTo(command, null, null, null);
-        inputLayout.bottom = null;
-        inputCommand.setLayoutData(inputLayout);
-        inputCommand.setToolTipText("Type a command and hit Enter to execute");
-
-        final Label labelOutput = new Label(shell, SWT.NONE);
-        labelOutput.setFont(SharedStyle.FONT_BOLD);
-        labelOutput.setText("Output");
-        labelOutput.setLayoutData(SharedStyle.relativeTo(inputCommand, null));
-
+        createCommandLabel();
+        createCommandInput();
+        createAsyncCheckbox();
+        createOutputLabel();
         createButtonClose();
+        createOutputText();
+        enableAsyncCheckbox();        
+        
+        inputCommand.addKeyListener(new InputCommandKeyListener(
+                shell, inputCommand, output, async));
 
-        final Text output = new Text(shell, SWT.BORDER | SWT.MULTI 
+        packAndSetMinSize();
+        shell.open();
+        shell.forceActive();
+        shell.forceFocus();
+        shell.setTabList(new Control[] { inputCommand, async, buttonClose });
+        inputCommand.setFocus();
+    }
+
+    /**
+     * Enables Run in separate thread checkbox to react to clicks
+     */
+    private void enableAsyncCheckbox() {
+        async.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent ev) {
+                labelOutput.setVisible(!async.getSelection());
+                output.setVisible(!async.getSelection());
+                if (async.getSelection()) {
+                    async.setLayoutData(SharedStyle.relativeTo(inputCommand, 
+                            null, buttonClose, null));
+                } else {
+                    async.setLayoutData(SharedStyle.relativeTo(inputCommand, null));
+                }
+                shell.setMinimumSize(shell.getSize().x, 10);
+                shell.pack();
+                shell.setMinimumSize(400, shell.getSize().y);
+            }
+        });
+    }
+
+    /**
+     * Creates command output text area
+     */
+    private void createOutputText() {
+        output = new Text(shell, SWT.BORDER | SWT.MULTI 
                 | SWT.VERTICAL | SWT.HORIZONTAL);
         final FormData outputLayout = SharedStyle.relativeTo(labelOutput, null,
                 buttonClose, null);
@@ -76,44 +125,51 @@ public class ExecuteWindow extends AbstractWindow {
         outputLayout.width = 400;
         outputLayout.height = 100;
         output.setLayoutData(outputLayout);
+    }
 
-        inputCommand.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent key) {
-                if (key.keyCode == SWT.CR || key.keyCode == SWT.KEYPAD_CR) {
-                    if (inputCommand.getText() == null
-                            || inputCommand.getText().length() < 1) {
-                        return;
-                    }
-                    shell.getDisplay().asyncExec(new Runnable() {
-                        public void run() {
-                            try {
-                                final String cmd = inputCommand.getText();
-                                inputCommand.setText("");
-                                inputCommand.setToolTipText("");
-                                output.setText("");
-                                final Process p = Runtime.getRuntime().exec(cmd);
-                                final InputStream in = p.getInputStream();
-                                int c;
-                                while ((c = in.read()) != -1) {
-                                    output.append("" + (char) c);
-                                }
-                                in.close();
-                            } catch (final Exception e) {
-                                output.setText(e.getMessage());
-                            }
-                        }
-                    });
-                }
-            }
-        });
+    /**
+     * Creates label "Output"
+     */
+    private void createOutputLabel() {
+        labelOutput = new Label(shell, SWT.NONE);
+        labelOutput.setFont(SharedStyle.FONT_BOLD);
+        labelOutput.setText("Output");
+        labelOutput.setLayoutData(SharedStyle.relativeTo(async, null));
+    }
 
-        packAndSetMinSize();
-        shell.open();
-        shell.forceActive();
-        shell.forceFocus();
-        shell.setTabList(new Control[] { inputCommand, buttonClose });
-        inputCommand.setFocus();
+    /**
+     * Creates "Run in a separate thread" checkbox
+     */
+    private void createAsyncCheckbox() {
+        async = new Button(shell, SWT.CHECK);
+        async.setText("Run in a separate thread");
+        async.setToolTipText("If this is checked, command will run in a " +
+        		"new thread. Suitable for long running processes or for " +
+        		"starting applications. If unchecked, command will be " +
+        		"terminated if execution will take longer than 30 seconds.");
+        async.setLayoutData(SharedStyle.relativeTo(inputCommand, null));
+    }
+
+    /**
+     * Creates executable command input
+     */
+    private void createCommandInput() {
+        inputCommand = new Text(shell, SWT.BORDER);
+        final FormData inputLayout = SharedStyle
+                .relativeTo(command, null, null, null);
+        inputLayout.bottom = null;
+        inputCommand.setLayoutData(inputLayout);
+        inputCommand.setToolTipText("Type a command and hit Enter to execute");
+    }
+
+    /**
+     * Creates label "Command"
+     */
+    private void createCommandLabel() {
+        command = new Label(shell, SWT.NONE);
+        command.setFont(SharedStyle.FONT_BOLD);
+        command.setText("Command");
+        command.setLayoutData(SharedStyle.relativeTo(null, null));
     }
 
     /**
@@ -121,7 +177,7 @@ public class ExecuteWindow extends AbstractWindow {
      * 
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new ExecuteWindow().open();
         while (Display.getDefault().readAndDispatch()) {
             Display.getDefault().sleep();
