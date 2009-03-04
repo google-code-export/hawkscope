@@ -126,11 +126,11 @@ public class InputCommandKeyListener extends KeyAdapter {
                         public void run() {
                             while (true) {
                                 try {
-                                    Thread.sleep(9000L);
+                                    
                                     p.exitValue();
                                     return;
                                 } catch (final Exception e) {
-                                    log.debug(e.getMessage());
+                                    //logging would spam
                                 }
                                 if ((System.currentTimeMillis() - start) 
                                         > 30000) {
@@ -144,6 +144,12 @@ public class InputCommandKeyListener extends KeyAdapter {
                                     });
                                     return;
                                 } 
+                                try {
+                                    Thread.sleep(50L);
+                                } catch (final InterruptedException e) {
+                                    log.warn("Interrupted while executing task:" 
+                                            + cmd, e);
+                                }
                             }
                         }
                     }).start();
