@@ -312,8 +312,7 @@ public class TwitterPlugin extends PluginAdapter {
 						try {
 							listMessages(menuFriends, twitter.getFriendsTimelineByPage(1));
 						} catch (final TwitterException e) {
-							twitterError = "Please check configuration.";
-							log.warn("Twitter error", e);
+							handleTwitterException(e);
 						}
 					}
 				}).start();
@@ -341,8 +340,7 @@ public class TwitterPlugin extends PluginAdapter {
 						try {
 							listMessages(menuReplies, twitter.getRepliesByPage(1));
 						} catch (final TwitterException e) {
-							twitterError = "Please check configuration.";
-							log.warn("Twitter error: ", e);
+							handleTwitterException(e);
 						}
 					}
 				}).start();
@@ -368,32 +366,16 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuMy, twitter.getUserTimeline(twitter.getUserId(), PAGE_SIZE));
+							listMessages(menuMy, twitter.getUserTimeline(twitter
+									.getUserId(), PAGE_SIZE));
 						} catch (final TwitterException e) {
-							twitterError = "Please check configuration.";
-							log.warn("Twitter error: ", e);
+							handleTwitterException(e);
 						}
 					}
 				}).start();
 			}
 		});
 	}
-
-	/*
-	private void addUserList(final String name, final List<User> users) {
-		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
-			public void run() {
-				MenuItem following = new MenuItem(twitterMenu.getSwtMenuItem()
-						.getMenu(), SWT.CASCADE);
-				following.setImage(getTwitterIcon());
-				following.setText(name);
-				Menu folMenu = new Menu(twitterMenu.getSwtMenuItem().getMenu());
-				following.setMenu(folMenu);
-				listUsers(folMenu, users);
-			}
-		});
-	} 
-	*/
 
 	/**
 	 * Creates tweet menu item
@@ -431,7 +413,7 @@ public class TwitterPlugin extends PluginAdapter {
 				try {
 					for (final Status reply : messages) {
 						String msg = reply.getUser().getName() + ": "
-						+ reply.getText().replaceAll("\\n", "");
+								+ reply.getText().replaceAll("\\n", "");
 						MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
 						if (msg.length() > 80) {
 							msg = msg.substring(0, 79) 
@@ -459,35 +441,6 @@ public class TwitterPlugin extends PluginAdapter {
 		});
 	}
 
-	/*
-	private void listUsers(Menu folMenu, List<User> users) {
-		for (final User followee : users) {
-			try {
-				MenuItem mi = new MenuItem(folMenu, SWT.CASCADE);
-				mi.setText(followee.getName());
-				mi.setImage(getTwitterIcon());
-				Menu msgsMenu = new Menu(mi);
-				mi.setMenu(msgsMenu);
-				listMessages(msgsMenu, twitter.getUserTimeline(followee.getName(), 
-						PAGE_SIZE));
-				mi.addSelectionListener(new SelectionListener() {
-					public void widgetDefaultSelected(
-							SelectionEvent selectionevent) {
-						widgetSelected(selectionevent);
-					}
-
-					public void widgetSelected(SelectionEvent selectionevent) {
-						Program.launch(twitter.getBaseURL()
-								+ followee.getName());
-					}
-				});
-			} catch (final Exception e) {
-				log.warn("Failed listing user", e);
-			}
-		}
-	}
-	*/
-
 	public String getDescription() {
 		return "Lets you tweet in Hawkscope.";
 	}
@@ -497,7 +450,21 @@ public class TwitterPlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.0";
+		return "1.1";
+	}
+
+	/**
+	 * Handles {@link TwitterException}.
+	 * 
+	 * @param e
+	 */
+	private void handleTwitterException(final TwitterException e) {
+		if (e.getMessage().startsWith("Server")) {
+			twitterError = "Server error.";
+		} else {
+			twitterError = "Network error";
+		}
+		log.warn("Twitter error", e);
 	}
 
 }
