@@ -4,7 +4,7 @@
   <groupId>com.varaneckas.hawkscope</groupId>
   <artifactId>twitter</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.1</version>
   <name>Hawkscope Twitter</name>
   <url>http://hawkscope.googlecode.com</url>
   <!-- $Id: pom.xml 349 2009-02-24 11:26:35Z tomas.varaneckas $ -->
@@ -44,13 +44,13 @@
     <dependency>
       <groupId>com.varaneckas</groupId>
       <artifactId>hawkscope</artifactId>
-      <version>0.5.2</version>
+      <version>0.5.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.homeip.yusuke</groupId>
       <artifactId>twitter4j</artifactId>
-      <version>1.1.5-patched</version>
+      <version>1.1.7</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

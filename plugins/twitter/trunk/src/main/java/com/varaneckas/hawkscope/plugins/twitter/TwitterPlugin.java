@@ -228,6 +228,7 @@ public class TwitterPlugin extends PluginAdapter {
 	        return false;
 	    }
 		twitter = new Twitter(user, pass);
+		twitter.setHttpConnectionTimeout(30000);
 		twitter.setSource("Hawkscope");
 		if (cfg.isHttpProxyInUse()) {
 			twitter.setHttpProxy(cfg.getHttpProxyHost(), cfg.getHttpProxyPort());
