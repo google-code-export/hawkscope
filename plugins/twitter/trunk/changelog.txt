@@ -1,2 +1,4 @@
-1.1 - More informative errors and increased timeout
+1.1 - More informative errors
+      Increased server timeout to 30 seconds
+      Switching to newer version of Twitter4J (1.1.7)
 1.0 - Initial release
