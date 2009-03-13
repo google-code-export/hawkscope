@@ -6,3 +6,5 @@ Build command:
 mvn package -Dmaven.test.skip
 
 Build result: target/twitter-X.X-jar-with-dependencies.jar
+
+Copy to dist/twitter-X.X.jar to release
