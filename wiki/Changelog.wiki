@@ -1,5 +1,15 @@
 #labels Featured,Phase-Implementation
 = Hawkscope Changelog =
+
+==Changes in version 0.5.3 (2009-03-13)==
+  * Optimized memory consumption and overal performance
+  * Improved icon in Windows version
+  * Added the missing msvcr71.dll in Windows version: Issue #67
+  * Fixed Network Settings proxy authentication checkbox behavior: Issue #66
+  * Long menus are no longer splitted with "More...": Issue #64
+  * Periodic menu reload in background (with at least 3 minutes between reloads): Issue #62
+  * Execute plugin (available separately): Issue #60 
+
 ==Changes in version 0.5.2 (2009-02-28)==
   * Twitter plugin (available separately): Issue #59
   * Improved plugin support: Issue #57
