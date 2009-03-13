@@ -26,7 +26,7 @@ You are welcome to [http://www.varaneckas.com/projects/opensource/hawkscope dona
 = Windows =
 
 === I'm getting a "missing msvcr71.dll" warning when running the Windows executable ===
-msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library is not distributed along with Hawkscope windows executable, as most Windows users have it. One way to remove this warning is to You can [http://www.dll-files.com/dllindex/dll-files.shtml?msvcr71 download msvcr71.dll] and drop it to your C:\Windows\System32 folder.
+msvcr71.dll is Microsoft Visual C Runtime 7.1 Dynamic Link Library. This library is not distributed along with Hawkscope windows executable (below version 0.5.3). You can [http://www.dll-files.com/dllindex/dll-files.shtml?msvcr71 download msvcr71.dll] and drop it to your C:\Windows\System32 folder, or simply update Hawkscope.
 
 === Where's the Windows 64-bit version? ===
 32-bit version should run fine, so I did not install 64-bit Windows just to make a build. If you can provide a 64-bit Windows build, please do.
