@@ -57,12 +57,6 @@ Run `ant dist-deb` and look at dist/output
 
 = Running Hawkscope =
 
-=== Running Hawkscope from source folder ===
-Running directly from source is good for debugging purposes. In console, execute:
-{{{
-mvn clean compile exec:java -Dexec.mainClass=com.varaneckas.hawkscope.Launcher -e
-}}}
-
 === Running Hawkscope from executable JAR ===
 Doubleclick the executable jar, or execute in console:
 {{{
