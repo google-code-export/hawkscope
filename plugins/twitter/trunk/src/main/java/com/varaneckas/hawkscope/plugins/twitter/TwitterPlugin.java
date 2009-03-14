@@ -94,7 +94,7 @@ public class TwitterPlugin extends PluginAdapter {
 	/**
 	 * Twitter4j object
 	 */
-	private Twitter twitter;
+	private TwitterClient twitter;
 
 	/**
 	 * Twitter error
@@ -223,23 +223,24 @@ public class TwitterPlugin extends PluginAdapter {
 	 * @return
 	 */
 	private boolean createTwitter(final Configuration cfg) {
-	    if (user == null || user.equals("")) {
+	    if (user == null || user.equals("") || pass == null || pass.equals("")) {
 	        twitterError = "No User/Pass. Please configure.";
 	        return false;
 	    }
-		twitter = new Twitter(user, pass);
-		twitter.setHttpConnectionTimeout(30000);
-		twitter.setSource("Hawkscope");
+		final Twitter twitter4j = new Twitter(user, pass);
+		twitter4j.setHttpConnectionTimeout(30000);
+		twitter4j.setSource("Hawkscope");
 		if (cfg.isHttpProxyInUse()) {
-			twitter.setHttpProxy(cfg.getHttpProxyHost(), cfg.getHttpProxyPort());
+			twitter4j.setHttpProxy(cfg.getHttpProxyHost(), cfg.getHttpProxyPort());
 			if (cfg.isHttpProxyAuthInUse()) {
-				twitter.setHttpProxyAuth(cfg.getHttpProxyAuthUsername(), 
+				twitter4j.setHttpProxyAuth(cfg.getHttpProxyAuthUsername(), 
 						cfg.getHttpProxyAuthPassword());
 			}
 		}
 		try {
+			twitter = new TwitterClient(twitter4j);
 		    return twitter.test();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 		    twitterError = "Please check configuration.";
 		    return false;
 		}
@@ -311,7 +312,7 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuFriends, twitter.getFriendsTimelineByPage(1));
+							listMessages(menuFriends, twitter.getFriendsTimeline());
 						} catch (final TwitterException e) {
 							handleTwitterException(e);
 						}
@@ -339,7 +340,7 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuReplies, twitter.getRepliesByPage(1));
+							listMessages(menuReplies, twitter.getReplies());
 						} catch (final TwitterException e) {
 							handleTwitterException(e);
 						}
@@ -367,8 +368,7 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuMy, twitter.getUserTimeline(twitter
-									.getUserId(), PAGE_SIZE));
+							listMessages(menuMy, twitter.getUserTimeline(PAGE_SIZE));
 						} catch (final TwitterException e) {
 							handleTwitterException(e);
 						}
@@ -389,7 +389,7 @@ public class TwitterPlugin extends PluginAdapter {
 		tweet.setCommand(new Command() {
 			public void execute() {
 				new TwitterDialog(new Updater() {
-					public void setValue(String value) {
+					public void setValue(final String value) {
 						try {
 							twitter.update(value);
 						} catch (TwitterException e) {
@@ -451,7 +451,7 @@ public class TwitterPlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.1";
+		return "1.2";
 	}
 
 	/**

@@ -4,7 +4,7 @@
   <groupId>com.varaneckas.hawkscope</groupId>
   <artifactId>twitter</artifactId>
   <packaging>jar</packaging>
-  <version>1.1</version>
+  <version>1.2</version>
   <name>Hawkscope Twitter</name>
   <url>http://hawkscope.googlecode.com</url>
   <!-- $Id: pom.xml 349 2009-02-24 11:26:35Z tomas.varaneckas $ -->
