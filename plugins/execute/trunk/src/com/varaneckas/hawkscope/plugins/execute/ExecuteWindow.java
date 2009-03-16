@@ -122,6 +122,7 @@ public class ExecuteWindow extends AbstractWindow {
         final FormData outputLayout = SharedStyle.relativeTo(labelOutput, null,
                 buttonClose, null);
         output.setEditable(false);
+        output.setFont(SharedStyle.FONT_FIXED);
         outputLayout.width = 400;
         outputLayout.height = 100;
         output.setLayoutData(outputLayout);

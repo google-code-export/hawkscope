@@ -19,6 +19,8 @@ package com.varaneckas.hawkscope.plugins.execute;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,6 +44,11 @@ public class InputCommandKeyListener extends KeyAdapter {
      * Logger
      */
     private static final Log log = LogFactory.getLog(InputCommandKeyListener.class);
+    
+    /**
+     * List of last commands
+     */
+    private static final List<String> lastCommands = new LinkedList<String>();
     
     /**
      * Underlying shell
@@ -106,6 +113,9 @@ public class InputCommandKeyListener extends KeyAdapter {
             } else {
                 shell.getDisplay().asyncExec(getSyncExecutor(cmd));
             }
+        }
+        if (key.keyCode == SWT.UP) {
+        	//TODO implement
         }
     }
 
