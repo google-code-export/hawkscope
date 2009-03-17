@@ -81,7 +81,7 @@ public class ExecutePlugin extends PluginAdapter {
     }
 
     public String getVersion() {
-        return "1.1";
+        return "1.2";
     }
 
 }

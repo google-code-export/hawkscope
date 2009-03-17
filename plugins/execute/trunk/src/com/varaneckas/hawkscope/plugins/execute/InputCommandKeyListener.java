@@ -19,7 +19,7 @@ package com.varaneckas.hawkscope.plugins.execute;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -48,7 +48,12 @@ public class InputCommandKeyListener extends KeyAdapter {
     /**
      * List of last commands
      */
-    private static final List<String> lastCommands = new LinkedList<String>();
+    private static final List<String> lastCommands = new ArrayList<String>();
+    
+    /**
+     * Last Command index
+     */
+    private static int lastCommandIndex = 0;
     
     /**
      * Underlying shell
@@ -95,6 +100,15 @@ public class InputCommandKeyListener extends KeyAdapter {
             if (cmd == null || cmd.length() < 1) {
                 return;
             }
+            if (lastCommands.contains(cmd)) {
+                lastCommands.remove(cmd);
+            }
+            if (lastCommands.size() > 20) {
+                lastCommands.remove(0);
+            }
+            lastCommands.add(cmd);
+            lastCommandIndex = lastCommands.size() - 1;
+           
             input.setText("");
             input.setToolTipText("");                        
             if (async.getSelection()) {
@@ -103,7 +117,7 @@ public class InputCommandKeyListener extends KeyAdapter {
                         try {
                             Runtime.getRuntime().exec(cmd);
                         } catch (final IOException e) {
-                            MessageBox mb = new MessageBox(new Shell());
+                            final MessageBox mb = new MessageBox(new Shell());
                             mb.setMessage("Error in asynchronous process: " 
                                     + e.getMessage());
                             log.warn("Error in async process", e);
@@ -111,11 +125,38 @@ public class InputCommandKeyListener extends KeyAdapter {
                     }
                 }).start();
             } else {
-                shell.getDisplay().asyncExec(getSyncExecutor(cmd));
+                if (cmd.equalsIgnoreCase("clear")) {
+                    output.setText("");
+                } else {
+                    shell.getDisplay().asyncExec(getSyncExecutor(cmd));
+                }
+            }
+        } else if (key.keyCode == SWT.ARROW_DOWN) {
+            key.doit = false;
+            if (lastCommands.size() > 0) {
+                adjustLastCommandIndex();
+                input.setText(lastCommands.get(lastCommandIndex++));
+                input.selectAll();
+            }
+        } else if (key.keyCode == SWT.ARROW_UP) {
+            key.doit = false;
+            if (lastCommands.size() > 0) {
+                adjustLastCommandIndex();
+                input.setText(lastCommands.get(lastCommandIndex--));
+                input.selectAll();
             }
         }
-        if (key.keyCode == SWT.UP) {
-        	//TODO implement
+    }
+
+    /**
+     * Adjusts last command index for looping through command array
+     */
+    private void adjustLastCommandIndex() {
+        if (lastCommandIndex >= lastCommands.size()) {
+            lastCommandIndex = 0;
+        }
+        if (lastCommandIndex < 0) {
+            lastCommandIndex = lastCommands.size() -1;
         }
     }
 
@@ -130,7 +171,6 @@ public class InputCommandKeyListener extends KeyAdapter {
             public void run() {
                 try {
                     final long start = System.currentTimeMillis();
-                    output.setText("");
                     final Process p = Runtime.getRuntime().exec(cmd);
                     new Thread(new Runnable() {
                         public void run() {
@@ -147,9 +187,9 @@ public class InputCommandKeyListener extends KeyAdapter {
                                     p.destroy();
                                     shell.getDisplay().syncExec(new Runnable() {
                                         public void run() {
-                                            output.setText(
+                                            output.append(
                                                     "Synchronous process timeout: " 
-                                                    + cmd);
+                                                    + cmd + '\n');
                                         }
                                     });
                                     return;
@@ -166,11 +206,11 @@ public class InputCommandKeyListener extends KeyAdapter {
                     final InputStream in = p.getInputStream();
                     int c;
                     while ((c = in.read()) != -1) {
-                        output.append("" + (char) c);
+                        output.append(String.valueOf((char) c));
                     }
                     in.close();
                 } catch (final Exception e) {
-                    output.setText(e.getMessage());
+                    output.append(e.getMessage()+ '\n');
                 }
             }
         };

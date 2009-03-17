@@ -54,6 +54,11 @@ public class ExecuteWindow extends AbstractWindow {
     private Button async;
     
     /**
+     * Button "Clear"
+     */
+    private Button clear;
+    
+    /**
      * Label "Output"
      */
     private Label labelOutput;
@@ -78,7 +83,8 @@ public class ExecuteWindow extends AbstractWindow {
         createOutputLabel();
         createButtonClose();
         createOutputText();
-        enableAsyncCheckbox();        
+        enableAsyncCheckbox();
+        createClearButton();
         
         inputCommand.addKeyListener(new InputCommandKeyListener(
                 shell, inputCommand, output, async));
@@ -149,6 +155,21 @@ public class ExecuteWindow extends AbstractWindow {
         		"starting applications. If unchecked, command will be " +
         		"terminated if execution will take longer than 30 seconds.");
         async.setLayoutData(SharedStyle.relativeTo(inputCommand, null));
+    }
+    
+    /**
+     * Creates a button to clear output
+     */
+    private void createClearButton() {
+        clear = new Button(shell, SWT.PUSH);
+        clear.setText("C&lear");
+        clear.setLayoutData(SharedStyle.relativeToBottomRight(buttonClose));
+        clear.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent event) {
+                output.setText("");
+            } 
+         });
     }
 
     /**
