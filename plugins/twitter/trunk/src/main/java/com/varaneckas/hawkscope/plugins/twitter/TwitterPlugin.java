@@ -421,7 +421,7 @@ public class TwitterPlugin extends PluginAdapter {
 								+ "...";
 						}
 						mi.setText(msg);
-						mi.setImage(getTwitterIcon());
+						mi.setImage(twitter.getUserImage(reply.getUser()));
 						mi.addSelectionListener(new SelectionListener() {
 							public void widgetDefaultSelected(
 									SelectionEvent selectionevent) {
@@ -451,7 +451,7 @@ public class TwitterPlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.2";
+		return "1.3";
 	}
 
 	/**
@@ -461,11 +461,13 @@ public class TwitterPlugin extends PluginAdapter {
 	 */
 	private void handleTwitterException(final TwitterException e) {
 		if (e.getMessage().startsWith("Server")) {
-			twitterError = "Server error.";
+			twitterError = "Server error";
 		} else {
 			twitterError = "Network error";
 		}
 		log.warn("Twitter error", e);
+		createTwitter(ConfigurationFactory.getConfigurationFactory()
+				.getConfiguration());
 	}
 
 }

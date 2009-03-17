@@ -17,16 +17,27 @@
  */
 package com.varaneckas.hawkscope.plugins.twitter;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.User;
+
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * Twitter4j based Twitter client with simple request cache to prevent throttling
@@ -76,6 +87,8 @@ public class TwitterClient {
 	 */
 	private static final short REPLIES = 2;
 	
+	private final Map<String, Image> userImages = new HashMap<String, Image>();
+	
 	/**
 	 * Constructor that wraps up Twitter4J client
 	 * @param twitter4j
@@ -94,6 +107,7 @@ public class TwitterClient {
 	 */
 	public boolean test() throws TwitterException {
 		return twitter4j.test();
+		
 	}
 	
 	/**
@@ -187,5 +201,28 @@ public class TwitterClient {
 	 */
 	public String getBaseURL() {
 		return twitter4j.getBaseURL();
+	}
+
+	public Image getUserImage(final User user) {
+		if (!userImages.containsKey(user.getName())) {
+			Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+				.getConfiguration();
+			Image i;
+			try {
+			if (!cfg.isHttpProxyInUse()) {
+				i = new Image(Display.getCurrent(), user.getProfileImageURL().openStream());
+			} else {
+				Proxy p = new Proxy(Type.HTTP, InetSocketAddress.createUnresolved(
+						cfg.getHttpProxyHost(), cfg.getHttpProxyPort()));
+//				i = new Image(Display.getCurrent(), user.get)
+				//FIXME todo continue
+			}
+			} catch (final IOException e) {
+				log.warn("Failed getting user icon: " + user.getName(), e);
+				i = IconFactory.getInstance().getPluginIcon("twitter"
+						, getClass().getClassLoader());
+			}
+		} 
+		return null;
 	}
 }
