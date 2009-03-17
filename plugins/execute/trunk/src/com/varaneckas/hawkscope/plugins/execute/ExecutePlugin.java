@@ -65,7 +65,7 @@ public class ExecutePlugin extends PluginAdapter {
                 getClass().getClassLoader()));
         execute.setCommand(new Command() {
             public void execute() {
-                new ExecuteWindow().open();
+                ExecuteWindow.getInstance().open();
             }
         });
         mainMenu.addMenuItem(execute);

@@ -44,6 +44,11 @@ public class ExecuteWindow extends AbstractWindow {
     private Label command;
     
     /**
+     * Singleton instance;
+     */
+    private static ExecuteWindow instance = null;
+    
+    /**
      * Command input line
      */
     private Text inputCommand;
@@ -67,6 +72,24 @@ public class ExecuteWindow extends AbstractWindow {
      * Output text area
      */
     private Text output;
+    
+    /**
+     * Singleton constructor
+     */
+    private ExecuteWindow() {
+        //nothing to do
+    }
+    
+    /**
+     * Gets the singleton instance of execute window
+     * @return
+     */
+    public static synchronized ExecuteWindow getInstance() {
+        if (instance == null) {
+            instance = new ExecuteWindow();
+        }
+        return instance;
+    }
     
     @Override
     public void open() {
