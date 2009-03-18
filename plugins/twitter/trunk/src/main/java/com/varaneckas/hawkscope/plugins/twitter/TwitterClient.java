@@ -20,6 +20,7 @@ package com.varaneckas.hawkscope.plugins.twitter;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.URLConnection;
 import java.net.Proxy.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -203,26 +204,69 @@ public class TwitterClient {
 		return twitter4j.getBaseURL();
 	}
 
+	/**
+	 * Gets an 24x24 image for User
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public Image getUserImage(final User user) {
+	    if (user == null) {
+	        return getTwitterIcon();
+	    }
 		if (!userImages.containsKey(user.getName())) {
 			Configuration cfg = ConfigurationFactory.getConfigurationFactory()
 				.getConfiguration();
-			Image i;
+			Image i = null;
 			try {
-			if (!cfg.isHttpProxyInUse()) {
-				i = new Image(Display.getCurrent(), user.getProfileImageURL().openStream());
-			} else {
-				Proxy p = new Proxy(Type.HTTP, InetSocketAddress.createUnresolved(
-						cfg.getHttpProxyHost(), cfg.getHttpProxyPort()));
-//				i = new Image(Display.getCurrent(), user.get)
-				//FIXME todo continue
-			}
+    			if (!cfg.isHttpProxyInUse()) {
+    				i = new Image(Display.getCurrent(), user.getProfileImageURL().openStream());
+    			} else {
+    				Proxy p = new Proxy(Type.HTTP, InetSocketAddress.createUnresolved(
+    						cfg.getHttpProxyHost(), cfg.getHttpProxyPort()));
+    				URLConnection con = user.getProfileImageURL().openConnection(p);
+    				con.setReadTimeout(3000);
+    				i = new Image(Display.getCurrent(), con.getInputStream());
+    			}
+			    i = new Image(Display.getCurrent(), 
+			            i.getImageData().scaledTo(24, 24));
+    			userImages.put(user.getName(), i);
 			} catch (final IOException e) {
 				log.warn("Failed getting user icon: " + user.getName(), e);
-				i = IconFactory.getInstance().getPluginIcon("twitter"
-						, getClass().getClassLoader());
+				return getTwitterIcon();
 			}
 		} 
-		return null;
+		return userImages.get(user.getName());
+	}
+	
+	/**
+	 * Gets twitter icon
+	 * 
+	 * @return
+	 */
+	public Image getTwitterIcon() {
+	    return IconFactory.getInstance().getPluginIcon("twitter24.png"
+                , getClass().getClassLoader());
+	}
+	
+	/**
+	 * Gets currently active user
+	 * 
+	 * @return
+	 */
+	public User getCurrentUser() {
+	    try {
+            return twitter4j.getAuthenticatedUser();
+        } catch (TwitterException e) {
+            log.warn("Can't get authenticated user", e);
+            return null;
+        }
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+	    for (final Image i : userImages.values()) {
+	        i.dispose();
+	    }
 	}
 }

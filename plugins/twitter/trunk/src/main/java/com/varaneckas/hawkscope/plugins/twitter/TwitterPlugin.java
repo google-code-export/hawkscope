@@ -384,8 +384,7 @@ public class TwitterPlugin extends PluginAdapter {
 	private void createTweetItem() {
 		ExecutableMenuItem tweet = MenuFactory.newExecutableMenuItem();
 		tweet.setText("Tweet!");
-		tweet.setIcon(IconFactory.getInstance().getPluginIcon("twitter24.png",
-				getClass().getClassLoader()));
+		tweet.setIcon(twitter.getUserImage(twitter.getCurrentUser()));
 		tweet.setCommand(new Command() {
 			public void execute() {
 				new TwitterDialog(new Updater() {
@@ -413,12 +412,11 @@ public class TwitterPlugin extends PluginAdapter {
 			public void run() {
 				try {
 					for (final Status reply : messages) {
-						String msg = reply.getUser().getName() + ": "
-								+ reply.getText().replaceAll("\\n", "");
+						String msg = reply.getUser().getName().concat(": ")
+								.concat(reply.getText().replaceAll("\\n", " "));
 						MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
 						if (msg.length() > 80) {
-							msg = msg.substring(0, 79) 
-								+ "...";
+							msg = msg.substring(0, 79).concat("...");
 						}
 						mi.setText(msg);
 						mi.setImage(twitter.getUserImage(reply.getUser()));
