@@ -1,4 +1,5 @@
 #labels Featured,Phase-Support
+#Frequently Asked Questions
 = General =
 
 === What is Hawkscope? ===
