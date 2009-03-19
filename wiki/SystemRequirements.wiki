@@ -1,4 +1,6 @@
+#summary Hawkscope System Requirements
 #labels Featured,Phase-Deploy
+
 = Hawkscope System Requirements =
 
 [http://java.sun.com/javase/downloads/index.jsp Java 5] Runtime Environment or greater. JRE 6 recommended.
