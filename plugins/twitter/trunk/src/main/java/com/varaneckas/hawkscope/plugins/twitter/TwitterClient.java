@@ -31,6 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
+import twitter4j.RateLimitStatus;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -54,9 +55,9 @@ public class TwitterClient {
 	private static final Log log = LogFactory.getLog(TwitterClient.class);
 	
 	/**
-	 * Two seconds cache. Ends up with 60 / 2 * 3 = 90 max requests per hour.
+	 * Five minute cache
 	 */
-	private static final int CACHE_SECONDS = 120; 
+	private static final int CACHE_SECONDS = 360; 
 
 	/**
 	 * Twitter4J instance
@@ -149,10 +150,30 @@ public class TwitterClient {
 	public List<Status> getFriendsTimeline() throws TwitterException {
 		if (cacheExpired(FRIENDS_TIMELINE)) {
 			updateLastCall(FRIENDS_TIMELINE);
-			statusListCache.put(FRIENDS_TIMELINE, twitter4j.getFriendsTimeline());
+			if (canHit()) {
+			    statusListCache.put(FRIENDS_TIMELINE, twitter4j.getFriendsTimeline());
+			}
 		}
 		return statusListCache.get(FRIENDS_TIMELINE);
 	}
+	
+	/**
+	 * Tells if twitter client can hit the server
+	 * 
+	 * @return
+	 */
+	private synchronized boolean canHit() {
+        int remainingHits;
+        try {
+            remainingHits = twitter4j.rateLimitStatus().getRemainingHits();
+        } catch (TwitterException e) {
+            log.warn("Failure while getting rate limit status", e);
+            return false;
+        }
+        log.debug("Remaining hits: " + remainingHits);
+        //leave 3 hits for reserve
+        return (remainingHits > 3);
+    }
 	
 	/**
 	 * Gets replies (last 20 entries)
@@ -163,7 +184,9 @@ public class TwitterClient {
 	public List<Status> getReplies() throws TwitterException {
 		if (cacheExpired(REPLIES)) {
 			updateLastCall(REPLIES);
-			statusListCache.put(REPLIES, twitter4j.getReplies());
+			if (canHit()) {
+			    statusListCache.put(REPLIES, twitter4j.getReplies());
+			}
 		}
 		return statusListCache.get(REPLIES);
 	}
@@ -178,8 +201,10 @@ public class TwitterClient {
 	public List<Status> getUserTimeline(final int pageSize) throws TwitterException {
 		if (cacheExpired(USER_TIMELINE)) {
 			updateLastCall(USER_TIMELINE);
-			statusListCache.put(USER_TIMELINE, 
+			if (canHit()) {
+    			statusListCache.put(USER_TIMELINE, 
 					twitter4j.getUserTimeline(twitter4j.getUserId(), pageSize));
+			}
 		}
 		return statusListCache.get(USER_TIMELINE);
 	}
@@ -215,7 +240,7 @@ public class TwitterClient {
 	        return getTwitterIcon();
 	    }
 		if (!userImages.containsKey(user.getName())) {
-			Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+			final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
 				.getConfiguration();
 			Image i = null;
 			try {
@@ -268,5 +293,15 @@ public class TwitterClient {
 	    for (final Image i : userImages.values()) {
 	        i.dispose();
 	    }
+	}
+	
+	/**
+	 * Gets the rate limit status
+	 * 
+	 * @return
+	 * @throws TwitterException
+	 */
+	public synchronized RateLimitStatus getRateLimitStatus() throws TwitterException {
+	    return twitter4j.rateLimitStatus();
 	}
 }
