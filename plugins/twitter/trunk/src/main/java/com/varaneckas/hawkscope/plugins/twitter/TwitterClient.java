@@ -89,6 +89,11 @@ public class TwitterClient {
 	 */
 	private static final short REPLIES = 2;
 	
+	/**
+	 * Current user
+	 */
+	private User currentUser = null;
+	
 	private final Map<String, Image> userImages = new HashMap<String, Image>();
 	
 	/**
@@ -280,13 +285,18 @@ public class TwitterClient {
 	 * @return
 	 */
 	public User getCurrentUser() {
-	    try {
-            return twitter4j.getAuthenticatedUser();
-        } catch (TwitterException e) {
-            log.warn("Can't get authenticated user", e);
-            return null;
+        if (currentUser == null) {
+            if (canHit()) {
+                try {
+                    currentUser = twitter4j.getAuthenticatedUser();
+                } catch (TwitterException e) {
+                    log.warn("Can't get authenticated user", e);
+                    return null;
+                }
+            }
         }
-	}
+        return currentUser;
+    }
 	
 	@Override
 	protected void finalize() throws Throwable {
