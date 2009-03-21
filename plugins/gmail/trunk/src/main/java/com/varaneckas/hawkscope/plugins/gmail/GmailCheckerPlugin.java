@@ -66,7 +66,7 @@ public class GmailCheckerPlugin extends PluginAdapter {
     private GmailClient gmail;
     
     public String getDescription() {
-        return "Displays unread Gmail messages";
+        return "Displays unread Gmail messages.";
     }
 
     public String getName() {
