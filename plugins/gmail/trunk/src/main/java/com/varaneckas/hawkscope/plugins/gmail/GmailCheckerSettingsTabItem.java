@@ -18,7 +18,6 @@
 package com.varaneckas.hawkscope.plugins.gmail;
 
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
@@ -35,17 +34,17 @@ import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 public class GmailCheckerSettingsTabItem extends AbstractSettingsTabItem {
 
 	/**
-	 * Twitter login section label
+	 * Gmail login section label
 	 */
-	private Label twitterLogin;
+	private Label gmailLogin;
 	
 	/**
-	 * Twitter user input
+	 * Gmail user input
 	 */
     private Text inputUser;
     
     /**
-     * Twitter password input
+     * Gmail password input
      */
     private Text inputPass;
     
@@ -59,26 +58,6 @@ public class GmailCheckerSettingsTabItem extends AbstractSettingsTabItem {
      */
     private Label pass;
     
-    /**
-     * "Display" label
-     */
-    private Label display;
-    
-    /**
-     * Checkbox "Display friends tweets"
-     */
-    private Button checkDisplayFriendsTweets;
-    
-    /**
-     * Checkbox "Display my tweets"
-     */
-    private Button checkDisplayMyTweets;
-    
-    /**
-     * Button "Display replies"
-     */
-    private Button checkDisplayReplies;
-    
     public GmailCheckerSettingsTabItem(final TabFolder folder) {
         super(folder, "&Gmail Checker");
         createLoginSection();
@@ -88,28 +67,28 @@ public class GmailCheckerSettingsTabItem extends AbstractSettingsTabItem {
      * Creates Twitter Login section
      */
     private void createLoginSection() {
-		twitterLogin = addSectionLabel("Gmail Login");
-        twitterLogin.setLayoutData(SharedStyle.relativeTo(null, null));
+		gmailLogin = addSectionLabel("Gmail Login");
+        gmailLogin.setLayoutData(SharedStyle.relativeTo(null, null));
         
         user = addLabel("Username:");
-        user.setLayoutData(ident(SharedStyle.relativeTo(twitterLogin, null)));
+        user.setLayoutData(ident(SharedStyle.relativeTo(gmailLogin, null)));
         
         pass = addLabel("Password:");
         pass.setLayoutData(ident(SharedStyle.relativeTo(user, null)));
         
         inputUser = addText(cfg.getProperties()
-                .get(TwitterPlugin.PROP_TWITTER_USER), 255);
-        FormData userLayout = SharedStyle.relativeTo(twitterLogin, 
-                null, null, twitterLogin);
+                .get(GmailCheckerPlugin.PROP_USER), 255);
+        FormData userLayout = SharedStyle.relativeTo(gmailLogin, 
+                null, null, gmailLogin);
         userLayout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         userLayout.bottom = null;
         inputUser.setLayoutData(userLayout);
         
         inputPass = addText(cfg.getPasswordProperty
-        		(TwitterPlugin.PROP_TWITTER_PASS), 255);
+        		(GmailCheckerPlugin.PROP_PASS), 255);
         inputPass.setEchoChar('*');
         FormData passLayout = SharedStyle.relativeTo(user, 
-                null, null, twitterLogin);
+                null, null, gmailLogin);
         passLayout.bottom = null;
         passLayout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         inputPass.setLayoutData(passLayout);
@@ -117,11 +96,11 @@ public class GmailCheckerSettingsTabItem extends AbstractSettingsTabItem {
 
     @Override
     protected void saveConfiguration() {
-        cfg.getProperties().put(TwitterPlugin.PROP_TWITTER_USER, 
+        cfg.getProperties().put(GmailCheckerPlugin.PROP_USER, 
         		inputUser.getText());
-        cfg.setPasswordProperty(TwitterPlugin.PROP_TWITTER_PASS, 
+        cfg.setPasswordProperty(GmailCheckerPlugin.PROP_PASS, 
         		inputPass.getText());
-        TwitterPlugin.getInstance().refresh();
+        GmailCheckerPlugin.getInstance().refresh();
     }
 
 }
