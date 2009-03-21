@@ -18,6 +18,8 @@ import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 public class GmailCheckerPlugin extends PluginAdapter {
+    
+    private GmailCheckerSettingsTabItem settings;
 
     private static final GmailCheckerPlugin instance = new GmailCheckerPlugin();
 
