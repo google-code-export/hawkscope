@@ -26,10 +26,10 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 
 /**
- * Twitter Settings tab item
+ * Gmail Checker Settings tab item
  * 
  * @author Tomas Varaneckas
- * @version $Id: TwitterSettingsTabItem.java 375 2009-02-28 07:48:02Z tomas.varaneckas $
+ * @version $Id$
  */
 public class GmailCheckerSettingsTabItem extends AbstractSettingsTabItem {
 

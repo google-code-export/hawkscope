@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2008-2009 Tomas Varaneckas
+ * http://www.varaneckas.com
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.varaneckas.hawkscope.plugins.gmail;
 
 import java.util.List;
@@ -25,28 +42,60 @@ import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
 
+/**
+ * Plugin that checks Gmail account for new messages
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class GmailCheckerPlugin extends PluginAdapter {
     
+    /**
+     * Gmail username property
+     */
     public static final String PROP_USER = "plugins.gmailchecker.user";
     
+    /**
+     * Gmail password property
+     */
     public static final String PROP_PASS = "plugins.gmailchecker.pass";
     
+    /**
+     * Gmail Checker Settings Tab
+     */
     private GmailCheckerSettingsTabItem settings;
     
+    /**
+     * Menu item
+     */
     private GmailCheckerMenuItem menuItem;
     
+    /**
+     * Gmail error
+     */
     private String gmailError = null;
 
+    /**
+     * Singleton instance
+     */
     private static final GmailCheckerPlugin instance = new GmailCheckerPlugin();
 
+    /**
+     * Singleton constructor
+     */
     private GmailCheckerPlugin() {
         canHookBeforeQuickAccessList = true;
         refresh();
     }
     
+    /**
+     * Refreshes plugin data
+     */
     public void refresh() {
         try {
-            Configuration cfg = ConfigurationFactory.getConfigurationFactory().getConfiguration();
+            gmailError = null;
+            final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
             gmail = new RssGmailClient();
             gmail.setLoginCredentials(cfg.getProperties().get(PROP_USER), 
                     cfg.getPasswordProperty(PROP_PASS).toCharArray());
@@ -59,10 +108,18 @@ public class GmailCheckerPlugin extends PluginAdapter {
         }
     }
 
+    /**
+     * Singleton instance getter
+     * 
+     * @return
+     */
     public static GmailCheckerPlugin getInstance() {
         return instance;
     }
     
+    /**
+     * Gmail4J client
+     */
     private GmailClient gmail;
     
     public String getDescription() {
@@ -121,11 +178,16 @@ public class GmailCheckerPlugin extends PluginAdapter {
         
     }
     
+    /**
+     * Adds unread message to menu
+     * 
+     * @param menuItem
+     * @param message
+     */
     private void addUnreadMessage(Menu menuItem, final GmailMessage message) {
-        log.debug("Adding unread message");
         String msg = message.getFrom().toString().concat(": ")
             .concat(message.getSubject());
-        MenuItem mi = new MenuItem(menuItem, SWT.PUSH);
+        final MenuItem mi = new MenuItem(menuItem, SWT.PUSH);
         if (msg.length() > 80) {
             msg = msg.substring(0, 79) 
                 + "...";

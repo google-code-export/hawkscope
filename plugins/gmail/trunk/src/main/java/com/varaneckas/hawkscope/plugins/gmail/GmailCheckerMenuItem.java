@@ -7,10 +7,10 @@ import org.eclipse.swt.widgets.MenuItem;
 import com.varaneckas.hawkscope.menu.AbstractMenuItem;
 
 /**
- * Twitter menu item in Hawkscope menu
+ * Gmail checker menu item in Hawkscope menu
  * 
  * @author Tomas Varaneckas
- * @version $Id: TwitterMenuItem.java 376 2009-02-28 08:13:26Z tomas.varaneckas $
+ * @version $Id$
  */
 public class GmailCheckerMenuItem extends AbstractMenuItem {
 

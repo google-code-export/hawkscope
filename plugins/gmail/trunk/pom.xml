@@ -7,7 +7,7 @@
   <version>1.0</version>
   <name>Hawkscope Gmail Checker</name>
   <url>http://hawkscope.googlecode.com</url>
-  <!-- $Id: pom.xml 349 2009-02-24 11:26:35Z tomas.varaneckas $ -->
+  <!-- $Id$ -->
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
