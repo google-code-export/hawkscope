@@ -17,6 +17,7 @@
  */
 package com.varaneckas.hawkscope.plugins.gmail;
 
+import java.net.Authenticator;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -34,6 +35,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import com.googlecode.gmail4j.GmailClient;
 import com.googlecode.gmail4j.GmailException;
 import com.googlecode.gmail4j.GmailMessage;
+import com.googlecode.gmail4j.http.HttpGmailConnection;
 import com.googlecode.gmail4j.rss.RssGmailClient;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
@@ -97,9 +99,17 @@ public class GmailCheckerPlugin extends PluginAdapter {
             final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
             gmail = new RssGmailClient();
-            gmail.setLoginCredentials(cfg.getProperties().get(PROP_USER), 
+            final HttpGmailConnection conn = new HttpGmailConnection();
+            conn.setLoginCredentials(cfg.getProperties().get(PROP_USER), 
                     cfg.getPasswordProperty(PROP_PASS).toCharArray());
-            gmail.init();
+            if (cfg.isHttpProxyInUse()) {
+                conn.setProxy(cfg.getHttpProxyHost(), cfg.getHttpProxyPort());
+                if (cfg.isHttpProxyAuthInUse()) {
+                    conn.setProxyCredentials(cfg.getHttpProxyAuthUsername(), 
+                            cfg.getHttpProxyAuthPassword().toCharArray());
+                }
+            }
+            gmail.setConnection(conn);
         } catch (final Exception e) {
             if (e instanceof GmailException) {
                 gmailError = e.getMessage();
@@ -131,7 +141,7 @@ public class GmailCheckerPlugin extends PluginAdapter {
     }
 
     public String getVersion() {
-        return "1.0";
+        return "1.1";
     }
     
     @Override
@@ -150,6 +160,11 @@ public class GmailCheckerPlugin extends PluginAdapter {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 try {
+                    //just in case
+                    Authenticator.setDefault(null);
+                    //for ROME property file reader:
+                    Thread.currentThread().setContextClassLoader(getClass()
+                            .getClassLoader());
                     final List<GmailMessage> messages = gmail.getUnreadMessages();
                     final Menu newMessages = new Menu(menuItem.getSwtMenuItem());
                     menuItem.getSwtMenuItem().setMenu(newMessages);
