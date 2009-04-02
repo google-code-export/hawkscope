@@ -69,3 +69,13 @@ rm ~/.hawkscope.properties
 
 === I would like to remove Hawkscope icon from the dock ===
 I would like that too (Issue #31), however there is an Eclipse SWT bug on this subject: [https://bugs.eclipse.org/bugs/show_bug.cgi?id=268687 #268687]
+-----
+= Plugins =
+
+=== Twitter plugin does not work, and it also breaks Hawkscope menu from loading ===
+Twitter API has [http://groups.google.com/group/twitter-development-talk/browse_thread/thread/f79c44d905a3e83d?pli=1 changed] recently. When [http://yusuke.homeip.net/twitter4j/en/index.html Twitter4J] library will adopt this change, new version of Twitter plugin will be out. Meanwhile please remove the plugin. Plugins are located at:
+  * Mac: /Users/youruser/Library/Application Support/Hawkscope
+  * Windows XP: C:\Documents and Settings\youruser\.hawkscope-plugins
+  * Windows Vista: C:\Users\youruser\.hawkscope-plugins
+  * Linux: /usr/share/hawkscope/plugins
+Hawkscope 0.6.0 (out in a few days) will not allow plugins to break the main menu.
