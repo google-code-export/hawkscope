@@ -23,13 +23,17 @@
 
 = Hawkscope Settings =
 == General ==
-[http://lh4.ggpht.com/_nP8Aa6cTHpo/SZ0Snc0ldTI/AAAAAAAABUo/SSZbawuGnQ0/hs2.png]
+[http://lh4.ggpht.com/_nP8Aa6cTHpo/Sdc4jX-PtrI/AAAAAAAABiQ/kL8FMtBhQwE/general.settings.png]
 
 *Check for updates* - if enabled, Hawkscope will check for updates on startup and will add "Update Available" item in Hawkscope Menu if update is available. If you are behind a proxy, make sure HTTP Proxy is configured in Network Settings Tab.
 
 *Reload delay (seconds)* - each time Hawkscope Menu becomes hidden, a menu reload gets scheduled. A reload detects new devices, new plugins, it also cleans up system memory. This setting defines the reload delay.
 
+*Icons Theme* - a set of icons used in Hawkscope Menu. By default icons are chosen to fit your operating system. You can choose any other theme, it will be instantly applied.
+
 *Use operating system icons* - if enabled, Hawkscope will attempt to use the underlying Operating System icons when displaying files. This works quite well in Windows and Mac. Folder and Mac application icon support is coming soon.
+
+*Hide known file extensions* - when you don't want to display extensions of known files (i.e. ".txt" or ".jpg"), select this option.
 
 == Quick Access ==
 [http://lh5.ggpht.com/_nP8Aa6cTHpo/SZ0VN2ZA_XI/AAAAAAAABUw/OowIcVTFYG0/hs3.png]
