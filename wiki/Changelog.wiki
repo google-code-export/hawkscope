@@ -4,12 +4,11 @@
 = Hawkscope Changelog =
 
 ==Changes in version 0.6.0 (2009-04-04)==
-* Plugins can no longer break the rest of Hawkscope menu: Issue #84
-* Native icon themes for supported operating systems: Issue #83
-* Unified HTTP authentication mechanism for version checks and plugins that 
-  use network connection: Issue #81  
-* Ability to show/hide known file icons. Mac .app extension is always hidden.Issue #78
-* Implemented checking for plugin updates: Issue #53
+  * Plugins can no longer break the rest of Hawkscope menu: Issue #84
+  * Native icon themes for supported operating systems: Issue #83
+  * Unified HTTP authentication mechanism for version checks and plugins that use network connection: Issue #81  
+  * Ability to show/hide known file icons. Mac .app extension is always hidden. Issue #78
+  * Implemented checking for plugin updates: Issue #53
 
 ==Changes in version 0.5.4 (2009-03-21)==
   * Gmail Checker plugin: Issue #76
