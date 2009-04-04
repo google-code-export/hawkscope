@@ -1,0 +1,154 @@
+<project name="Hawkscope" basedir=".">
+    
+    <!-- $Id$ -->
+    <!--  
+         This build file is Operating System dependent and is used only for 
+         creating Hawkscope installer packages for various platforms. 
+         All the java building magic should be done with Maven. 
+     -->
+    
+    <property file="src/main/resources/internal.properties" />
+
+    <target name="dist-mac" 
+        description="Builds a Mac distributable. Find it in dist/output.">
+        <exec executable="mvn">
+            <arg line="clean package -Dmaven.test.skip" />
+        </exec>
+        <copy overwrite="true" 
+            tofile="dist/mac/Hawkscope.app/Contents/MacOS/hawkscope.jar">
+            <fileset dir="target">
+                <include name="*jar-with-dependencies.jar" />
+            </fileset>
+        </copy>
+        <!-- seems to hang and irritates me
+    	<delete dir="dist/output" failonerror="no" quiet="true"/>
+    	so let's get rude -->
+        <exec executable="rm">
+            <arg line="-rf dist/output" />
+        </exec>
+        <mkdir dir="dist/output/Hawkscope-${version.number}" />
+        <filter token="hawkscope.version" value="${version.number}" />
+        <filter token="copyright.year" value="${copyright.year}" />
+        <copy overwrite="true" 
+            todir="dist/output/Hawkscope-${version.number}" filtering="true">
+            <fileset dir="dist/mac">
+                <filename name="**/*" />
+                <exclude name=".*" />
+            </fileset>
+        </copy>
+        <chmod perm="a+x" 
+            file="dist/output/Hawkscope-${version.number}/Hawkscope.app/Contents/MacOS/hawkscope" />
+        <exec executable="ln">
+            <arg line="-s /Applications dist/output/Hawkscope-${version.number}/Applications" />
+        </exec>
+        <copy file="license.txt" todir="dist/output/Hawkscope-${version.number}"/>
+        <copy file="changelog.txt" todir="dist/output/Hawkscope-${version.number}"/>
+        <exec executable="hdiutil">
+            <arg line="create -srcfolder dist/output/Hawkscope-${version.number} dist/output/Hawkscope-${version.number}.dmg" />
+        </exec>
+        <exec executable="hdiutil">
+            <arg line="internet-enable -yes dist/output/Hawkscope-${version.number}.dmg" />
+        </exec>
+    </target>
+
+    <target name="dist-win" description="Builds a Windows distributable.">
+        <taskdef name="jsmoothgen" 
+            classname="net.charabia.jsmoothgen.ant.JSmoothGen" 
+            classpath="dist/win/tools/jsmoothgen-ant-0.9.9-7-mgu1.jar" />
+        <taskdef name="nsis" classname="net.sf.nsisant.Task" 
+            classpath="dist/win/tools/nsisant-1.2.jar" />
+        <exec executable="cmd">
+            <arg line="/c mvn clean package -Dmaven.test.skip" />
+        </exec>
+        <copy overwrite="true" tofile="target/hawkscope.jar">
+            <fileset dir="target">
+                <include name="*jar-with-dependencies.jar" />
+            </fileset>
+        </copy>
+        <delete dir="dist/output" failonerror="no" quiet="true" />
+        <mkdir dir="dist/output/win" />
+        <jsmoothgen project="dist/win/hawkscope.jsmooth" 
+            skeletonroot="dist/win/skeletons" destdir="dist/win" />
+        <nsis path="C:/Program Files/NSIS" 
+            script="dist/win/hawkscope.nsi" nocd="yes" verbosity="4">
+            <define name="VERSION" value="${version.number}" />
+        </nsis>
+    </target>
+	
+	<target name="dist-deb" description="Creates Debian Package">
+        <exec executable="mvn">
+            <arg line="clean package -Dmaven.test.skip" />
+        </exec>
+	    <path id="classpath">
+	        <fileset dir="${basedir}/dist/deb/tools" includes="*.jar"/>
+	    </path>
+		<taskdef resource="ant_deb_task.properties" classpathref="classpath"/>
+        <delete dir="dist/output" failonerror="no" quiet="true" />
+        <mkdir dir="dist/output/deb" />
+		<chmod perm="a+x" file="dist/deb/hawkscope"/>
+		<copy overwrite="true" tofile="dist/output/deb/hawkscope.jar">
+            <fileset dir="target">
+                <include name="*jar-with-dependencies.jar" />
+            </fileset>
+        </copy>
+	    <desktopentry
+	            toFile="dist/output/deb/hawkscope.desktop"
+	            name="Hawkscope"
+	            comment="${slogan}"
+	            exec="hawkscope"
+	            path="/usr/share/hawkscope/"
+	            icon="/usr/share/hawkscope/hawkscope32.png"
+	            categories="Utility;FileTools;Java"/>
+        <deb
+	            todir="dist/output"
+	            package="hawkscope"
+	            section="utils"
+        	    preinst="dist/deb/local/preinst"
+        	    postinst="dist/deb/local/postinst"
+        	    architecture="${os.arch}"
+	            depends="sun-java6-jre | sun-java5-jre">
+	            <version upstream="${version.number}"/>
+	            <maintainer email="tomas.varaneckas@gmail.com" name="Tomas Varaneckas"/>
+	            <description synopsis="Access anything with single click!">
+	                Hawkscope is a productivity tool that allows you to access your hard drive contents quickly via system tray icon with dynamic pop-up menu. 
+
+	                Http://hawkscope.googlecode.com
+	            </description>
+	            <tarfileset dir="dist/output/deb" prefix="usr/share/hawkscope">
+	                <include name="*.jar"/>
+	            </tarfileset>
+        	    <tarfileset dir="src/main/resources/icons" prefix="usr/share/hawkscope">
+        	    	<include name="hawkscope32.png"/>
+        	    </tarfileset>
+        	    <tarfileset file="dist/deb/hawkscope" prefix="usr/bin" />
+	            <tarfileset file="dist/output/deb/hawkscope.desktop" 
+	            	prefix="usr/share/applications"/>
+        	    <tarfileset file="changelog.txt" prefix="usr/share/hawkscope"/>
+        	    <tarfileset file="license.txt" prefix="usr/share/hawkscope"/>
+	        </deb>
+    </target>
+    
+    <target name="dist-source" description="Creates a source distribution">
+        <delete dir="dist/output" failonerror="no" quiet="true" />
+        <mkdir dir="dist/output/source"/>
+        <copy overwrite="true" todir="dist/output/source" filtering="true">
+            <fileset dir=".">
+                <exclude name=".svn/"/>
+                <exclude name="dist/"/>
+                <exclude name=".project"/>
+                <exclude name=".settings/"/>
+                <exclude name=".classpath"/>
+                <exclude name="target/"/>
+            </fileset>
+        </copy>
+        <tar destfile="dist/output/hawkscope-${version.number}-src.tar">
+            <fileset dir="dist/output/source"/>
+        </tar>
+        <gzip src="dist/output/hawkscope-${version.number}-src.tar" 
+            destfile="dist/output/hawkscope-${version.number}-src.tar.gz"/>
+        <zip destfile="dist/output/hawkscope-${version.number}-src.zip">
+            <fileset dir="dist/output/source"/>
+        </zip>        
+    </target>
+    
+</project>

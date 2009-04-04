@@ -1,0 +1,2 @@
+#!/bin/sh
+java -Xms4m -Xmx32m -jar /usr/share/hawkscope/hawkscope.jar $1 $2 $3 $4 $5 $6
