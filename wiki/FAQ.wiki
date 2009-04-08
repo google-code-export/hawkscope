@@ -78,4 +78,5 @@ Twitter API has [http://groups.google.com/group/twitter-development-talk/browse_
   * Windows XP: C:\Documents and Settings\youruser\.hawkscope-plugins
   * Windows Vista: C:\Users\youruser\.hawkscope-plugins
   * Linux: /usr/share/hawkscope/plugins
-Hawkscope 0.6.0 (out in a few days) will not allow plugins to break the main menu.
+Hawkscope 0.6.0 does not allow plugins to break the main menu.
+Twitter plugin 1.4 has this issue fixed.
