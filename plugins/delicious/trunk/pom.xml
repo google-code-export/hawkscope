@@ -7,7 +7,7 @@
   <version>1.0</version>
   <name>Hawkscope Delicious.com Bookmarks</name>
   <url>http://hawkscope.googlecode.com</url>
-  <!-- $Id: pom.xml 349 2009-02-24 11:26:35Z tomas.varaneckas $ -->
+  <!-- $Id$ -->
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
@@ -51,6 +51,12 @@
       <groupId>net.sf.delicious-java</groupId>
       <artifactId>delicious</artifactId>
       <version>1.14</version>
+      <exclusions>
+        <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
