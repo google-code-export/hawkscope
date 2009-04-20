@@ -88,7 +88,7 @@ public class DeliciousClient {
      * 
      * @return client or null if not configured
      */
-    public Delicious getDelicous() {
+    public Delicious getDelicious() {
         return client;
     }
     

@@ -39,6 +39,8 @@ import com.varaneckas.hawkscope.menu.AbstractMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.OSUtils.OS;
 
 import del.icio.us.beans.Post;
 import del.icio.us.beans.Tag;
@@ -97,16 +99,22 @@ public class DeliciousPlugin extends PluginAdapter {
         client = DeliciousClient.getInstance();
         client.login(cfg.getProperties().get(PROP_USER), 
                 cfg.getPasswordProperty(PROP_PASS));
-        if (cfg.isHttpProxyInUse()) {
-            client.getDelicous().setProxyConfiguration(cfg.getHttpProxyHost(), 
-                    cfg.getHttpProxyPort());
-            if (cfg.isHttpProxyAuthInUse()) {
-                client.getDelicous().setProxyAuthenticationConfiguration(
-                        cfg.getHttpProxyAuthUsername(), 
-                        cfg.getHttpProxyAuthPassword());
+        if (client.getDelicious() != null) {
+            if (cfg.isHttpProxyInUse()) {
+                client.getDelicious().setProxyConfiguration(cfg.getHttpProxyHost(), 
+                        cfg.getHttpProxyPort());
+                if (cfg.isHttpProxyAuthInUse()) {
+                    client.getDelicious().setProxyAuthenticationConfiguration(
+                            cfg.getHttpProxyAuthUsername(), 
+                            cfg.getHttpProxyAuthPassword());
+                }
             }
+            new Thread(new Runnable() {
+                public void run() {
+                    client.update();
+                }
+            }).start();
         }
-        client.update();
     }
 
     @Override
@@ -116,15 +124,15 @@ public class DeliciousPlugin extends PluginAdapter {
         deliciousItem.setIcon(getDeliciousIcon());
         mainMenu.addMenuItem(deliciousItem);
         mainMenu.addSeparator();
-        if (client.getDelicous() == null) {
+        if (client.getDelicious() == null) {
             deliciousItem.getSwtMenuItem().setText("Delicious :( No User/Pass");
             deliciousItem.getSwtMenuItem().setEnabled(false);
             return;
         }
-        client.update();
 //        createPostBookmarkItem();
         new Thread(new Runnable() {
             public void run() {
+                client.update();
                 loadData();
             }
         }).start();
@@ -191,8 +199,14 @@ public class DeliciousPlugin extends PluginAdapter {
                 loader.setText("Move over to load items");
                 loader.addArmListener(new ArmListener() {
                     public void widgetArmed(ArmEvent event) {
+                        if (!OSUtils.CURRENT_OS.equals(OS.UNIX)) {
+                            loader.dispose();
+                        } else {
+                            loader.removeArmListener(this);
+                            loader.setText("Loaded");
+                            loader.setEnabled(false);
+                        }
                         log.debug("Loading: " + t.getTag());
-                        loader.dispose();
                         loadPosts(tagPosts, client.getPosts(t.getTag()));
                         log.debug("Loaded");
                     }
@@ -277,7 +291,7 @@ public class DeliciousPlugin extends PluginAdapter {
     }
 
     public String getVersion() {
-        return "1.0";
+        return "1.1";
     }
 
     /**

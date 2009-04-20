@@ -1,1 +1,3 @@
+1.1 - Fixed loading behind proxy
+    - Fixed crash on tag loading in Linux
 1.0 - Initial release
