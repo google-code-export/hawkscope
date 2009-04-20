@@ -14,9 +14,7 @@ public class DeliciousTest {
 
     @Test
     public void testDelicious() throws Exception {
-        Delicious client = new Delicious("spajus", "bullshit1");
-        client.setProxyConfiguration("172.16.1.99", 3128);
-        client.setProxyAuthenticationConfiguration("tomasv", "test123");
+        Delicious client = new Delicious("*", "*");
         for (Object p : client.getBundles()) {
             Bundle bun = (Bundle) p;
             System.out.println(bun.getTags());
@@ -34,9 +32,7 @@ public class DeliciousTest {
     @Test
     public void testDeliciousClient() throws Exception {
         DeliciousClient cli = DeliciousClient.getInstance();
-        cli.login("spajus", "bullshit1");
-        cli.getDelicious().setProxyConfiguration("172.16.1.99", 3128);
-        cli.getDelicious().setProxyAuthenticationConfiguration("tomasv", "test123");
+        cli.login("*", "*");
         assertTrue(cli.update());
         System.out.println(cli.getPosts());
         assertFalse(cli.update());
