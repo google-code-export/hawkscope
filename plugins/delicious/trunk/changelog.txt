@@ -1,4 +1,4 @@
-1.2 - Implemented bookmark limiting (30 recently added bookmarks only)
+1.2 - Implemented bookmark limiting (50 recently added bookmarks only)
 1.1 - Fixed loading behind proxy
     - Fixed crash on tag loading in Linux
 1.0 - Initial release
