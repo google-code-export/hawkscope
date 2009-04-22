@@ -283,7 +283,7 @@ public class DeliciousPlugin extends PluginAdapter {
     }
 
     public String getDescription() {
-        return "Delicious.com bookmarks at your service";
+        return "Delicious.com bookmarks at your service.";
     }
 
     public String getName() {
@@ -291,7 +291,7 @@ public class DeliciousPlugin extends PluginAdapter {
     }
 
     public String getVersion() {
-        return "1.1";
+        return "1.2";
     }
 
     /**

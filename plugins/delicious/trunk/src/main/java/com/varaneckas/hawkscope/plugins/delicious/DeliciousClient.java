@@ -37,6 +37,11 @@ import del.icio.us.beans.Tag;
 public class DeliciousClient {
     
     /**
+     * Limit data to 50 items
+     */
+    private static final int COUNT = 50;
+    
+    /**
      * Singleton instance
      */
     private static DeliciousClient instance = null;
@@ -121,7 +126,7 @@ public class DeliciousClient {
         }
         if (lastUpdated == null || client.getLastUpdate().after(lastUpdated)) {
             lastUpdated = client.getLastUpdate();
-            posts = client.getAllPosts();
+            posts = client.getRecentPosts(null, COUNT);
             tags = client.getTags();
             taggedPosts = new HashMap<String, List<Post>>();
             return true;
@@ -159,7 +164,7 @@ public class DeliciousClient {
         if (taggedPosts.containsKey(tag)) {
             return taggedPosts.get(tag);
         }
-        List<Post> tagPosts = client.getAllPosts(tag);
+        List<Post> tagPosts = client.getRecentPosts(tag, COUNT);
         taggedPosts.put(tag, tagPosts);
         return tagPosts;
     }
