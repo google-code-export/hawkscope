@@ -312,7 +312,13 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuFriends, twitter.getFriendsTimeline());
+						    final List<Status> friends = twitter.getFriendsTimeline();
+                            twitterMenu.getSwtMenuItem().getDisplay()
+                                    .asyncExec(new Runnable() {
+                                public void run() {
+                                    listMessages(menuFriends, friends);
+                                }
+                            });						    
 						} catch (final TwitterException e) {
 							handleTwitterException(e);
 						}
@@ -328,7 +334,7 @@ public class TwitterPlugin extends PluginAdapter {
 	 * @throws TwitterException
 	 */
 	private void createReplies() throws TwitterException {
-		twitterMenu.getSwtMenuItem().getDisplay().syncExec(new Runnable() {
+		twitterMenu.getSwtMenuItem().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				// Replies
 				MenuItem replies = new MenuItem(twitterMenu.getSwtMenuItem().getMenu(),
@@ -340,7 +346,13 @@ public class TwitterPlugin extends PluginAdapter {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							listMessages(menuReplies, twitter.getReplies());
+						    final List<Status> replies = twitter.getReplies();
+						    twitterMenu.getSwtMenuItem().getDisplay().
+						            asyncExec(new Runnable() {
+						        public void run() {
+						            listMessages(menuReplies, replies);
+						        }
+						    });
 						} catch (final TwitterException e) {
 							handleTwitterException(e);
 						}
@@ -366,14 +378,21 @@ public class TwitterPlugin extends PluginAdapter {
 				menuMy = new Menu(twitterMenu.getSwtMenuItem().getMenu());
 				timeline.setMenu(menuMy);
 				new Thread(new Runnable() {
-					public void run() {
-						try {
-							listMessages(menuMy, twitter.getUserTimeline(PAGE_SIZE));
-						} catch (final TwitterException e) {
-							handleTwitterException(e);
-						}
-					}
-				}).start();
+                    public void run() {
+                        try {
+                            final List<Status> my = twitter
+                                    .getUserTimeline(PAGE_SIZE);
+                            twitterMenu.getSwtMenuItem().getDisplay()
+                                    .asyncExec(new Runnable() {
+                                public void run() {
+                                    listMessages(menuMy, my);
+                                }
+                            });
+                        } catch (final TwitterException e) {
+                            handleTwitterException(e);
+                        }
+                    }
+                }).start();
 			}
 		});
 	}
@@ -408,36 +427,32 @@ public class TwitterPlugin extends PluginAdapter {
 	 * @param messages
 	 */
 	private void listMessages(final Menu repMenu, final List<Status> messages) {
-		twitterMenu.getSwtMenuItem().getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				try {
-					for (final Status reply : messages) {
-						String msg = reply.getUser().getName().concat(": ")
-								.concat(reply.getText().replaceAll("\\n", " "));
-						MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
-						if (msg.length() > 80) {
-							msg = msg.substring(0, 79).concat("...");
-						}
-						mi.setText(msg);
-						mi.setImage(twitter.getUserImage(reply.getUser()));
-						mi.addSelectionListener(new SelectionListener() {
-							public void widgetDefaultSelected(
-									SelectionEvent selectionevent) {
-								widgetSelected(selectionevent);
-							}
-							public void widgetSelected(SelectionEvent selectionevent) {
-								Program.launch(twitter.getBaseURL()
-										+ reply.getUser().getScreenName() 
-										+ "/status/" 
-										+ reply.getId());
-							}
-						});
-					}
-				} catch (final Exception e) {
-					log.warn("Failed listing replies", e);
+		try {
+			for (final Status reply : messages) {
+				String msg = reply.getUser().getName().concat(": ")
+						.concat(reply.getText().replaceAll("\\n", " "));
+				MenuItem mi = new MenuItem(repMenu, SWT.PUSH);
+				if (msg.length() > 80) {
+					msg = msg.substring(0, 79).concat("...");
 				}
+				mi.setText(msg);
+				mi.setImage(twitter.getUserImage(reply.getUser()));
+				mi.addSelectionListener(new SelectionListener() {
+					public void widgetDefaultSelected(
+							SelectionEvent selectionevent) {
+						widgetSelected(selectionevent);
+					}
+					public void widgetSelected(SelectionEvent selectionevent) {
+						Program.launch(twitter.getBaseURL()
+								+ reply.getUser().getScreenName() 
+								+ "/status/" 
+								+ reply.getId());
+					}
+				});
 			}
-		});
+		} catch (final Exception e) {
+			log.warn("Failed listing replies", e);
+		}
 	}
 
 	public String getDescription() {
