@@ -33,6 +33,9 @@ import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
  */
 public class DeliciousSettingsTabItem extends AbstractSettingsTabItem {
 
+    /**
+     * Instance of the Delicious plugin
+     */
     private DeliciousPlugin plugin;
     
 	/**

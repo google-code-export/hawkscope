@@ -19,7 +19,10 @@ package com.varaneckas.hawkscope.plugins.delicious;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ArmEvent;
@@ -34,12 +37,17 @@ import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.command.Command;
+import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.menu.AbstractMenuItem;
+import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.Updater;
 import com.varaneckas.hawkscope.util.OSUtils.OS;
 
 import del.icio.us.beans.Post;
@@ -125,11 +133,11 @@ public class DeliciousPlugin extends PluginAdapter {
         mainMenu.addMenuItem(deliciousItem);
         mainMenu.addSeparator();
         if (client.getDelicious() == null) {
-            deliciousItem.getSwtMenuItem().setText("Delicious :( No User/Pass");
+            deliciousItem.getSwtMenuItem().setText("Delicious: No User/Pass");
             deliciousItem.getSwtMenuItem().setEnabled(false);
             return;
         }
-//        createPostBookmarkItem();
+        createPostBookmarkItem();
         new Thread(new Runnable() {
             public void run() {
                 client.update();
@@ -182,7 +190,6 @@ public class DeliciousPlugin extends PluginAdapter {
     private void loadTags(Menu targetMenu, List<Tag> tags) {
         for (final Tag t : tags) {
             try {
-                log.debug("Adding tag: " + t);
                 String msg = t.getTag() + " (" + t.getCount() + ")";
                 final MenuItem mi = new MenuItem(targetMenu, SWT.CASCADE);
                 mi.setText(msg);
@@ -190,13 +197,12 @@ public class DeliciousPlugin extends PluginAdapter {
                 final Menu tagPosts = new Menu(mi);
                 mi.setMenu(tagPosts);
                 if (client.hasPosts(t.getTag())) {
-                    log.debug("Posts for tag already loaded: " + t.getTag());
                     loadPosts(tagPosts, client.getPosts(t.getTag()));
                     continue;
                 } 
                 final MenuItem loader = new MenuItem(tagPosts, SWT.PUSH);
                 loader.setImage(getDeliciousIcon());
-                loader.setText("Move over to load items");
+                loader.setText("Move over and wait to load items");
                 loader.addArmListener(new ArmListener() {
                     public void widgetArmed(ArmEvent event) {
                         if (!OSUtils.CURRENT_OS.equals(OS.UNIX)) {
@@ -206,9 +212,7 @@ public class DeliciousPlugin extends PluginAdapter {
                             loader.setText("Loaded");
                             loader.setEnabled(false);
                         }
-                        log.debug("Loading: " + t.getTag());
                         loadPosts(tagPosts, client.getPosts(t.getTag()));
-                        log.debug("Loaded");
                     }
                 });
             } catch (final Exception e) {
@@ -223,11 +227,10 @@ public class DeliciousPlugin extends PluginAdapter {
     private void createMyBookmarks() {
         deliciousItem.getSwtMenuItem().getDisplay().asyncExec(new Runnable() {
             public void run() {
-                // My Tweets
                 MenuItem myBookmarks = new MenuItem(
                         deliciousItem.getSwtMenuItem().getMenu(), SWT.CASCADE);
                 myBookmarks.setImage(getDeliciousIcon());
-                myBookmarks.setText("My Bookmarks");
+                myBookmarks.setText("Recent Bookmarks");
                 final Menu menuMy = new Menu(myBookmarks);
                 myBookmarks.setMenu(menuMy);
                 new Thread(new Runnable() {
@@ -245,16 +248,44 @@ public class DeliciousPlugin extends PluginAdapter {
         });
     }
 
-//    private void createPostBookmarkItem() {
-//        ExecutableMenuItem post = MenuFactory.newExecutableMenuItem();
-//        post.setText("Post new bookmark");
-//        post.setIcon(getDeliciousIcon());
-//        post.setCommand(new Command() {
-//            public void execute() {
-//            }
-//        });
-//        post.createMenuItem(deliciousItem.getSwtMenuItem().getMenu());
-//    }
+    /**
+     * Posts new bookmark
+     */
+    private void createPostBookmarkItem() {
+        ExecutableMenuItem post = MenuFactory.newExecutableMenuItem();
+        post.setText("Post New Bookmark");
+        post.setIcon(getDeliciousIcon());
+        post.setCommand(new Command() {
+            public void execute() {
+                try {
+                final Map<String, String> bookmark = new HashMap<String, String>();
+                new InputDialog().open("Enter link to bookmark", 1024, null, new Updater() {
+                    public void setValue(String value) {
+                        bookmark.put("link", value);
+                        new InputDialog().open("Enter description for " + bookmark.get("link"), 1024, null, new Updater() {
+                            public void setValue(String value) {
+                                bookmark.put("description", value);
+                                new InputDialog().open("Enter space delimited tags", 1024, null, new Updater() {
+                                    public void setValue(String value) {
+                                        bookmark.put("tags", value);
+                                        client.getDelicious().addPost(bookmark.get("link"), 
+                                                bookmark.get("description"), "", 
+                                                bookmark.get("tags"), new Date());
+                                        client.clearCache();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                } catch (Exception e) {
+                    log.error("Failed posting new bookmark", e);
+                }
+            }
+        });
+        post.createMenuItem(deliciousItem.getSwtMenuItem().getMenu());
+    }
 
     /**
      * Creates Hawkscope Delicious menu item
@@ -291,7 +322,7 @@ public class DeliciousPlugin extends PluginAdapter {
     }
 
     public String getVersion() {
-        return "1.2";
+        return "1.3";
     }
 
     /**
@@ -303,7 +334,6 @@ public class DeliciousPlugin extends PluginAdapter {
     private void loadPosts(final Menu targetMenu, final List<Post> posts) {
         for (final Post p : posts) {
             try {
-                log.debug("Adding bookmark: " + p);
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String msg = df.format(p.getTimeAsDate()).concat(": ")
                     .concat(p.getDescription());

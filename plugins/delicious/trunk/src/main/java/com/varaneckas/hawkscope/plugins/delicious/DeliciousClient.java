@@ -39,7 +39,7 @@ public class DeliciousClient {
     /**
      * Limit data to 50 items
      */
-    private static final int COUNT = 50;
+    private static final int COUNT = 20;
     
     /**
      * Singleton instance
@@ -183,6 +183,13 @@ public class DeliciousClient {
      */
     public void logout() {
         client = null;
+        clearCache();
+    }
+
+    /**
+     * Clears delicious cache
+     */
+    public void clearCache() {
         lastUpdated = null;
         if (posts != null) {
             posts.clear();
