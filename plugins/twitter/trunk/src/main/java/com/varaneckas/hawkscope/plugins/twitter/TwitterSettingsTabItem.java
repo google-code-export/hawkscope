@@ -103,9 +103,9 @@ public class TwitterSettingsTabItem extends AbstractSettingsTabItem {
 
 	    final String showRe = cfg.getProperties().get(
 	    		TwitterPlugin.PROP_TWITTER_SHOW_RE);
-	    checkDisplayReplies = addCheckbox("Display replies");
+	    checkDisplayReplies = addCheckbox("Display mentions");
 	    checkDisplayReplies
-	    		.setToolTipText("Displays latest replies to your tweets");
+	    		.setToolTipText("Displays tweets where @You are mentioned");
 	    checkDisplayReplies.setLayoutData(ident(SharedStyle.relativeTo(
 	    		checkDisplayMyTweets, null)));
 	    checkDisplayReplies.setSelection(showRe == null ? 

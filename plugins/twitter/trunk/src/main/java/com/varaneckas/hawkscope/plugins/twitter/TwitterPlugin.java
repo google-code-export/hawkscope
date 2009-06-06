@@ -275,7 +275,7 @@ public class TwitterPlugin extends PluginAdapter {
 				try {
 					loadData();
 				} catch (final TwitterException e) {
-					twitterError = "Please check configuration.";
+					twitterError = "Check Settings.";
 					log.warn("Twitter error: " + getTwitterError(), e);
 				}
 			}
@@ -334,7 +334,7 @@ public class TwitterPlugin extends PluginAdapter {
 				MenuItem replies = new MenuItem(twitterMenu.getSwtMenuItem().getMenu(),
 						SWT.CASCADE);
 				replies.setImage(getTwitterIcon());
-				replies.setText("Replies");
+				replies.setText("Mentions");
 				menuReplies = new Menu(replies);
 				replies.setMenu(menuReplies);
 				new Thread(new Runnable() {
@@ -449,7 +449,7 @@ public class TwitterPlugin extends PluginAdapter {
 	}
 
 	public String getVersion() {
-		return "1.4";
+		return "1.5";
 	}
 
 	/**

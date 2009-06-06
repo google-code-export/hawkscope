@@ -87,7 +87,7 @@ public class TwitterClient {
 	/**
 	 * Replies timeline flag
 	 */
-	private static final short REPLIES = 2;
+	private static final short MENTIONS = 2;
 	
 	/**
 	 * Current user
@@ -187,13 +187,13 @@ public class TwitterClient {
 	 * @throws TwitterException
 	 */
 	public List<Status> getReplies() throws TwitterException {
-		if (cacheExpired(REPLIES)) {
-			updateLastCall(REPLIES);
+		if (cacheExpired(MENTIONS)) {
+			updateLastCall(MENTIONS);
 			if (canHit()) {
-			    statusListCache.put(REPLIES, twitter4j.getReplies());
+			    statusListCache.put(MENTIONS, twitter4j.getMentions());
 			}
 		}
-		return statusListCache.get(REPLIES);
+		return statusListCache.get(MENTIONS);
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class TwitterClient {
 			updateLastCall(USER_TIMELINE);
 			if (canHit()) {
     			statusListCache.put(USER_TIMELINE, 
-					twitter4j.getUserTimeline(twitter4j.getUserId(), pageSize));
+					twitter4j.getUserTimeline(twitter4j.getUserId()));
 			}
 		}
 		return statusListCache.get(USER_TIMELINE);
@@ -222,7 +222,7 @@ public class TwitterClient {
 	 * @throws TwitterException
 	 */
 	public Status update(final String message) throws TwitterException {
-		return twitter4j.update(message);
+		return twitter4j.updateStatus(message);
 	}
 	
 	/**
@@ -288,7 +288,7 @@ public class TwitterClient {
         if (currentUser == null) {
             if (canHit()) {
                 try {
-                    currentUser = twitter4j.getAuthenticatedUser();
+                    currentUser = twitter4j.verifyCredentials();
                 } catch (TwitterException e) {
                     log.warn("Can't get authenticated user", e);
                     return null;
