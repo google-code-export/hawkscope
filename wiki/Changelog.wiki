@@ -3,6 +3,13 @@
 
 = Hawkscope Changelog =
 
+==Changes in version 0.6.1 (2009-06-07)==
+  * System wide shortcut key for Windows and Linux: Issue #35
+  * Possibility to rename Quick Access items: Issue #15
+  * Disabled plugins are no longer loaded in background: Issue #99
+  * Hawkscope icon is no longer invisible on dark backgrounds: Issue #98
+  * Added a Donate button in About window: Issue #100
+
 ==Changes in version 0.6.0 (2009-04-04)==
   * Plugins can no longer break the rest of Hawkscope menu: Issue #84
   * Native icon themes for supported operating systems: Issue #83
