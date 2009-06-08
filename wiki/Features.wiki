@@ -1,0 +1,18 @@
+#summary Hawkscope features.
+#labels Phase-Implementation
+
+= Main features =
+  * Cross platform, support Windows, Linux and Mac
+  * Navigation through hard drive contents via dynamic popup menu
+  * System wide global hotkey for invoking menu right under mouse location (on Windows and Linux only)
+  * Configurable favourite locations for quick access
+  * Hide unwanted drives, folders or files by adding them to blacklist
+  * Plugin system
+  
+= Features provided by plugins =
+    * Open With plugin: Choose your preferred applications
+    * Gmail Checker plugin: Shows unread items from your [http://mail.google.com Gmail] inbox
+    * Delicious plugin: Instant access your [http://www.delicious.com delicious.com] bookmarks
+    * Twitter plugin: Twitter client for Hawkscope
+    * Execute plugin: Execute system commands 
+    * Googlescope plugin: Google search integration
