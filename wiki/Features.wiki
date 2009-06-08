@@ -9,7 +9,7 @@
   * Hide unwanted drives, folders or files by adding them to blacklist
   * Plugin system
   
-= Features provided by plugins =
+= Features provided by Plugins =
     * Open With plugin: Choose your preferred applications
     * Gmail Checker plugin: Shows unread items from your [http://mail.google.com Gmail] inbox
     * Delicious plugin: Instant access your [http://www.delicious.com delicious.com] bookmarks
