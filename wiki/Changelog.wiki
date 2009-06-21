@@ -3,6 +3,9 @@
 
 = Hawkscope Changelog =
 
+==Changes in version 0.6.2 (2009-06-21)==
+  * Quick access list is now being saved properly on Windows: Issue #109
+
 ==Changes in version 0.6.1 (2009-06-07)==
   * System wide shortcut key for Windows and Linux: Issue #35
   * Possibility to rename Quick Access items: Issue #15
