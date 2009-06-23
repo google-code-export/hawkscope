@@ -6,6 +6,9 @@
 === What is Hawkscope? ===
 It's an application that resides in your system tray and allows you to browse your hard drive and open anything within seconds.
 
+=== How to use Hawkscope? ===
+Install it, run it, click the hawk icon [http://hawkscope.googlecode.com/svn/trunk/src/main/resources/icons/hawkscope24.png], the menu will pop out. Navigate through it to find your files and folders. Click on Settings to pimp your menu with custom Quick Access list, plugins, etc.
+
 === Is it free? ===
 Absolutely, it's free and open source.
 
