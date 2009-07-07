@@ -1,3 +1,4 @@
+1.6 - Upgraded to newer version of Twitter4J (2.0.8)
 1.5 - Upgraded to newer version of Twitter4J (2.0.3)
       Improved asynchronious handling of events
 1.4 - Upgraded to newer version of Twitter4J (1.1.8)
