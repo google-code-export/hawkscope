@@ -64,3 +64,8 @@ Doubleclick the executable jar, or execute in console:
 {{{
 java -jar hawkscope-...jar
 }}} 
+
+On Mac:
+{{{
+java -jar -XstartOnFirstThread hawkscope-...jar
+}}}
